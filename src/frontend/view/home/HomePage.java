@@ -1,4 +1,6 @@
-package frontend.view.layout;
+package frontend.view.home;
+
+import frontend.view.IContent;
 
 import javax.swing.*;
 import java.awt.*;

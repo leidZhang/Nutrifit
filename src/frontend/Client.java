@@ -1,9 +1,8 @@
 package frontend;
 
-import frontend.view.layout.HomePage;
-import frontend.view.layout.IContent;
-import frontend.view.FrontEnd;
-import frontend.view.layout.UserProfile;
+import frontend.view.home.HomePage;
+import frontend.view.IContent;
+import frontend.view.user.UserProfile;
 
 public class Client {
     public static void main(String[] args) {

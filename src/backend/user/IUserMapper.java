@@ -1,6 +1,6 @@
-package backend.mapper;
+package backend.user;
 
-import backend.entity.User;
+import backend.user.entity.User;
 
 import java.sql.SQLException;
 

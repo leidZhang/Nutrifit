@@ -1,4 +1,4 @@
-package frontend.view.layout;
+package frontend.view;
 
 import javax.swing.*;
 

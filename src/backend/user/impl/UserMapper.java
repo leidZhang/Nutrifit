@@ -1,8 +1,8 @@
-package backend.mapper.impl;
+package backend.user.impl;
 
 import backend.common.ConnectionUtil;
-import backend.entity.User;
-import backend.mapper.IUserMapper;
+import backend.user.entity.User;
+import backend.user.IUserMapper;
 
 import java.sql.*;
 

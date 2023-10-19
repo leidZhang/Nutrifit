@@ -1,4 +1,4 @@
-package api.common;
+package backend.common;
 
 public class Result {
     private static final String SUCCESS_CODE = "200";

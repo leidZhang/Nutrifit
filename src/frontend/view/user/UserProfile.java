@@ -1,9 +1,10 @@
-package frontend.view.layout;
+package frontend.view.user;
 
-import api.IUser;
-import api.common.Result;
+import backend.user.IUser;
+import backend.common.Result;
 import backend.controller.UserController;
-import backend.entity.User;
+import backend.user.entity.User;
+import frontend.view.IContent;
 
 import javax.swing.*;
 import java.awt.*;
