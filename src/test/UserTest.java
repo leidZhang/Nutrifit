@@ -1,14 +1,14 @@
 package test;
 
-import backend.user.IUser;
+import backend.user.IUserController;
 import backend.common.Result;
-import backend.controller.UserController;
 import backend.user.entity.User;
+import backend.user.impl.UserController;
 
 
 public class UserTest {
     public static void main(String[] args) {
-        IUser iuser = new UserController();
+        IUserController iuser = new UserController();
         String username = "js288ca";
         Result res0 = iuser.getUser(username);
         String code = res0.getCode();

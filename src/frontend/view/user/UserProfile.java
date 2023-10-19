@@ -1,16 +1,16 @@
 package frontend.view.user;
 
-import backend.user.IUser;
 import backend.common.Result;
-import backend.controller.UserController;
+import backend.user.IUserController;
 import backend.user.entity.User;
+import backend.user.impl.UserController;
 import frontend.view.IContent;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class UserProfile implements IContent {
-    IUser user = new UserController();
+    IUserController user = new UserController();
 
     @Override
     public String showContent(JPanel content) {
