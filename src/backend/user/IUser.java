@@ -1,7 +1,7 @@
-package api;
+package backend.user;
 
-import api.common.Result;
-import backend.entity.User;
+import backend.common.Result;
+import backend.user.entity.User;
 
 public interface IUser {
     Result save(User user);

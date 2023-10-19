@@ -1,4 +1,4 @@
-package backend.entity;
+package backend.user.entity;
 
 import java.sql.Date;
 

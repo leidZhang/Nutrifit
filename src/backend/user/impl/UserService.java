@@ -1,9 +1,8 @@
-package backend.service.impl;
+package backend.user.impl;
 
-import backend.entity.User;
-import backend.mapper.IUserMapper;
-import backend.mapper.impl.UserMapper;
-import backend.service.IUserService;
+import backend.user.entity.User;
+import backend.user.IUserMapper;
+import backend.user.IUserService;
 
 import java.sql.SQLException;
 

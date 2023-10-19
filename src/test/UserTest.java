@@ -1,11 +1,9 @@
 package test;
 
-import api.IUser;
-import api.common.Result;
+import backend.user.IUser;
+import backend.common.Result;
 import backend.controller.UserController;
-import backend.entity.User;
-
-import java.sql.Date;
+import backend.user.entity.User;
 
 
 public class UserTest {
