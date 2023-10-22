@@ -1,0 +1,20 @@
+@startuml
+UserProfile -> UserController: save(User)
+activate UserProfile
+activate UserController
+
+UserController -> UserService: save(User)
+activate UserService
+
+UserService -> UserMapper: save(User)
+activate UserMapper
+
+UserMapper --> UserService: User
+deactivate UserMapper
+
+UserService --> UserController: User
+deactivate UserService
+
+UserController --> UserProfile: Result
+
+@enduml

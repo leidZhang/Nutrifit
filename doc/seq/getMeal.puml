@@ -1,0 +1,25 @@
+@startuml
+activate MealList
+MealList -> UserSession: getInstance()
+activate UserSession
+UserSession --> MealList: User
+deactivate UserSession
+
+MealList -> MealController: getByUsername(String)
+activate MealController
+
+MealController -> MealService: getByUsername(String)
+activate MealService
+
+MealService -> MealMapper: getByUsername(String)
+activate MealMapper
+
+MealMapper --> MealService: List
+deactivate MealMapper
+
+MealService --> MealController: List
+deactivate MealService
+
+MealController --> MealList: Result
+deactivate MealController
+@enduml

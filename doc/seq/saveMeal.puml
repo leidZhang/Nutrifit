@@ -1,0 +1,33 @@
+@startuml
+activate MealForm
+MealForm -> UserSession: getInstance()
+activate UserSession
+UserSession --> MealForm: User
+deactivate UserSession
+
+MealForm -> MealController : save(Meal, User)
+activate MealController
+
+MealController -> MealService: save(Meal, User)
+activate MealService
+
+loop
+MealService -> IngredientMapper: getByName(String)
+activate IngredientMapper
+IngredientMapper --> MealService: Ingredient
+deactivate IngredientMapper
+end
+
+MealService -> MealMapper: save(Meal, String)
+activate MealMapper
+
+MealMapper --> MealService:
+deactivate MealMapper
+
+MealService --> MealController:
+deactivate MealService
+
+MealController --> MealForm: Result
+deactivate MealController
+
+@enduml

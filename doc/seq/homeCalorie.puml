@@ -1,0 +1,36 @@
+@startuml
+activate Home
+Home -> UserSession: getInstance()
+activate UserSession
+
+UserSession --> Home: User
+deactivate UserSession
+
+Home -> MealController: getByPeriod(String, Date, Date)
+activate MealController
+MealController -> MealService: getByPeriod(String, Date, Date)
+activate MealService
+MealService -> MealMapper: getByPeriod(String, Date, Date)
+activate MealMapper
+MealMapper --> MealService: List
+deactivate MealMapper
+MealService --> MealController: List
+deactivate MealService
+
+MealController --> Home: Result
+deactivate MealController
+
+Home -> ExerciseController: getByPeriod(String, Date, Date)
+activate ExerciseController
+ExerciseController -> ExerciseService: getByPeriod(String, Date, Date)
+activate ExerciseService
+ExerciseService -> ExerciseMapper: getByPeriod(String, Date, Date)
+activate ExerciseMapper
+ExerciseMapper --> ExerciseService: List
+deactivate ExerciseMapper
+ExerciseService --> ExerciseController: List
+deactivate ExerciseService
+
+ExerciseController --> Home: Result
+deactivate ExerciseController
+@enduml

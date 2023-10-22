@@ -1,0 +1,23 @@
+@startuml
+UserProfile -> UserController: update(User)
+activate UserProfile
+activate UserController
+
+UserController -> UserService: update(User)
+activate UserService
+
+UserService -> UserMapper: update(User)
+activate UserMapper
+
+UserMapper --> UserService:
+deactivate UserMapper
+
+UserService --> UserController:
+deactivate UserService
+
+UserController --> UserProfile: Result
+deactivate UserController
+UserProfile -> UserSession: setInstance(User)
+activate UserSession
+
+@enduml

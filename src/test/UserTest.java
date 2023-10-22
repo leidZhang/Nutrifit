@@ -1,9 +1,9 @@
 package test;
 
-import backend.user.IUserController;
-import backend.common.Result;
-import backend.user.entity.User;
-import backend.user.impl.UserController;
+import main.backend.user.IUserController;
+import main.backend.common.Result;
+import main.backend.user.entity.User;
+import main.backend.user.impl.UserController;
 
 
 public class UserTest {
