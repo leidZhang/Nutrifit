@@ -1,0 +1,20 @@
+@startuml
+activate MealList
+MealList -> MealController: delete(int)
+activate MealController
+
+MealController -> MealService: delete(int)
+activate MealService
+
+MealService -> MealMapper: delete(int)
+activate MealMapper
+
+MealMapper --> MealService:
+deactivate MealMapper
+
+MealService --> MealController:
+deactivate MealService
+
+MealController --> MealList: Result
+deactivate MealController
+@enduml

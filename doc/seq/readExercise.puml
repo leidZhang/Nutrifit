@@ -1,0 +1,26 @@
+@startuml
+activate ExerciseList
+ExerciseList -> UserSession: getInstance()
+activate UserSession
+
+UserSession --> ExerciseList: User
+deactivate UserSession
+
+ExerciseList -> ExerciseController: getByUsername(String)
+activate ExerciseController
+
+ExerciseController -> ExerciseService:  getByUsername(String)
+activate ExerciseService
+
+ExerciseService -> ExerciseMapper:  getByUsername(String)
+activate ExerciseMapper
+
+ExerciseMapper --> ExerciseService: List
+deactivate ExerciseMapper
+
+ExerciseService --> ExerciseController: List
+deactivate ExerciseService
+
+ExerciseController --> ExerciseList: Result
+deactivate ExerciseController
+@enduml

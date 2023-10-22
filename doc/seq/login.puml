@@ -1,0 +1,23 @@
+@startuml
+Login -> UserController: getUser(String, String)
+activate Login
+activate UserController
+
+UserController -> UserService: getUser(String, String)
+activate UserService
+
+UserService -> UserMapper: getUser(String, String)
+activate UserMapper
+
+UserMapper --> UserService: User
+deactivate UserMapper
+
+UserService --> UserController: User
+deactivate UserService
+
+UserController --> Login: Result
+deactivate UserController
+
+Login -> UserSession: setInstance()
+activate UserSession
+@enduml

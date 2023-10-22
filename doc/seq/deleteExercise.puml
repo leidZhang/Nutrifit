@@ -1,0 +1,20 @@
+@startuml
+activate ExerciseList
+ExerciseList -> ExerciseController: delete(int)
+activate ExerciseController
+
+ExerciseController -> ExerciseService: delete(int)
+activate ExerciseService
+
+ExerciseService -> ExerciseMapper: delete(int)
+activate ExerciseMapper
+
+ExerciseMapper --> ExerciseService:
+deactivate ExerciseMapper
+
+ExerciseService --> ExerciseController:
+deactivate ExerciseService
+
+ExerciseController --> ExerciseList: Result
+deactivate ExerciseController
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+activate ExerciseVisualization
+ExerciseVisualization -> UserSession: getInstance()
+activate UserSession
+UserSession --> ExerciseVisualization: User
+deactivate UserSession
+
+ExerciseVisualization -> ExerciseController: getByPeriod(String, Date, Date)
+activate ExerciseController
+
+ExerciseController -> ExerciseService: getByPeriod(String, Date, Date)
+activate ExerciseService
+
+ExerciseService -> ExerciseMapper: getByPeriod(String, Date, Date)
+activate ExerciseMapper
+
+ExerciseMapper --> ExerciseService: List
+deactivate ExerciseMapper
+
+ExerciseService --> ExerciseController: List
+deactivate ExerciseService
+
+ExerciseController --> ExerciseVisualization: Result
+deactivate ExerciseController
+@enduml
