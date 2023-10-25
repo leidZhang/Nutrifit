@@ -4,6 +4,7 @@ import main.backend.common.Result;
 import main.backend.user.IUserController;
 import main.backend.user.entity.User;
 import main.backend.user.impl.UserController;
+import main.frontend.session.UserSession;
 import main.frontend.view.IContent;
 
 import javax.swing.*;
@@ -11,11 +12,14 @@ import java.awt.*;
 
 public class UserProfile implements IContent {
     IUserController user = new UserController();
+    UserSession instance = UserSession.getInstance();
 
     @Override
     public String showContent(JPanel content) {
         // the code below is just a demonstration, implement ur user profile components...
+
         // set up layout
+        content.removeAll();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
         // get data from main.backend
@@ -24,6 +28,7 @@ public class UserProfile implements IContent {
 
         if (res.getCode().equals("200")) {
             User user = (User) res.getData();
+            instance.setUser(user);
             // get user attributes
             String name = user.getName();
             String username = user.getUsername();

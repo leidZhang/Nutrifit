@@ -1,15 +1,22 @@
 package main.frontend.view.home;
 
+import main.backend.user.entity.User;
+import main.frontend.session.UserSession;
 import main.frontend.view.IContent;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class HomePage implements IContent {
+public class Home implements IContent {
+    UserSession instance = UserSession.getInstance();
     @Override
     public String showContent(JPanel content) {
+        User user = instance.getUser();
+
+        // remove all
+        content.removeAll();
         // set up button attributes
-        JLabel label = new JLabel("hello world!");
+        JLabel label = new JLabel("hello " + user.getName()); // get login user info
         label.setForeground(Color.BLACK);
         label.setPreferredSize(new Dimension(100, 20));
 
