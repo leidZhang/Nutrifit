@@ -22,7 +22,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void updateUser(String username) throws SQLException {
-
+    public void updateUser(User user) throws SQLException {
+        userMapper.updateUser(user);
     }
 }

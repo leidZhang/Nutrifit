@@ -29,7 +29,12 @@ public class UserController implements IUserController {
     }
 
     @Override
-    public Result updateUser(String username) {
-        return null;
+    public Result updateUser(User user) {
+        try {
+            service.updateUser(user);
+            return Result.success();
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
     }
 }

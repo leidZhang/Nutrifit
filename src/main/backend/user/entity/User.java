@@ -3,6 +3,7 @@ package main.backend.user.entity;
 import java.sql.Date;
 
 public class User {
+    private int id;
     private String name;
     private String username;
     private String sex;
@@ -19,6 +20,11 @@ public class User {
         this.height = height;
         this.weight = weight;
         this.age = age;
+    }
+
+    public User(int id, String name, String username, String sex, Date dateOfBirth, double height, double weight, int age) {
+        this(name, username, sex, dateOfBirth, height, weight, age);
+        this.id = id;
     }
 
     public String getName() {
@@ -47,5 +53,9 @@ public class User {
 
     public int getAge() {
         return age;
+    }
+
+    public int getId() {
+        return id;
     }
 }
