@@ -5,6 +5,6 @@ import main.backend.user.entity.User;
 
 public interface IUserController {
     Result save(User user);
-    Result updateUser(String username);
+    Result updateUser(User user);
     Result getUser(String username);
 }
