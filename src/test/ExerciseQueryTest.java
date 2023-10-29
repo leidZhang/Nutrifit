@@ -6,7 +6,6 @@ import main.backend.exercise.impl.ExerciseMapper;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ExerciseQueryTest {
@@ -20,7 +19,7 @@ public class ExerciseQueryTest {
         String username = "js288c";
 
         try {
-            Date endDate = Date.valueOf("2023-10-24");
+            Date endDate = Date.valueOf("2023-10-26");
             Date startDate = Date.valueOf("2023-10-20");
             List<Exercise> res = mapper.getByPeriod("js288c", startDate, endDate);
             for (int i=0; i<res.size(); i++) {
