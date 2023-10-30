@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 26/10/2023 16:32:18
+ Date: 29/10/2023 20:54:37
 */
 
 SET NAMES utf8mb4;
@@ -218,22 +218,25 @@ INSERT INTO `food source` VALUES (36, 35, 'CNF RECIPE COMPILATION', 'COMPILATION
 INSERT INTO `food source` VALUES (38, 37, 'CNF Sampling and Analysis Program (SNAP-CAN)', 'Programme d\'閏hantillonage et d\'analyse du FC蒒 (P葾蒒-CAN)');
 
 -- ----------------------------
--- Table structure for food use
+-- Table structure for food used
 -- ----------------------------
-DROP TABLE IF EXISTS `food use`;
-CREATE TABLE `food use`  (
+DROP TABLE IF EXISTS `food used`;
+CREATE TABLE `food used`  (
   `meal_id` int NOT NULL,
   `food_id` int NOT NULL,
   `quantity` float NULL DEFAULT NULL,
   PRIMARY KEY (`meal_id`, `food_id`) USING BTREE,
   INDEX `fuFoodID`(`food_id` ASC) USING BTREE,
-  CONSTRAINT `fuMealID` FOREIGN KEY (`meal_id`) REFERENCES `meal` (`meal_id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  CONSTRAINT `fuFoodID` FOREIGN KEY (`food_id`) REFERENCES `food name` (`FoodID`) ON DELETE CASCADE ON UPDATE RESTRICT
+  CONSTRAINT `fuFoodID` FOREIGN KEY (`food_id`) REFERENCES `food name` (`FoodID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fuMealID` FOREIGN KEY (`meal_id`) REFERENCES `meal` (`meal_id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of food use
+-- Records of food used
 -- ----------------------------
+INSERT INTO `food used` VALUES (1, 2, 100);
+INSERT INTO `food used` VALUES (1, 4, 150);
+INSERT INTO `food used` VALUES (1, 6, 80);
 
 -- ----------------------------
 -- Table structure for meal
@@ -248,11 +251,13 @@ CREATE TABLE `meal`  (
   PRIMARY KEY (`meal_id`) USING BTREE,
   INDEX `mUserID`(`user_id` ASC) USING BTREE,
   CONSTRAINT `mUserID` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of meal
 -- ----------------------------
+INSERT INTO `meal` VALUES (1, '2023-10-28', 'lunch', 1000, 1);
+INSERT INTO `meal` VALUES (2, '2023-10-28', 'dinner', 2500, 4);
 
 -- ----------------------------
 -- Table structure for measure name
@@ -3857,12 +3862,12 @@ INSERT INTO `nutrient name` VALUES (307, 307, 'NA', 'mg', 'SODIUM', 'SODIUM', 'N
 INSERT INTO `nutrient name` VALUES (309, 309, 'ZN', 'mg', 'ZINC', 'ZINC', 'ZN', 2);
 INSERT INTO `nutrient name` VALUES (312, 312, 'CU', 'mg', 'COPPER', 'CUIVRE', 'CU', 3);
 INSERT INTO `nutrient name` VALUES (315, 315, 'MN', 'mg', 'MANGANESE', 'MANGAN萐E', 'MN', 3);
-INSERT INTO `nutrient name` VALUES (317, 317, 'SE', '礸', 'SELENIUM', 'S蒐蒒IUM', 'SE', 1);
-INSERT INTO `nutrient name` VALUES (319, 319, 'RT-礕', '礸', 'RETINOL', 'R蒚INOL', 'RETOL', 0);
-INSERT INTO `nutrient name` VALUES (321, 321, 'BC-礕', '礸', 'BETA CAROTENE', 'B蒚A CAROT萅E', 'CARTB', 0);
+INSERT INTO `nutrient name` VALUES (317, 317, 'SE', 'μg', 'SELENIUM', 'S蒐蒒IUM', 'SE', 1);
+INSERT INTO `nutrient name` VALUES (319, 319, 'RT-礕', 'μg', 'RETINOL', 'R蒚INOL', 'RETOL', 0);
+INSERT INTO `nutrient name` VALUES (321, 321, 'BC-礕', 'μg', 'BETA CAROTENE', 'B蒚A CAROT萅E', 'CARTB', 0);
 INSERT INTO `nutrient name` VALUES (323, 323, 'ATMG', 'mg', 'ALPHA-TOCOPHEROL', 'ALPHA-TOCOPH蒖OL', 'TOCPHA', 2);
 INSERT INTO `nutrient name` VALUES (324, 324, 'D-IU', 'IU', 'VITAMIN D (INTERNATIONAL UNITS)', 'VITAMINE D (UNITES INTERNATIONALES)', 'VITD_IU', 0);
-INSERT INTO `nutrient name` VALUES (339, 328, 'D3+D2-礕', '礸', 'VITAMIN D (D2 + D3)', 'VITAMINE D (D2 + D3)', 'VITD_ 礕', 1);
+INSERT INTO `nutrient name` VALUES (339, 328, 'D3+D2-礕', 'μg', 'VITAMIN D (D2 + D3)', 'VITAMINE D (D2 + D3)', 'VITD_ 礕', 1);
 INSERT INTO `nutrient name` VALUES (401, 401, 'VITC', 'mg', 'VITAMIN C', 'VITAMINE C', 'VITC', 1);
 INSERT INTO `nutrient name` VALUES (404, 404, 'THIA', 'mg', 'THIAMIN', 'THIAMINE', 'THIA', 3);
 INSERT INTO `nutrient name` VALUES (405, 405, 'RIBO', 'mg', 'RIBOFLAVIN', 'RIBOFLAVINE', 'RIBF', 3);
@@ -3870,11 +3875,11 @@ INSERT INTO `nutrient name` VALUES (406, 406, 'N-MG', 'mg', 'NIACIN (NICOTINIC A
 INSERT INTO `nutrient name` VALUES (409, 409, 'N-NE', 'NE', 'TOTAL NIACIN EQUIVALENT', '蒕UIVALENT EN NIACINE TOTALE', 'NIAEQ', 3);
 INSERT INTO `nutrient name` VALUES (410, 410, 'PANT', 'mg', 'PANTOTHENIC ACID', 'ACIDE PANTOTH蒒IQUE', 'PANTAC', 3);
 INSERT INTO `nutrient name` VALUES (415, 415, 'B6', 'mg', 'VITAMIN B-6', 'VITAMINE B-6', 'VITB6A', 3);
-INSERT INTO `nutrient name` VALUES (416, 416, 'BIOT', '礸', 'BIOTIN', 'BIOTINE', 'BIOT', 0);
-INSERT INTO `nutrient name` VALUES (417, 417, 'FOLA', '礸', 'TOTAL FOLACIN', 'FOLACINE TOTALE', 'FOL', 0);
-INSERT INTO `nutrient name` VALUES (418, 418, 'B12', '礸', 'VITAMIN B-12', 'VITAMINE B-12', 'VITB12', 2);
-INSERT INTO `nutrient name` VALUES (430, 430, 'VITK', '礸', 'VITAMIN K', 'VITAMINE K', 'VITK', 1);
-INSERT INTO `nutrient name` VALUES (431, 431, 'FOAC', '礸', 'FOLIC ACID', 'ACIDE FOLIQUE', 'FOLAC', 0);
+INSERT INTO `nutrient name` VALUES (416, 416, 'BIOT', 'μg', 'BIOTIN', 'BIOTINE', 'BIOT', 0);
+INSERT INTO `nutrient name` VALUES (417, 417, 'FOLA', 'μg', 'TOTAL FOLACIN', 'FOLACINE TOTALE', 'FOL', 0);
+INSERT INTO `nutrient name` VALUES (418, 418, 'B12', 'μg', 'VITAMIN B-12', 'VITAMINE B-12', 'VITB12', 2);
+INSERT INTO `nutrient name` VALUES (430, 430, 'VITK', 'μg', 'VITAMIN K', 'VITAMINE K', 'VITK', 1);
+INSERT INTO `nutrient name` VALUES (431, 431, 'FOAC', 'μg', 'FOLIC ACID', 'ACIDE FOLIQUE', 'FOLAC', 0);
 INSERT INTO `nutrient name` VALUES (501, 501, 'TRP', 'g', 'TRYPTOPHAN', 'TRYPTOPHANE', 'TRP', 3);
 INSERT INTO `nutrient name` VALUES (502, 502, 'THR', 'g', 'THREONINE', 'THR蒓NINE', 'THR', 3);
 INSERT INTO `nutrient name` VALUES (503, 503, 'ISO', 'g', 'ISOLEUCINE', 'ISOLEUCINE', 'ILE', 3);
@@ -3928,13 +3933,13 @@ INSERT INTO `nutrient name` VALUES (653, 653, '17:0', 'g', 'FATTY ACIDS, SATURAT
 INSERT INTO `nutrient name` VALUES (654, 654, '24:0', 'g', 'FATTY ACIDS, SATURATED, 24:0, TETRACOSANOIC', 'ACIDES GRAS SATUR蒘, 24:0, T蒚RASANO螿UE', 'F24D0', 3);
 INSERT INTO `nutrient name` VALUES (802, 802, 'TMOS', 'g', 'TOTAL MONOSACCARIDES', 'MONOSACCHARIDES TOTAUX', 'MNSAC', 2);
 INSERT INTO `nutrient name` VALUES (803, 803, 'TDIS', 'g', 'TOTAL DISACCHARIDES', 'DISACCHARIDES TOTAUX', 'DISAC', 2);
-INSERT INTO `nutrient name` VALUES (806, 432, 'FOLN', '礸', 'NATURALLY OCCURRING FOLATE', 'FOLATES PR蒘ENTS NATURELLEMENT', 'FOLFD', 0);
+INSERT INTO `nutrient name` VALUES (806, 432, 'FOLN', 'μg', 'NATURALLY OCCURRING FOLATE', 'FOLATES PR蒘ENTS NATURELLEMENT', 'FOLFD', 0);
 INSERT INTO `nutrient name` VALUES (810, 209, 'STAR', 'g', 'STARCH', 'AMIDON', 'STARCH', 2);
 INSERT INTO `nutrient name` VALUES (811, 341, 'BTMG', 'mg', 'BETA-TOCOPHEROL', 'B蔜A-TOCOPH蒖OL', 'TOCPHB', 2);
 INSERT INTO `nutrient name` VALUES (812, 342, 'GTMG', 'mg', 'GAMMA-TOCOPHEROL', 'GAMMA-TOCOPH蒖OL', 'TOCPHG', 2);
 INSERT INTO `nutrient name` VALUES (813, 343, 'DTMG', 'mg', 'DELTA-TOCOPHEROL', 'DELTA-TOCOPH蒖OL', 'TOCPHD', 2);
-INSERT INTO `nutrient name` VALUES (814, 320, 'RAE', '礸', 'RETINOL ACTIVITY EQUIVALENTS', '蒕UIVALENTS D\'ACTIVIT?DU R蒚INOL', 'VITA_RAE', 0);
-INSERT INTO `nutrient name` VALUES (815, 435, 'DFE', '礸', 'DIETARY FOLATE EQUIVALENTS', '蒕UIVALENTS DE FOLATE ALIMENTAIRE (蒄A)', 'FOLDFE', 0);
+INSERT INTO `nutrient name` VALUES (814, 320, 'RAE', 'μg', 'RETINOL ACTIVITY EQUIVALENTS', '蒕UIVALENTS D\'ACTIVIT?DU R蒚INOL', 'VITA_RAE', 0);
+INSERT INTO `nutrient name` VALUES (815, 435, 'DFE', 'μg', 'DIETARY FOLATE EQUIVALENTS', '蒕UIVALENTS DE FOLATE ALIMENTAIRE (蒄A)', 'FOLDFE', 0);
 INSERT INTO `nutrient name` VALUES (816, 641, 'SITSTR', 'mg', 'BETA-SITOSTEROL', 'B蒚A-SITOST蒖OL', 'SITSTR', 0);
 INSERT INTO `nutrient name` VALUES (817, 662, '16:1t', 'g', 'FATTY ACIDS, MONOUNSATURATED, 16:1t, HEXADECENOIC', 'ACIDES GRAS MONOINSATUR蒘, 16:1t, HEXAD蒀蒒O螿UE', 'F16D1T', 3);
 INSERT INTO `nutrient name` VALUES (818, 663, '18:1t', 'g', 'FATTY ACIDS, MONOUNSATURATED, 18:1t, OCTADECENOIC', 'ACIDE GRAS MONOINSATUR蒘, 18:1t, OCTAD蒀蒒O螿UE', 'F18D1T', 3);
@@ -3952,10 +3957,10 @@ INSERT INTO `nutrient name` VALUES (830, 696, '13:0', 'g', 'FATTY ACIDS, SATURAT
 INSERT INTO `nutrient name` VALUES (831, 851, '18:3cccn-3', 'g', 'FATTY ACIDS, POLYUNSATURATED, 18:3 c,c,c n-3  LINOLENIC, OCTADECATRIENOIC', 'ACIDES GRAS POLYINSATUR蒘, 18:3 c,c,c  n-3, LINOL蒒IQUE, OCTAD蒀ATRI蒒O螿UE', 'F18D3CN3', 3);
 INSERT INTO `nutrient name` VALUES (832, 685, '18:3cccn-6', 'g', 'FATTY ACIDS, POLYUNSATURATED, 18:3 c,c,c n-6, g-LINOLENIC, OCTADECATRIENOIC', 'ACIDES GRAS POLYINSATUR蒘, 18:3 c,c,c n-6, g-LINOL蒒IQUE, OCTAD蒀ATRI蒒O螿UE', 'F18D3CN6', 3);
 INSERT INTO `nutrient name` VALUES (833, 697, '15:1', 'g', 'FATTY ACIDS, MONOUNSATURATED, 15:1, PENTADECENOIC', 'ACIDES GRAS MONOINSATUR蒘, 15:1, PENTAD蒀蒒O螿UE', 'F15D1', 3);
-INSERT INTO `nutrient name` VALUES (834, 322, 'AC-礕', '礸', 'ALPHA CAROTENE', 'ALPHA-CAROT萅E', 'CARTA', 0);
-INSERT INTO `nutrient name` VALUES (835, 334, 'CRYPX', '礸', 'BETA CRYPTOXANTHIN', 'B蔜A-CRYPTOZANTHINE', 'CRYPX', 0);
-INSERT INTO `nutrient name` VALUES (836, 337, 'LYCPN', '礸', 'LYCOPENE', 'LYCOP萅E', 'LYCPN', 0);
-INSERT INTO `nutrient name` VALUES (837, 338, 'LUT+ZEA', '礸', 'LUTEIN AND ZEAXANTHIN', 'LUT蒊NE ET Z葾XANTHINE', 'LUT+ZEA', 0);
+INSERT INTO `nutrient name` VALUES (834, 322, 'AC-礕', 'μg', 'ALPHA CAROTENE', 'ALPHA-CAROT萅E', 'CARTA', 0);
+INSERT INTO `nutrient name` VALUES (835, 334, 'CRYPX', 'μg', 'BETA CRYPTOXANTHIN', 'B蔜A-CRYPTOZANTHINE', 'CRYPX', 0);
+INSERT INTO `nutrient name` VALUES (836, 337, 'LYCPN', 'μg', 'LYCOPENE', 'LYCOP萅E', 'LYCPN', 0);
+INSERT INTO `nutrient name` VALUES (837, 338, 'LUT+ZEA', 'μg', 'LUTEIN AND ZEAXANTHIN', 'LUT蒊NE ET Z葾XANTHINE', 'LUT+ZEA', 0);
 INSERT INTO `nutrient name` VALUES (838, 670, '18:2cla', 'g', 'FATTY ACIDS, POLYUNSATURATED, CONJUGATED, 18:2 cla, LINOLEIC, OCTADECADIENOIC', 'ACIDES GRAS POLYINSATUR蒘 CONJUGU蒘, 18:2 cla, LINOL蒊QUE, OCTAD蒀ADI蒒O螿UE', 'F18D2CLA', 3);
 INSERT INTO `nutrient name` VALUES (840, 676, '22:1c', 'g', 'FATTY ACIDS, MONOUNSATURATED, 22:1c, DOCOSENOIC', 'ACIDES GRAS MONOINSATUR蒘, 22:1c, DOCOS蒒O螿UE', NULL, 3);
 INSERT INTO `nutrient name` VALUES (841, 856, '18:3i', 'g', 'FATTY ACIDS, POLYUNSATURATED, 18:3i, LINOLENIC, OCTADECATRIENOIC', 'ACIDES GRAS POLYINSATUR蒘, 18:3i, LINOL蒒IQUE, OCTAD蒀ATRI蒒O螿UE', NULL, 3);
@@ -3977,7 +3982,7 @@ INSERT INTO `nutrient name` VALUES (866, 639, 'CAMSTR', 'mg', 'CAMPESTEROL', 'CA
 INSERT INTO `nutrient name` VALUES (868, 902, 'TOmega n-3', 'g', 'FATTY ACIDS, POLYUNSATURATED, TOTAL OMEGA  N-3', 'ACIDES GRAS POLYINSATUR蒘, TOTAUX D\'OM蒅A N-3\n', 'FAPUN3', 3);
 INSERT INTO `nutrient name` VALUES (869, 903, 'TOmega n-6', 'g', 'FATTY ACIDS, POLYUNSATURATED, TOTAL OMEGA   N-6', 'ACIDES GRAS POLYINSATUR蒘, TOTAUX D\'OM蒅A N-6', 'FAPUN6', 3);
 INSERT INTO `nutrient name` VALUES (875, 573, 'ATMG-A', 'mg', 'ALPHA-TOCOPHEROL, ADDED', 'ALPHA-TOCOPH蒖OL, AJOUT?,,2\r\n874,578,B12-A,礸,\"VITAMIN B12, ADDED', 'VITAMINE B12, AJOUT蒃', NULL);
-INSERT INTO `nutrient name` VALUES (876, 325, 'D2-礕', '礸', 'VITAMIN D2, ERGOCALCIFEROL', 'VITAMINE D2, (ERGOCALCIF蒖OL)', 'ERGCAL', 1);
+INSERT INTO `nutrient name` VALUES (876, 325, 'D2-礕', 'μg', 'VITAMIN D2, ERGOCALCIFEROL', 'VITAMINE D2, (ERGOCALCIF蒖OL)', 'ERGCAL', 1);
 
 -- ----------------------------
 -- Table structure for nutrient source
