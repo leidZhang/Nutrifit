@@ -2,9 +2,7 @@ package main.backend.meal.impl;
 
 import main.backend.common.ConnectionUtil;
 import main.backend.meal.IFoodMapper;
-import main.backend.meal.entity.Food;
 import main.backend.meal.entity.Nutrient;
-import main.backend.user.entity.User;
 
 import java.sql.*;
 import java.util.HashMap;

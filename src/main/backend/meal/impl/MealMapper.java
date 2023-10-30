@@ -4,7 +4,6 @@ import main.backend.common.ConnectionUtil;
 import main.backend.meal.IMealMapper;
 import main.backend.meal.entity.Food;
 import main.backend.meal.entity.Meal;
-import main.backend.meal.entity.Nutrient;
 import main.backend.user.entity.User;
 
 import java.sql.*;
