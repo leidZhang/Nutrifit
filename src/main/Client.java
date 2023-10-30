@@ -12,6 +12,6 @@ public class Client {
         IContent up = new UserProfile();
         IContent hp = new Home();
         window.switchContentPanel(up); // switch to user profile
-        // window.switchContentPanel(hp); // switch to home page
+        window.switchContentPanel(hp); // switch to home page
     }
 }
