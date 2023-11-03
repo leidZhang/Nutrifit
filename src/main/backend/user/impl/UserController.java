@@ -9,6 +9,16 @@ public class UserController implements IUserController {
     private IUserService service = new UserService();
 
     @Override
+    public Result getUser(String username) {
+        try {
+            User user = service.getByUsername(username);
+            return Result.success(user);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    @Override
     public Result save(User user) {
         try {
             service.save(user);
@@ -18,15 +28,7 @@ public class UserController implements IUserController {
         }
     }
 
-    @Override
-    public Result getUser(String username) {
-        try {
-            User user = service.getByUsername(username);
-            return Result.success(user);
-        } catch (Exception e) {
-            return Result.error(e.getMessage());
-        }
-    }
+
 
     @Override
     public Result updateUser(User user) {

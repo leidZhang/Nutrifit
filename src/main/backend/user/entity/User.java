@@ -1,6 +1,7 @@
 package main.backend.user.entity;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class User {
     private int id;
@@ -26,6 +27,7 @@ public class User {
         this(name, username, sex, dateOfBirth, height, weight, age);
         this.id = id;
     }
+
 
     public String getName() {
         return name;

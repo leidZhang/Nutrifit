@@ -46,14 +46,15 @@ public class UserMapper implements IUserMapper {
 
     @Override
     public User getUser(String username) throws SQLException {
+
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet res = null;
         User user = null;
 
+
         try {
             connection = ConnectionUtil.getConnection();
-
             // use PreparedStatement with placeholders
             String query = "select user_id, name, username, sex, date_of_birth, height, weight, age from user ";
             query += "where username = ?";
@@ -100,9 +101,9 @@ public class UserMapper implements IUserMapper {
             int age = user.getAge();
 
             // use PreparedStatement with placeholders
-            String query = "update user";
-            query += " set name = ?, username = ?, sex = ?, date_of_birth = ?, height = ?, weight = ?, age = ?";
-            query += " where user_id = ?";
+            String query = "UPDATE user " +
+                    "SET user.name = ?, username = ?, sex = ?, date_of_birth = ?, height = ?, weight = ?, age = ? " +
+                    "WHERE user_id = ?";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setString(1, name);
