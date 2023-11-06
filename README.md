@@ -9,4 +9,4 @@ Course project for EECS3311
 <img src="/images/register_page.png" /> 
 
 ### User Profile Page
-<img src="/images/user_progile_page.png" /> 
+<img src="/images/user_profile_page.png" /> 
