@@ -14,7 +14,7 @@ public class RegistationBackendTest {
         UserSession instance = UserSession.getInstance();
         LocalDate localDate = LocalDate.now();
         java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
-        User testUser=new User("name","username","male", sqlDate,180,60,18);
+        User testUser=new User("name","username","male", sqlDate,180,60);
         Result res = userController.save(testUser);
         String code = res.getCode();
         String message = res.getMessage();

@@ -12,18 +12,17 @@ public class User {
     private double weight; // kg
     private int age;
 
-    public User(String name, String username, String sex, Date dateOfBirth, double height, double weight, int age) {
+    public User(String name, String username, String sex, Date dateOfBirth, double height, double weight) {
         this.name = name;
         this.username = username;
         this.sex = sex;
         this.dateOfBirth = dateOfBirth;
         this.height = height;
         this.weight = weight;
-        this.age = age;
     }
 
-    public User(int id, String name, String username, String sex, Date dateOfBirth, double height, double weight, int age) {
-        this(name, username, sex, dateOfBirth, height, weight, age);
+    public User(int id, String name, String username, String sex, Date dateOfBirth, double height, double weight) {
+        this(name, username, sex, dateOfBirth, height, weight);
         this.id = id;
     }
 
@@ -58,5 +57,9 @@ public class User {
 
     public int getId() {
         return id;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }

@@ -72,4 +72,8 @@ public class NfEntry extends JPanel {
         this.regex = regex;
         this.verifyMessage = verifyMessage;
     }
+
+    public void setEditable(boolean flag) {
+        textField.setEditable(flag);
+    }
 }

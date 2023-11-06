@@ -21,11 +21,10 @@ public class UserMapper implements IUserMapper {
             Date dateOfBirth = user.getDateOfBirth();
             double height = user.getHeight();
             double weight = user.getWeight();
-            int age = user.getAge();
 
             // use PreparedStatement with placeholders
-            String query = "insert into user(name, username, sex, date_of_birth, height, weight, age) ";
-            query += "values (?, ?, ?, ?, ?, ?, ?)";
+            String query = "insert into user(name, username, sex, date_of_birth, height, weight) ";
+            query += "values (?, ?, ?, ?, ?, ?)";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setString(1, name);
@@ -34,7 +33,6 @@ public class UserMapper implements IUserMapper {
             ps.setDate(4, dateOfBirth);
             ps.setDouble(5, height);
             ps.setDouble(6, weight);
-            ps.setInt(7, age);
             // update row
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -55,7 +53,7 @@ public class UserMapper implements IUserMapper {
             connection = ConnectionUtil.getConnection();
 
             // use PreparedStatement with placeholders
-            String query = "select user_id, name, username, sex, date_of_birth, height, weight, age from user ";
+            String query = "select user_id, name, username, sex, date_of_birth, height, weight from user ";
             query += "where username = ?";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
@@ -69,9 +67,8 @@ public class UserMapper implements IUserMapper {
                 Date dateOfBirth = res.getDate("date_of_birth");
                 double height = res.getDouble("height");
                 double weight = res.getDouble("weight");
-                int age = res.getInt("age");
 
-                user = new User(id, name, username, sex, dateOfBirth, height, weight, age);
+                user = new User(id, name, username, sex, dateOfBirth, height, weight);
             }
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
@@ -97,11 +94,10 @@ public class UserMapper implements IUserMapper {
             Date dateOfBirth = user.getDateOfBirth();
             double height = user.getHeight();
             double weight = user.getWeight();
-            int age = user.getAge();
 
             // use PreparedStatement with placeholders
             String query = "update user";
-            query += " set name = ?, username = ?, sex = ?, date_of_birth = ?, height = ?, weight = ?, age = ?";
+            query += " set name = ?, username = ?, sex = ?, date_of_birth = ?, height = ?, weight = ?";
             query += " where user_id = ?";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
@@ -111,8 +107,7 @@ public class UserMapper implements IUserMapper {
             ps.setDate(4, dateOfBirth);
             ps.setDouble(5, height);
             ps.setDouble(6, weight);
-            ps.setInt(7, age);
-            ps.setInt(8, id);
+            ps.setInt(7, id);
             // insert new row
             ps.executeUpdate();
         } catch (SQLException e) {
