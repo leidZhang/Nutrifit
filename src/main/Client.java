@@ -1,6 +1,6 @@
 package main;
 
-import main.frontend.FrontEnd;
+import main.frontend.view.mainframe.FrontEnd;
 
 public class Client {
     public static void main(String[] args) {
