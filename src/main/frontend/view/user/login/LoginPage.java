@@ -6,7 +6,7 @@ import main.backend.user.entity.User;
 import main.backend.user.impl.UserController;
 import main.frontend.view.mainframe.FrontEnd;
 import main.frontend.common.Content;
-import main.frontend.common.PageBuilder;
+import main.frontend.common.ContentBuilder;
 import main.frontend.component.NfEntry;
 import main.frontend.session.UserSession;
 
@@ -70,12 +70,12 @@ public class LoginPage extends Content {
         };
 
         // construct page
-        PageBuilder builder = new LoginPageBuilder(content);
+        ContentBuilder builder = new LoginContentBuilder(content);
         LoginPageDirector director = new LoginPageDirector(builder);
         director.constructPage("Login", registerListener, loginListener);
 
         // get entries and setup entries
-        entries = ((LoginPageBuilder) builder).getFormData();
+        entries = ((LoginContentBuilder) builder).getFormData();
 
         return "Switch to " + pageName;
     }

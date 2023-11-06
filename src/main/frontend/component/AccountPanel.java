@@ -22,7 +22,7 @@ public class AccountPanel extends JPanel {
         this.frontEnd = frontEnd;
 
         Dimension labelDimension = new Dimension(200, 30);
-        Dimension buttonDimension = new Dimension(200, 10);
+        Dimension buttonDimension = new Dimension(200, 8);
         usernameLabel.setPreferredSize(labelDimension);
         logoutButton.setPreferredSize(buttonDimension);
 

@@ -2,7 +2,7 @@ package main.frontend.view.mainframe;
 
 import main.backend.user.entity.User;
 import main.frontend.common.IContent;
-import main.frontend.common.PageBuilder;
+import main.frontend.common.ContentBuilder;
 import main.frontend.session.UserSession;
 import main.frontend.view.exercise.ExercisePage;
 import main.frontend.view.home.Home;
@@ -87,7 +87,7 @@ public class FrontEnd extends JFrame {
         sideBar.setBackground(Color.white);
         // set up layout
         User user = instance.getUser();
-        PageBuilder builder = new SideBarBuilder(sideBar, this);
+        ContentBuilder builder = new SideBarBuilder(sideBar, this);
         SideBarDirector director = new SideBarDirector(builder);
         director.constructSideBar(user.getUsername());
 

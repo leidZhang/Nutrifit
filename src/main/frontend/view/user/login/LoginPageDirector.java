@@ -1,14 +1,14 @@
 package main.frontend.view.user.login;
 
-import main.frontend.common.PageBuilder;
+import main.frontend.common.ContentBuilder;
 
 import java.awt.event.ActionListener;
 
 public class LoginPageDirector {
-    private LoginPageBuilder builder;
+    private LoginContentBuilder builder;
 
-    public LoginPageDirector(PageBuilder builder) {
-        this.builder = (LoginPageBuilder) builder;
+    public LoginPageDirector(ContentBuilder builder) {
+        this.builder = (LoginContentBuilder) builder;
     }
 
     public void constructPage(String title, ActionListener register, ActionListener login) {

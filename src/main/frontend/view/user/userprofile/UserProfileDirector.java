@@ -1,13 +1,13 @@
 package main.frontend.view.user.userprofile;
 
-import main.frontend.common.PageBuilder;
+import main.frontend.common.ContentBuilder;
 
 import java.awt.event.ActionListener;
 
 public class UserProfileDirector {
     private UserProfileBuilder builder;
 
-    public UserProfileDirector(PageBuilder builder) {
+    public UserProfileDirector(ContentBuilder builder) {
         this.builder = (UserProfileBuilder) builder;
     }
 

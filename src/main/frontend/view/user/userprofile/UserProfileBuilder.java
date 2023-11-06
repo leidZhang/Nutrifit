@@ -1,6 +1,6 @@
 package main.frontend.view.user.userprofile;
 
-import main.frontend.common.PageBuilder;
+import main.frontend.common.ContentBuilder;
 import main.frontend.component.NfEntry;
 
 import javax.swing.*;
@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class UserProfileBuilder extends PageBuilder {
+public class UserProfileBuilder extends ContentBuilder {
     private Map<String, NfEntry> entries = new LinkedHashMap<>();
 
     public UserProfileBuilder(JPanel page) {
