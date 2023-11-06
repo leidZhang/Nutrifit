@@ -34,6 +34,7 @@ public class UserProfileBuilder extends ContentBuilder {
         // set entries title
         for (Map.Entry<String, NfEntry> entry : entries.entrySet()) {
             entry.getValue().setTitle(entry.getKey());
+            if (entry.getKey().equals("Age")) entry.getValue().setEditable(false);
         }
     }
 
@@ -45,15 +46,47 @@ public class UserProfileBuilder extends ContentBuilder {
         }
     }
 
-    public void buildOperations(ActionListener listener) {
+    public void buildModifyButton(ActionListener listener) {
+        JButton submitButton = new JButton("Modify");
+        submitButton.setMinimumSize(new Dimension(120, 30));
+        submitButton.addActionListener(listener);
+        constraints.gridx = 1;
+        constraints.gridy = gridy;
+        constraints.gridwidth = 1;
+        page.add(submitButton, constraints);
+    }
+
+    public void setHeadHorizontalSpace(int width) {
         // Add some empty space after the content
         constraints.gridy = gridy++;
         page.add(Box.createVerticalStrut(10), constraints);
 
+        constraints.gridx = 0;
+        constraints.gridwidth = 1;
+        constraints.weightx = 0.5;
+        constraints.weighty = 0;
+        page.add(Box.createHorizontalStrut(width), constraints);
+    }
+
+    public void setTailHorizontalSpace(int width) {
+        page.add(Box.createHorizontalStrut(width), constraints);
+    }
+
+    public void buildSubmitButton(ActionListener listener) {
         JButton submitButton = new JButton("Submit");
+        submitButton.setMinimumSize(new Dimension(120, 30));
         submitButton.addActionListener(listener);
-        constraints.gridy = gridy++;
+        constraints.gridx = 2;
+        constraints.gridy = gridy;
+        constraints.gridwidth = 1;
         page.add(submitButton, constraints);
+    }
+
+    public void enableForm(boolean flag) {
+        for (Map.Entry<String, NfEntry> entry : entries.entrySet()) {
+            if (entry.getKey().equals("Age")) continue;
+            entry.getValue().setEditable(false);
+        }
     }
 
     public Map<String, NfEntry> getFormData() {

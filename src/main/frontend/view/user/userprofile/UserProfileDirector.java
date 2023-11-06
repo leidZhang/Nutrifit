@@ -11,12 +11,17 @@ public class UserProfileDirector {
         this.builder = (UserProfileBuilder) builder;
     }
 
-    public void constructPage(String title, ActionListener listener) {
+    public void constructPage(String title, ActionListener submitListener, ActionListener modifyListener) {
         builder.setUp();
         builder.clearPage();
 
         builder.buildTitle(title);
         builder.buildMainContent();
-        builder.buildOperations(listener);
+
+        builder.enableForm(false);
+        builder.setHeadHorizontalSpace(120);
+        builder.buildModifyButton(modifyListener);
+        builder.buildSubmitButton(submitListener);
+        builder.setTailHorizontalSpace(500);
     }
 }

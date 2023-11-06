@@ -1,4 +1,4 @@
-package main.frontend.view.user.userprofile;
+package main.frontend.view.user.register;
 
 import main.backend.common.Result;
 import main.backend.user.IUserController;
@@ -8,6 +8,8 @@ import main.frontend.view.mainframe.FrontEnd;
 import main.frontend.common.Content;
 import main.frontend.common.ContentBuilder;
 import main.frontend.component.NfEntry;
+import main.frontend.view.user.userprofile.UserProfileBuilder;
+import main.frontend.view.user.userprofile.UserProfileDirector;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -28,10 +30,9 @@ public class RegisterPage extends Content {
         String sex = entries.get("Sex").getInput();
         double weight = Double.parseDouble(entries.get("Weight (kg)").getInput());
         double height = Double.parseDouble(entries.get("Height (cm)").getInput());
-        int age = Integer.parseInt(entries.get("Age").getInput());
 
         // create new user
-        return new User(name, username, sex, dateOfBirth, height, weight, age);
+        return new User(name, username, sex, dateOfBirth, height, weight);
     }
 
     private void setEntryRegex() {
@@ -54,7 +55,7 @@ public class RegisterPage extends Content {
     @Override
     public String showContent(JPanel content, FrontEnd frontEnd) {
         // add listener
-        ActionListener listener = new ActionListener() {
+        ActionListener submitListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // verify input
@@ -66,7 +67,7 @@ public class RegisterPage extends Content {
 
                 // submit result
                 if (res.getCode().equals("200")) {
-                    JOptionPane.showMessageDialog(content, "Information updated!", "Message", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(content, "Registration success!", "Message", JOptionPane.INFORMATION_MESSAGE);
 
                     // Remove the login page components from the content panel
                     content.removeAll();
@@ -82,10 +83,26 @@ public class RegisterPage extends Content {
             }
         };
 
+        ActionListener backListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Back button clicked!");
+
+                // Remove the login page components from the content panel
+                content.removeAll();
+
+                // Revalidate and repaint to update the content panel
+                content.revalidate();
+                content.repaint();
+
+                frontEnd.initialize();
+            }
+        };
+
         // construct page
-        ContentBuilder builder = new UserProfileBuilder(content);
-        UserProfileDirector director = new UserProfileDirector(builder);
-        director.constructPage("My Profile", listener);
+        ContentBuilder builder = new RegisterBuilder(content);
+        RegisterDirector director = new RegisterDirector(builder);
+        director.constructPage("Register", submitListener, backListener);
 
         // get entries and setup entries
         entries = ((UserProfileBuilder) builder).getFormData();

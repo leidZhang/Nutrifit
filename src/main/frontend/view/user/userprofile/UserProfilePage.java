@@ -19,6 +19,7 @@ public class UserProfilePage extends Content {
     private String pageName = "UserProfile";
     private IUserController controller = new UserController();
     private Map<String, NfEntry> entries;
+    private boolean editable = false;
 
     public void displayUserInfo(User user) {
         // get user info
@@ -51,7 +52,7 @@ public class UserProfilePage extends Content {
         int age = Integer.parseInt(entries.get("Age").getInput());
 
         // create new user
-        return new User(id, name, username, sex, dateOfBirth, height, weight, age);
+        return new User(id, name, username, sex, dateOfBirth, height, weight);
     }
 
     private void setEntryRegex() {
@@ -71,28 +72,63 @@ public class UserProfilePage extends Content {
         return flag;
     }
 
+    private void setEditable(boolean flag) {
+        for (Map.Entry<String, NfEntry> entry : entries.entrySet()) {
+            if (entry.getKey().equals("Age")) continue;
+            entry.getValue().setEditable(flag);
+        }
+    }
+
     @Override
     public String showContent(JPanel content, FrontEnd frontEnd) {
         // get user from session
         User user = instance.getUser();
 
-        // add listener
-        ActionListener listener = new ActionListener() {
+        // add submit listener
+        ActionListener submitListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // verify input
                 System.out.println(verifyInput());
                 if (!verifyInput()) return;
+                if (!editable) return;
 
                 User newUser = getNewUserInfo(user.getId());
                 Result res = controller.updateUser(newUser);
 
                 // submit result
                 if (res.getCode().equals("200")) {
-                    instance.setUser(newUser);
-                    JOptionPane.showMessageDialog(content, "Information updated!", "Message", JOptionPane.INFORMATION_MESSAGE);
+                    Result userResult = controller.getUser(newUser.getUsername());
+
+                    if (userResult.getCode().equals("200")) {
+                        User user = (User) userResult.getData();
+                        instance.setUser(user); // update session
+                        displayUserInfo(user); // update form
+
+                        editable = false; // update editable
+                        setEditable(false); // disable entries 
+
+                        JOptionPane.showMessageDialog(content, "Information updated!", "Message", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        };
+
+        // add modify listener
+        ActionListener modifyListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Modify Button clicked!");
+
+                editable = !editable;
+                if (editable) {
+                    setEditable(true);
+                } else {
+                    setEditable(false);
                 }
             }
         };
@@ -100,7 +136,7 @@ public class UserProfilePage extends Content {
         // construct page
         ContentBuilder builder = new UserProfileBuilder(content);
         UserProfileDirector director = new UserProfileDirector(builder);
-        director.constructPage("My Profile", listener);
+        director.constructPage("My Profile", submitListener, modifyListener);
 
         // get entries and setup entries
         entries = ((UserProfileBuilder) builder).getFormData();

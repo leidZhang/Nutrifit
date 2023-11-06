@@ -8,7 +8,7 @@ import main.frontend.view.exercise.ExercisePage;
 import main.frontend.view.home.Home;
 import main.frontend.view.meal.MealPage;
 import main.frontend.view.user.login.LoginPage;
-import main.frontend.view.user.userprofile.RegisterPage;
+import main.frontend.view.user.register.RegisterPage;
 import main.frontend.view.user.userprofile.UserProfilePage;
 
 import javax.swing.*;

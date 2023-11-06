@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 05/11/2023 20:06:16
+ Date: 06/11/2023 14:41:50
 */
 
 SET NAMES utf8mb4;
@@ -4199,18 +4199,19 @@ CREATE TABLE `user`  (
   `date_of_birth` date NULL DEFAULT NULL,
   `height` double NULL DEFAULT NULL,
   `weight` double NULL DEFAULT NULL,
-  `age` int NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'Jane Doe', 'jd123', 'female', '2023-10-08', 178, 52, 0);
-INSERT INTO `user` VALUES (4, 'John Smith', 'js288c', 'male', '1997-12-31', 180, 70, 10);
-INSERT INTO `user` VALUES (5, 'Hua Li', 'lima2', 'male', '2023-10-26', 180, 70, 0);
-INSERT INTO `user` VALUES (6, 'Mark Johnson', 'mj123', 'male', '2023-11-03', 180, 77, 10);
-INSERT INTO `user` VALUES (8, 'Miller Kastar', 'mika', 'male', '2011-02-18', 181, 70, 3);
+INSERT INTO `user` VALUES (1, 'Jane Doe', 'jd123', 'female', '1998-10-08', 178, 52);
+INSERT INTO `user` VALUES (4, 'John Smith', 'js288c', 'male', '1996-12-31', 180, 70);
+INSERT INTO `user` VALUES (5, 'Hua Li', 'lima2', 'male', '2023-10-26', 180, 70);
+INSERT INTO `user` VALUES (6, 'Mark Johnson', 'mj123', 'male', '2021-11-03', 180, 77);
+INSERT INTO `user` VALUES (8, 'Miller Kastar', 'mika', 'male', '2011-02-18', 181, 70);
+INSERT INTO `user` VALUES (9, 'Lily Hahn', 'lhahn', 'female', '2011-01-08', 167, 65);
+INSERT INTO `user` VALUES (10, 'Henry Saunder', 'hs233', 'male', '1998-10-14', 169, 77);
 
 -- ----------------------------
 -- Table structure for yield amount
