@@ -1,6 +1,6 @@
 package main.frontend.view.user.login;
 
-import main.frontend.common.PageBuilder;
+import main.frontend.common.ContentBuilder;
 import main.frontend.component.NfEntry;
 
 import javax.swing.*;
@@ -9,10 +9,10 @@ import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class LoginPageBuilder extends PageBuilder {
+public class LoginContentBuilder extends ContentBuilder {
     private Map<String, NfEntry> entries = new LinkedHashMap<>();
 
-    public LoginPageBuilder(JPanel page) {
+    public LoginContentBuilder(JPanel page) {
         super(page);
 
         constraints = new GridBagConstraints();

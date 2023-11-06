@@ -2,14 +2,13 @@ package main.frontend.common;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
-public abstract class PageBuilder {
+public abstract class ContentBuilder {
     protected JPanel page;
     protected GridBagConstraints constraints;
     protected int gridy = 0;
 
-    public PageBuilder(JPanel page) {
+    public ContentBuilder(JPanel page) {
         this.page = page;
     }
 

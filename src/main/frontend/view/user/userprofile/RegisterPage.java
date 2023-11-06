@@ -6,7 +6,7 @@ import main.backend.user.entity.User;
 import main.backend.user.impl.UserController;
 import main.frontend.view.mainframe.FrontEnd;
 import main.frontend.common.Content;
-import main.frontend.common.PageBuilder;
+import main.frontend.common.ContentBuilder;
 import main.frontend.component.NfEntry;
 
 import javax.swing.*;
@@ -83,7 +83,7 @@ public class RegisterPage extends Content {
         };
 
         // construct page
-        PageBuilder builder = new UserProfileBuilder(content);
+        ContentBuilder builder = new UserProfileBuilder(content);
         UserProfileDirector director = new UserProfileDirector(builder);
         director.constructPage("My Profile", listener);
 

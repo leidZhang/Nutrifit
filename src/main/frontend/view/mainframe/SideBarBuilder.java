@@ -1,6 +1,6 @@
 package main.frontend.view.mainframe;
 
-import main.frontend.common.PageBuilder;
+import main.frontend.common.ContentBuilder;
 import main.frontend.component.AccountPanel;
 
 import javax.swing.*;
@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class SideBarBuilder extends PageBuilder {
+public class SideBarBuilder extends ContentBuilder {
     private JPanel accountPanel;
     private Map<String, JButton> buttonMap = new LinkedHashMap<>();
     private FrontEnd frontEnd;

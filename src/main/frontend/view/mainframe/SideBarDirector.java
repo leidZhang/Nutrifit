@@ -1,11 +1,11 @@
 package main.frontend.view.mainframe;
 
-import main.frontend.common.PageBuilder;
+import main.frontend.common.ContentBuilder;
 
 public class SideBarDirector {
     private SideBarBuilder builder;
 
-    public SideBarDirector(PageBuilder builder) {
+    public SideBarDirector(ContentBuilder builder) {
         this.builder = (SideBarBuilder) builder;
     }
 
