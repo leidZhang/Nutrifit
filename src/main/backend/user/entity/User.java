@@ -1,7 +1,6 @@
 package main.backend.user.entity;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 
 public class User {
     private int id;
@@ -10,7 +9,7 @@ public class User {
     private String sex;
     private Date dateOfBirth;
     private double height; // cm
-    private double weight; // m
+    private double weight; // kg
     private int age;
 
     public User(String name, String username, String sex, Date dateOfBirth, double height, double weight, int age) {

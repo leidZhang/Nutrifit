@@ -1,76 +1,77 @@
 package main.frontend;
 
-import main.frontend.view.IContent;
+import main.backend.user.entity.User;
+import main.frontend.common.IContent;
+import main.frontend.session.UserSession;
+import main.frontend.view.home.Home;
+import main.frontend.view.user.login.LoginPage;
+import main.frontend.view.user.userprofile.RegisterPage;
+import main.frontend.view.user.userprofile.UserProfilePage;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.util.Map;
 
-public class FrontEnd extends JFrame implements ItemListener, ActionListener {
-    private JPanel topBar;
+public class FrontEnd extends JFrame {
     private JPanel sideBar;
     private JPanel content;
+    private Map<String, IContent> pageMap = Map.of( // add more if you need
+            "Home", new Home(),
+            "Login", new LoginPage(),
+            "UserProfile", new UserProfilePage(),
+            "Register", new RegisterPage()
+    );
+    private UserSession instance = UserSession.getInstance();
 
     public FrontEnd() {
         initialize(); // initialize GUI
     }
 
-    private void initialize() {
-        // initialize components
-        topBar = createTopPanel();
-        sideBar = createSideBar();
-        content = createContent();
+    public void initialize() {
+        User user = instance.getUser();
 
-        // add components to the window
-        getContentPane().add(topBar, BorderLayout.NORTH);
-        getContentPane().add(sideBar, BorderLayout.WEST);
-        getContentPane().add(content, BorderLayout.CENTER);
+        // initialize components
+        if (user == null) { // user did not login
+            // set up gui
+            setSize(600, 400);
+            if (content == null) content = createContent(0);
+            getContentPane().add(content, BorderLayout.CENTER);
+            // switch to login
+            switchContentPanel(pageMap.get("Login"));
+        } else { // user login
+            // set up gui
+            setSize(1200, 800);
+            sideBar = createSideBar(250);
+            content.setSize(new Dimension(950, 800));
+            getContentPane().add(sideBar, BorderLayout.WEST);
+            getContentPane().add(content, BorderLayout.CENTER);
+            // switch to home
+            switchContentPanel(pageMap.get("UserProfile"));
+        }
 
         // set window attributes
         setTitle("Nutrifit");
-        setSize(1000, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
 
-    private JPanel createContent() {
+    private JPanel createContent(int width) {
         JPanel content = new JPanel();
 
         // set content initial attributes
-        content.setPreferredSize(new Dimension(getWidth() - sideBar.getWidth(), getHeight() - topBar.getWidth()));
-        content.setBackground(Color.WHITE);
+        content.setPreferredSize(new Dimension(getWidth() - width, getHeight()));
+        content.setBackground(Color.white);
 
         return content;
     }
 
-    private JPanel createTopPanel() {
-        JPanel topBar = new JPanel();
-
-        // set topBar attributes
-        topBar.setPreferredSize(new Dimension(getWidth(), 100));
-        topBar.setBorder(BorderFactory.createMatteBorder(1,0,2,0, Color.GRAY));
-        topBar.setBackground(Color.WHITE);
-        // set up layout
-        topBar.setLayout(new BoxLayout(topBar, BoxLayout.Y_AXIS));
-        // implement top bar menu
-        JLabel placeholder = new JLabel("Placeholder");
-        placeholder.setFont(placeholder.getFont().deriveFont(18.0f));
-        placeholder.setAlignmentX(Component.CENTER_ALIGNMENT);
-        topBar.add(placeholder);
-
-        return topBar;
-    }
-
-    private JPanel createSideBar() {
+    private JPanel createSideBar(int width) {
         JPanel sideBar = new JPanel();
 
         // set sideBar attributes
-        sideBar.setPreferredSize(new Dimension(200, getHeight()));
+        sideBar.setPreferredSize(new Dimension(width, getHeight()));
         sideBar.setBorder(BorderFactory.createMatteBorder(0,0,0,2, Color.GRAY));
-        sideBar.setBackground(Color.WHITE);
+        sideBar.setBackground(Color.white);
         // set up layout
         sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
 
@@ -89,19 +90,21 @@ public class FrontEnd extends JFrame implements ItemListener, ActionListener {
     }
 
     public void switchContentPanel(IContent IContent) {
-        String message = IContent.showContent(content);
+        String message = IContent.showContent(content, this);
         content.revalidate();
         content.repaint();
         System.out.println(message);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // implement actionPerformed...
+    public JPanel getSideBar() {
+        return sideBar;
     }
 
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        // implement itemStateChanged...
+    public JPanel getContent() {
+        return content;
+    }
+
+    public Map<String, IContent> getPageMap() {
+        return pageMap;
     }
 }
