@@ -1,4 +1,4 @@
-package main.frontend.view.user.userform;
+package main.frontend.view.user.userprofile;
 
 import main.frontend.common.PageBuilder;
 
