@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 29/10/2023 20:54:37
+ Date: 05/11/2023 20:06:16
 */
 
 SET NAMES utf8mb4;
@@ -4201,14 +4201,16 @@ CREATE TABLE `user`  (
   `weight` double NULL DEFAULT NULL,
   `age` int NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (1, 'Jane Doe', 'jd123', 'female', '2023-10-08', 178, 52, 0);
-INSERT INTO `user` VALUES (4, 'John Smith', 'js288c', 'male', '2023-10-09', 180, 70, 0);
+INSERT INTO `user` VALUES (4, 'John Smith', 'js288c', 'male', '1997-12-31', 180, 70, 10);
 INSERT INTO `user` VALUES (5, 'Hua Li', 'lima2', 'male', '2023-10-26', 180, 70, 0);
+INSERT INTO `user` VALUES (6, 'Mark Johnson', 'mj123', 'male', '2023-11-03', 180, 77, 10);
+INSERT INTO `user` VALUES (8, 'Miller Kastar', 'mika', 'male', '2011-02-18', 181, 70, 3);
 
 -- ----------------------------
 -- Table structure for yield amount

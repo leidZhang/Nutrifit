@@ -35,6 +35,7 @@ public class NfEntry extends JPanel {
         add(titleField);
         add(textField);
         add(messageField);
+
         textField.setBorder(new LineBorder(Color.BLUE, 1));
         setBackground(Color.white);
     }

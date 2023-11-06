@@ -1,14 +1,12 @@
-package main.frontend.view.home;
+package main.frontend.view.meal;
 
 import main.frontend.view.mainframe.FrontEnd;
-import main.frontend.session.UserSession;
-import main.frontend.common.IContent;
+import main.frontend.common.Content;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class Home implements IContent {
-    UserSession instance = UserSession.getInstance();
+public class MealPage extends Content {
     @Override
     public String showContent(JPanel content, FrontEnd frontEnd) {
         content.removeAll();
@@ -16,7 +14,7 @@ public class Home implements IContent {
         content.setLayout(new GridBagLayout());
 
         // set up button attributes
-        JLabel label = new JLabel("Welcome to Home page"); // get login user info
+        JLabel label = new JLabel("Welcome to Meal Page"); // get login user info
         label.setForeground(Color.BLACK);
         label.setPreferredSize(new Dimension(200, 20));
 
@@ -34,6 +32,6 @@ public class Home implements IContent {
         gridBagConstraints.gridy = 0; // row 0
         content.add(label, gridBagConstraints);
 
-        return "Switch to homepage";
+        return "Switch to Meal Page";
     }
 }

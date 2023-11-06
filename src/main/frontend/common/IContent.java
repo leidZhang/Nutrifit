@@ -1,9 +1,8 @@
 package main.frontend.common;
 
-import main.frontend.FrontEnd;
+import main.frontend.view.mainframe.FrontEnd;
 
 import javax.swing.*;
-import java.util.Map;
 
 public interface IContent {
     String showContent(JPanel content, FrontEnd frontEnd);

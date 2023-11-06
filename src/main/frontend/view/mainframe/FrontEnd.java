@@ -1,9 +1,12 @@
-package main.frontend;
+package main.frontend.view.mainframe;
 
 import main.backend.user.entity.User;
 import main.frontend.common.IContent;
+import main.frontend.common.PageBuilder;
 import main.frontend.session.UserSession;
+import main.frontend.view.exercise.ExercisePage;
 import main.frontend.view.home.Home;
+import main.frontend.view.meal.MealPage;
 import main.frontend.view.user.login.LoginPage;
 import main.frontend.view.user.userprofile.RegisterPage;
 import main.frontend.view.user.userprofile.UserProfilePage;
@@ -19,7 +22,9 @@ public class FrontEnd extends JFrame {
             "Home", new Home(),
             "Login", new LoginPage(),
             "UserProfile", new UserProfilePage(),
-            "Register", new RegisterPage()
+            "Register", new RegisterPage(),
+            "Exercise", new ExercisePage(),
+            "Meal", new MealPage()
     );
     private UserSession instance = UserSession.getInstance();
 
@@ -34,19 +39,27 @@ public class FrontEnd extends JFrame {
         if (user == null) { // user did not login
             // set up gui
             setSize(600, 400);
-            if (content == null) content = createContent(0);
+
+            if (content == null) {
+                content = createContent(0);
+            }
+            if (sideBar != null) {
+                remove(sideBar);
+                sideBar = null;
+            }
+
             getContentPane().add(content, BorderLayout.CENTER);
             // switch to login
             switchContentPanel(pageMap.get("Login"));
         } else { // user login
             // set up gui
             setSize(1200, 800);
-            sideBar = createSideBar(250);
+            if (sideBar == null) sideBar = createSideBar(250);
             content.setSize(new Dimension(950, 800));
             getContentPane().add(sideBar, BorderLayout.WEST);
             getContentPane().add(content, BorderLayout.CENTER);
             // switch to home
-            switchContentPanel(pageMap.get("UserProfile"));
+            switchContentPanel(pageMap.get("Home"));
         }
 
         // set window attributes
@@ -73,18 +86,10 @@ public class FrontEnd extends JFrame {
         sideBar.setBorder(BorderFactory.createMatteBorder(0,0,0,2, Color.GRAY));
         sideBar.setBackground(Color.white);
         // set up layout
-        sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
-
-        // implement sideBar menu...
-        JLabel profile = new JLabel("Profile");
-        profile.setFont(profile.getFont().deriveFont(18.0f));
-        profile.setAlignmentX(Component.CENTER_ALIGNMENT);
-        sideBar.add(profile);
-
-        JLabel exerciseLog = new JLabel("Exercise Log");
-        exerciseLog.setFont(exerciseLog.getFont().deriveFont(18.0f));
-        exerciseLog.setAlignmentX(Component.CENTER_ALIGNMENT);
-        sideBar.add(exerciseLog);
+        User user = instance.getUser();
+        PageBuilder builder = new SideBarBuilder(sideBar, this);
+        SideBarDirector director = new SideBarDirector(builder);
+        director.constructSideBar(user.getUsername());
 
         return sideBar;
     }
