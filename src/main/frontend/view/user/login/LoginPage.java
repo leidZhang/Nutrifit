@@ -11,7 +11,6 @@ import main.frontend.component.NfEntry;
 import main.frontend.session.UserSession;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
@@ -21,41 +20,18 @@ public class LoginPage extends Content {
     private IUserController controller = new UserController();
     private Map<String, NfEntry> entries;
 
-    @Override
-    public String showContent(JPanel content, FrontEnd frontEnd) {
-        // add listener
-        ActionListener loginListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Login Button clicked!");
-                // get user input
-                String username = entries.get("Username").getInput();
-                String password = entries.get("Password").getInput();
+    private ActionListener handleLogin(JPanel content, FrontEnd frontEnd) {
+        ActionListener listener = e -> {
+            System.out.println("Login Button clicked!");
+            // get user input
+            String username = entries.get("Username").getInput();
+            String password = entries.get("Password").getInput();
 
-                // get user
-                Result res = controller.getUser(username);
-                if (res.getCode().equals("200")) {
-                    User user = (User) res.getData();
-                    instance.setUser(user);
-
-                    // Remove the login page components from the content panel
-                    content.removeAll();
-
-                    // Revalidate and repaint to update the content panel
-                    content.revalidate();
-                    content.repaint();
-
-                    frontEnd.initialize();
-                } else {
-                    JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        };
-
-        ActionListener registerListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Register Button clicked!");
+            // get user
+            Result res = controller.getUser(username);
+            if (res.getCode().equals("200")) {
+                User user = (User) res.getData();
+                instance.setUser(user);
 
                 // Remove the login page components from the content panel
                 content.removeAll();
@@ -64,18 +40,46 @@ public class LoginPage extends Content {
                 content.revalidate();
                 content.repaint();
 
-                frontEnd.setSize(600, 800);
-                frontEnd.switchContentPanel(frontEnd.getPageMap().get("Register"));
+                frontEnd.initialize();
+            } else {
+                JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         };
 
+        return listener;
+    }
+
+    private ActionListener handleRegister(JPanel content, FrontEnd frontEnd) {
+        ActionListener listener = e -> {
+            System.out.println("Register Button clicked!");
+
+            // Remove the login page components from the content panel
+            content.removeAll();
+
+            // Revalidate and repaint to update the content panel
+            content.revalidate();
+            content.repaint();
+
+            frontEnd.setSize(600, 800);
+            frontEnd.switchContentPanel(frontEnd.getPageMap().get("Register"));
+        };
+
+        return listener;
+    }
+
+    @Override
+    public String showContent(JPanel content, FrontEnd frontEnd) {
+        // add listener
+        ActionListener loginListener = handleLogin(content, frontEnd);
+        ActionListener registerListener = handleRegister(content, frontEnd);
+
         // construct page
-        ContentBuilder builder = new LoginContentBuilder(content);
-        LoginPageDirector director = new LoginPageDirector(builder);
+        ContentBuilder builder = new LoginBuilder(content);
+        LoginDirector director = new LoginDirector(builder);
         director.constructPage("Login", registerListener, loginListener);
 
         // get entries and setup entries
-        entries = ((LoginContentBuilder) builder).getFormData();
+        entries = ((LoginBuilder) builder).getFormData();
 
         return "Switch to " + pageName;
     }

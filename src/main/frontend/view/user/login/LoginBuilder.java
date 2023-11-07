@@ -9,10 +9,10 @@ import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class LoginContentBuilder extends ContentBuilder {
+public class LoginBuilder extends ContentBuilder {
     private Map<String, NfEntry> entries = new LinkedHashMap<>();
 
-    public LoginContentBuilder(JPanel page) {
+    public LoginBuilder(JPanel page) {
         super(page);
 
         constraints = new GridBagConstraints();

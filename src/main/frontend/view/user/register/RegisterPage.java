@@ -11,7 +11,6 @@ import main.frontend.view.user.userprofile.UserProfileBuilder;
 import main.frontend.view.user.userprofile.UserProfilePage;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
@@ -20,10 +19,8 @@ public class RegisterPage extends UserProfilePage {
     private IUserController controller = new UserController();
     private Map<String, NfEntry> entries;
 
-    @Override
-    public String showContent(JPanel content, FrontEnd frontEnd) {
-        // add listener
-        ActionListener submitListener = e -> {
+    private ActionListener handleSubmit(JPanel content, FrontEnd frontEnd) {
+        ActionListener listener = e -> {
             // verify input
             System.out.println(verifyInput(entries));
             if (!verifyInput(entries)) return;
@@ -48,7 +45,11 @@ public class RegisterPage extends UserProfilePage {
             }
         };
 
-        ActionListener backListener = e -> {
+        return listener;
+    }
+
+    private ActionListener handleBack(JPanel content, FrontEnd frontEnd) {
+        ActionListener listener = e -> {
             System.out.println("Back button clicked!");
 
             // Remove the login page components from the content panel
@@ -60,6 +61,15 @@ public class RegisterPage extends UserProfilePage {
 
             frontEnd.initialize();
         };
+
+        return listener;
+    }
+
+    @Override
+    public String showContent(JPanel content, FrontEnd frontEnd) {
+        // add listener
+        ActionListener submitListener = handleSubmit(content, frontEnd);
+        ActionListener backListener = handleBack(content, frontEnd);
 
         // construct page
         ContentBuilder builder = new RegisterBuilder(content);
