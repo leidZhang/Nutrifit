@@ -10,7 +10,6 @@ import main.frontend.common.ContentBuilder;
 import main.frontend.component.NfEntry;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.Map;
@@ -85,13 +84,8 @@ public class UserProfilePage extends Content {
         }
     }
 
-    @Override
-    public String showContent(JPanel content, FrontEnd frontEnd) {
-        // get user from session
-        User user = instance.getUser();
-
-        // add submit listener
-        ActionListener submitListener = e -> {
+    private ActionListener handleSubmit(JPanel content, User user) {
+        ActionListener listener = e -> {
             // verify input
             System.out.println(verifyInput(entries));
             if (!verifyInput(entries)) return;
@@ -121,13 +115,27 @@ public class UserProfilePage extends Content {
             }
         };
 
-        // add modify listener
-        ActionListener modifyListener = e -> {
+        return listener;
+    }
+
+    private ActionListener handleModify() {
+        ActionListener listener = e -> {
             System.out.println("Modify Button clicked!");
 
             editable = !editable;
             setEditable(editable);
         };
+
+        return listener;
+    }
+
+    @Override
+    public String showContent(JPanel content, FrontEnd frontEnd) {
+        // get user from session
+        User user = instance.getUser();
+
+        ActionListener submitListener = handleSubmit(content, user); // add submit listener
+        ActionListener modifyListener = handleModify(); // add modify listener
 
         // construct page
         ContentBuilder builder = new UserProfileBuilder(content);

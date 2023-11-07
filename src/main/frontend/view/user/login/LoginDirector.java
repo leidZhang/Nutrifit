@@ -4,11 +4,11 @@ import main.frontend.common.ContentBuilder;
 
 import java.awt.event.ActionListener;
 
-public class LoginPageDirector {
-    private LoginContentBuilder builder;
+public class LoginDirector {
+    private LoginBuilder builder;
 
-    public LoginPageDirector(ContentBuilder builder) {
-        this.builder = (LoginContentBuilder) builder;
+    public LoginDirector(ContentBuilder builder) {
+        this.builder = (LoginBuilder) builder;
     }
 
     public void constructPage(String title, ActionListener register, ActionListener login) {
