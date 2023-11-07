@@ -1,8 +1,7 @@
-package main.frontend.component;
+package main.frontend.view.mainframe.component;
 
-import main.frontend.common.IContent;
 import main.frontend.session.UserSession;
-import main.frontend.view.mainframe.FrontEnd;
+import main.frontend.view.mainframe.impl.FrontEnd;
 
 import javax.swing.*;
 import java.awt.*;

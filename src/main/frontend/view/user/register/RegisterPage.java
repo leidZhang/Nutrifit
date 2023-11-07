@@ -4,9 +4,9 @@ import main.backend.common.Result;
 import main.backend.user.IUserController;
 import main.backend.user.entity.User;
 import main.backend.user.impl.UserController;
-import main.frontend.view.mainframe.FrontEnd;
+import main.frontend.view.mainframe.impl.FrontEnd;
 import main.frontend.common.ContentBuilder;
-import main.frontend.component.NfEntry;
+import main.frontend.custom.NfEntry;
 import main.frontend.view.user.userprofile.UserProfileBuilder;
 import main.frontend.view.user.userprofile.UserProfilePage;
 
@@ -19,7 +19,7 @@ public class RegisterPage extends UserProfilePage {
     private IUserController controller = new UserController();
     private Map<String, NfEntry> entries;
 
-    private ActionListener handleSubmit(JPanel content, FrontEnd frontEnd) {
+    private ActionListener handleSubmit(JPanel content) {
         ActionListener listener = e -> {
             // verify input
             System.out.println(verifyInput(entries));
@@ -39,7 +39,7 @@ public class RegisterPage extends UserProfilePage {
                 content.revalidate();
                 content.repaint();
 
-                frontEnd.initialize();
+                frontEnd.get().initialize();
             } else {
                 JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -48,7 +48,7 @@ public class RegisterPage extends UserProfilePage {
         return listener;
     }
 
-    private ActionListener handleBack(JPanel content, FrontEnd frontEnd) {
+    private ActionListener handleBack(JPanel content) {
         ActionListener listener = e -> {
             System.out.println("Back button clicked!");
 
@@ -59,17 +59,17 @@ public class RegisterPage extends UserProfilePage {
             content.revalidate();
             content.repaint();
 
-            frontEnd.initialize();
+            frontEnd.get().initialize();
         };
 
         return listener;
     }
 
     @Override
-    public String showContent(JPanel content, FrontEnd frontEnd) {
+    public String showContent(JPanel content) {
         // add listener
-        ActionListener submitListener = handleSubmit(content, frontEnd);
-        ActionListener backListener = handleBack(content, frontEnd);
+        ActionListener submitListener = handleSubmit(content);
+        ActionListener backListener = handleBack(content);
 
         // construct page
         ContentBuilder builder = new RegisterBuilder(content);

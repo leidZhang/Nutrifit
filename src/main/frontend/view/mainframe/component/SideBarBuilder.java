@@ -1,11 +1,11 @@
-package main.frontend.view.mainframe;
+package main.frontend.view.mainframe.component;
 
+import main.frontend.common.Content;
 import main.frontend.common.ContentBuilder;
-import main.frontend.component.AccountPanel;
+import main.frontend.view.mainframe.impl.FrontEnd;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -1,11 +1,15 @@
-package main.frontend.view.mainframe;
+package main.frontend.view.mainframe.impl;
 
 import main.backend.user.entity.User;
+import main.frontend.common.Content;
 import main.frontend.common.IContent;
 import main.frontend.common.ContentBuilder;
 import main.frontend.session.UserSession;
 import main.frontend.view.exercise.ExercisePage;
 import main.frontend.view.home.Home;
+import main.frontend.view.mainframe.IMainframe;
+import main.frontend.view.mainframe.component.SideBarBuilder;
+import main.frontend.view.mainframe.component.SideBarDirector;
 import main.frontend.view.meal.MealPage;
 import main.frontend.view.user.login.LoginPage;
 import main.frontend.view.user.register.RegisterPage;
@@ -13,25 +17,28 @@ import main.frontend.view.user.userprofile.UserProfilePage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Map;
 
-public class FrontEnd extends JFrame {
+public class FrontEnd extends JFrame implements IMainframe {
     private JPanel sideBar;
     private JPanel content;
-    private Map<String, IContent> pageMap = Map.of( // add more if you need
-            "Home", new Home(),
-            "Login", new LoginPage(),
-            "UserProfile", new UserProfilePage(),
-            "Register", new RegisterPage(),
-            "Exercise", new ExercisePage(),
-            "Meal", new MealPage()
-    );
+    private Map<String, IContent> pageMap = new HashMap<>();
+
     private UserSession instance = UserSession.getInstance();
 
     public FrontEnd() {
+        pageMap.put("Home", new Home());
+        pageMap.put("UserProfile", new UserProfilePage());
+        pageMap.put("Register", new RegisterPage());
+        pageMap.put("Login", new LoginPage((Content) pageMap.get("Register")));
+        pageMap.put("Exercise", new ExercisePage());
+        pageMap.put("Meal", new MealPage());
+
         initialize(); // initialize GUI
     }
 
+    @Override
     public void initialize() {
         User user = instance.getUser();
 
@@ -50,7 +57,7 @@ public class FrontEnd extends JFrame {
 
             getContentPane().add(content, BorderLayout.CENTER);
             // switch to log in
-            switchContentPanel(pageMap.get("Login"));
+            switchContentPanel((Content) pageMap.get("Login"));
         } else { // user login
             // set up gui
             setSize(1200, 800);
@@ -59,7 +66,7 @@ public class FrontEnd extends JFrame {
             getContentPane().add(sideBar, BorderLayout.WEST);
             getContentPane().add(content, BorderLayout.CENTER);
             // switch to home
-            switchContentPanel(pageMap.get("Home"));
+            switchContentPanel((Content) pageMap.get("Home"));
         }
 
         // set window attributes
@@ -94,8 +101,13 @@ public class FrontEnd extends JFrame {
         return sideBar;
     }
 
-    public void switchContentPanel(IContent IContent) {
-        String message = IContent.showContent(content, this);
+    public void switchContentPanel(IContent external) {
+        ((Content) external).setMainframe(this);
+        if (pageMap.get("Register").equals(external)) {
+            setSize(600, 800); // in case not login
+        }
+
+        String message = external.showContent(content);
         content.revalidate();
         content.repaint();
         System.out.println(message);
