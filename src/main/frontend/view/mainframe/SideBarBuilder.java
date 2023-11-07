@@ -38,10 +38,10 @@ public class SideBarBuilder extends ContentBuilder {
         Dimension dimension = new Dimension(200, 50);
         Font buttonFont = new Font("Arial", Font.BOLD, 14);
         String[] pageList = {"Home", "My Profile", "My Exercise Log", "My Meal Log"};
-        for (int i=0; i<pageList.length; i++) {
-            buttonMap.put(pageList[i], new JButton(pageList[i]));
-            buttonMap.get(pageList[i]).setPreferredSize(dimension);
-            buttonMap.get(pageList[i]).setFont(buttonFont);
+        for (String s : pageList) {
+            buttonMap.put(s, new JButton(s));
+            buttonMap.get(s).setPreferredSize(dimension);
+            buttonMap.get(s).setFont(buttonFont);
         }
     }
 
@@ -70,39 +70,27 @@ public class SideBarBuilder extends ContentBuilder {
     }
 
     public void setListener() {
-        ActionListener homeListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Home button clicked!");
-                frontEnd.switchContentPanel(frontEnd.getPageMap().get("Home"));
-            }
+        ActionListener homeListener = e -> {
+            System.out.println("Home button clicked!");
+            frontEnd.switchContentPanel(frontEnd.getPageMap().get("Home"));
         };
         buttonMap.get("Home").addActionListener(homeListener);
 
-        ActionListener profileListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("profile button clicked!");
-                frontEnd.switchContentPanel(frontEnd.getPageMap().get("UserProfile"));
-            }
+        ActionListener profileListener = e -> {
+            System.out.println("profile button clicked!");
+            frontEnd.switchContentPanel(frontEnd.getPageMap().get("UserProfile"));
         };
         buttonMap.get("My Profile").addActionListener(profileListener);
 
-        ActionListener exerciseListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("exercise button clicked!");
-                frontEnd.switchContentPanel(frontEnd.getPageMap().get("Exercise"));
-            }
+        ActionListener exerciseListener = e -> {
+            System.out.println("exercise button clicked!");
+            frontEnd.switchContentPanel(frontEnd.getPageMap().get("Exercise"));
         };
         buttonMap.get("My Exercise Log").addActionListener(exerciseListener);
 
-        ActionListener mealListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("meal button clicked!");
-                frontEnd.switchContentPanel(frontEnd.getPageMap().get("Meal"));
-            }
+        ActionListener mealListener = e -> {
+            System.out.println("meal button clicked!");
+            frontEnd.switchContentPanel(frontEnd.getPageMap().get("Meal"));
         };
         buttonMap.get("My Meal Log").addActionListener(mealListener);
     }

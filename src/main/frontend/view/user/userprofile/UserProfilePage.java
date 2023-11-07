@@ -21,7 +21,7 @@ public class UserProfilePage extends Content {
     private Map<String, NfEntry> entries;
     private boolean editable = false;
 
-    public void displayUserInfo(User user) {
+    private void displayUserInfo(User user) {
         // get user info
         String name = user.getName();
         String username = user.getUsername();
@@ -41,28 +41,34 @@ public class UserProfilePage extends Content {
         entries.get("Age").setEntry(age);
     }
 
-    public User getNewUserInfo(int id) {
-        // get new input
+    protected User getNewUser(Map<String, NfEntry> entries) {
         String name = entries.get("Name").getInput();
         String username = entries.get("Username").getInput();
         Date dateOfBirth = Date.valueOf(entries.get("Date of Birth").getInput());
         String sex = entries.get("Sex").getInput();
         double weight = Double.parseDouble(entries.get("Weight (kg)").getInput());
         double height = Double.parseDouble(entries.get("Height (cm)").getInput());
-        int age = Integer.parseInt(entries.get("Age").getInput());
 
         // create new user
-        return new User(id, name, username, sex, dateOfBirth, height, weight);
+        return new User(name, username, sex, dateOfBirth, height, weight);
     }
 
-    private void setEntryRegex() {
+    private User getNewUserInfo(int id) {
+        // get new input
+        User user = getNewUser(entries);
+        user.setId(id);
+
+        return user;
+    }
+
+    protected void setEntryRegex(Map<String, NfEntry> entries) {
         entries.get("Date of Birth").setRegex(
                 "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$",
                 "data input format should be yyyy-mm-dd"
                 ); // set date format
     }
 
-    private boolean verifyInput() {
+    protected boolean verifyInput(Map<String, NfEntry> entries) {
         boolean flag = true;
 
         for (Map.Entry<String, NfEntry> entry : entries.entrySet()) {
@@ -85,52 +91,42 @@ public class UserProfilePage extends Content {
         User user = instance.getUser();
 
         // add submit listener
-        ActionListener submitListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // verify input
-                System.out.println(verifyInput());
-                if (!verifyInput()) return;
-                if (!editable) return;
+        ActionListener submitListener = e -> {
+            // verify input
+            System.out.println(verifyInput(entries));
+            if (!verifyInput(entries)) return;
+            if (!editable) return;
 
-                User newUser = getNewUserInfo(user.getId());
-                Result res = controller.updateUser(newUser);
+            User newUser = getNewUserInfo(user.getId());
+            Result res = controller.updateUser(newUser);
 
-                // submit result
-                if (res.getCode().equals("200")) {
-                    Result userResult = controller.getUser(newUser.getUsername());
+            // submit result
+            if (res.getCode().equals("200")) {
+                Result userResult = controller.getUser(newUser.getUsername());
 
-                    if (userResult.getCode().equals("200")) {
-                        User user = (User) userResult.getData();
-                        instance.setUser(user); // update session
-                        displayUserInfo(user); // update form
+                if (userResult.getCode().equals("200")) {
+                    User user1 = (User) userResult.getData();
+                    instance.setUser(user1); // update session
+                    displayUserInfo(user1); // update form
 
-                        editable = false; // update editable
-                        setEditable(false); // disable entries 
+                    editable = false; // update editable
+                    setEditable(false); // disable entries
 
-                        JOptionPane.showMessageDialog(content, "Information updated!", "Message", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+                    JOptionPane.showMessageDialog(content, "Information updated!", "Message", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
+            } else {
+                JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         };
 
         // add modify listener
-        ActionListener modifyListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Modify Button clicked!");
+        ActionListener modifyListener = e -> {
+            System.out.println("Modify Button clicked!");
 
-                editable = !editable;
-                if (editable) {
-                    setEditable(true);
-                } else {
-                    setEditable(false);
-                }
-            }
+            editable = !editable;
+            setEditable(editable);
         };
 
         // construct page
@@ -141,7 +137,7 @@ public class UserProfilePage extends Content {
         // get entries and setup entries
         entries = ((UserProfileBuilder) builder).getFormData();
         displayUserInfo(user);
-        setEntryRegex();
+        setEntryRegex(entries);
 
         return "Switch to " + pageName;
     }

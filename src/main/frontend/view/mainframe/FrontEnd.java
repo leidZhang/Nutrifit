@@ -49,7 +49,7 @@ public class FrontEnd extends JFrame {
             }
 
             getContentPane().add(content, BorderLayout.CENTER);
-            // switch to login
+            // switch to log in
             switchContentPanel(pageMap.get("Login"));
         } else { // user login
             // set up gui
@@ -99,10 +99,6 @@ public class FrontEnd extends JFrame {
         content.revalidate();
         content.repaint();
         System.out.println(message);
-    }
-
-    public JPanel getSideBar() {
-        return sideBar;
     }
 
     public JPanel getContent() {

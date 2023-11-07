@@ -85,7 +85,7 @@ public class UserProfileBuilder extends ContentBuilder {
     public void enableForm(boolean flag) {
         for (Map.Entry<String, NfEntry> entry : entries.entrySet()) {
             if (entry.getKey().equals("Age")) continue;
-            entry.getValue().setEditable(false);
+            entry.getValue().setEditable(flag);
         }
     }
 
