@@ -1,6 +1,6 @@
 package main.frontend.view.meal;
 
-import main.frontend.view.mainframe.FrontEnd;
+import main.frontend.view.mainframe.impl.FrontEnd;
 import main.frontend.common.Content;
 
 import javax.swing.*;
@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class MealPage extends Content {
     @Override
-    public String showContent(JPanel content, FrontEnd frontEnd) {
+    public String showContent(JPanel content) {
         content.removeAll();
 
         content.setLayout(new GridBagLayout());

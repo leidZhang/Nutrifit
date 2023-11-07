@@ -4,10 +4,10 @@ import main.backend.common.Result;
 import main.backend.user.IUserController;
 import main.backend.user.entity.User;
 import main.backend.user.impl.UserController;
-import main.frontend.view.mainframe.FrontEnd;
+import main.frontend.view.mainframe.impl.FrontEnd;
 import main.frontend.common.Content;
 import main.frontend.common.ContentBuilder;
-import main.frontend.component.NfEntry;
+import main.frontend.custom.NfEntry;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -130,7 +130,7 @@ public class UserProfilePage extends Content {
     }
 
     @Override
-    public String showContent(JPanel content, FrontEnd frontEnd) {
+    public String showContent(JPanel content) {
         // get user from session
         User user = instance.getUser();
 

@@ -1,6 +1,7 @@
-package main.frontend.view.mainframe;
+package main.frontend.view.mainframe.component;
 
 import main.frontend.common.ContentBuilder;
+import main.frontend.view.mainframe.component.SideBarBuilder;
 
 public class SideBarDirector {
     private SideBarBuilder builder;

@@ -1,16 +1,18 @@
 package main.frontend.view.home;
 
-import main.frontend.view.mainframe.FrontEnd;
+import main.frontend.common.Content;
 import main.frontend.session.UserSession;
 import main.frontend.common.IContent;
+import main.frontend.view.mainframe.impl.FrontEnd;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class Home implements IContent {
+public class Home extends Content {
     UserSession instance = UserSession.getInstance();
+
     @Override
-    public String showContent(JPanel content, FrontEnd frontEnd) {
+    public String showContent(JPanel content) {
         content.removeAll();
 
         content.setLayout(new GridBagLayout());
