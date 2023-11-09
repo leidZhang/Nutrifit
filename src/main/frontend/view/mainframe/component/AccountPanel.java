@@ -1,19 +1,18 @@
 package main.frontend.view.mainframe.component;
 
 import main.frontend.session.UserSession;
-import main.frontend.view.mainframe.impl.FrontEnd;
+import main.frontend.view.mainframe.IMainframe;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AccountPanel extends JPanel {
     private JLabel usernameLabel;
     private JButton logoutButton;
-    private FrontEnd frontEnd;
+    private IMainframe frontEnd;
 
-    public AccountPanel(String username, FrontEnd frontEnd) {
+    public AccountPanel(String username, IMainframe frontEnd) {
         setLayout(new GridLayout(2, 1));
 
         usernameLabel = new JLabel("User: " + username);
@@ -38,23 +37,20 @@ public class AccountPanel extends JPanel {
     }
 
     public void setLogoutButton() {
-        ActionListener actionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("logout button is clicked!");
-                UserSession instance = UserSession.getInstance();
-                instance.setUser(null);
+        ActionListener actionListener = e -> {
+            System.out.println("logout button is clicked!");
+            UserSession instance = UserSession.getInstance();
+            instance.setUser(null);
 
-                JPanel content = frontEnd.getContent();
-                // Remove the login page components from the content panel
-                content.removeAll();
+            JPanel content = (JPanel) frontEnd.getContent();
+            // Remove the login page components from the content panel
+            content.removeAll();
 
-                // Revalidate and repaint to update the content panel
-                content.revalidate();
-                content.repaint();
+            // Revalidate and repaint to update the content panel
+            content.revalidate();
+            content.repaint();
 
-                frontEnd.initialize();
-            }
+            frontEnd.initialize();
         };
         logoutButton.addActionListener(actionListener);
     }
