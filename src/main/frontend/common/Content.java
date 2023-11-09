@@ -1,7 +1,6 @@
 package main.frontend.common;
 
 import main.frontend.view.mainframe.IMainframe;
-import main.frontend.view.mainframe.impl.FrontEnd;
 import main.frontend.session.UserSession;
 
 import javax.swing.*;

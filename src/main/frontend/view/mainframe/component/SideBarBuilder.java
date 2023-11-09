@@ -1,8 +1,7 @@
 package main.frontend.view.mainframe.component;
 
-import main.frontend.common.Content;
 import main.frontend.common.ContentBuilder;
-import main.frontend.view.mainframe.impl.FrontEnd;
+import main.frontend.view.mainframe.IMainframe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +12,9 @@ import java.util.Map;
 public class SideBarBuilder extends ContentBuilder {
     private JPanel accountPanel;
     private Map<String, JButton> buttonMap = new LinkedHashMap<>();
-    private FrontEnd frontEnd;
+    private IMainframe frontEnd;
 
-    public SideBarBuilder(JPanel page, FrontEnd frontEnd) {
+    public SideBarBuilder(JPanel page, IMainframe frontEnd) {
         super(page);
         this.frontEnd = frontEnd;
 

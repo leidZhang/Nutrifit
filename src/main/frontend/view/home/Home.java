@@ -1,15 +1,17 @@
 package main.frontend.view.home;
 
+import main.backend.exercise.IExerciseMapper;
+import main.backend.exercise.impl.ExerciseMapper;
 import main.frontend.common.Content;
 import main.frontend.session.UserSession;
-import main.frontend.common.IContent;
-import main.frontend.view.mainframe.impl.FrontEnd;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Home extends Content {
     UserSession instance = UserSession.getInstance();
+    IExerciseMapper mapper = new ExerciseMapper();
+    LayoutManager constraint = new GridBagLayout();
 
     @Override
     public String showContent(JPanel content) {
