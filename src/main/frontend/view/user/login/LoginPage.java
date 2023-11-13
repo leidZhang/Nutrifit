@@ -4,7 +4,6 @@ import main.backend.common.Result;
 import main.backend.user.IUserController;
 import main.backend.user.entity.User;
 import main.backend.user.impl.UserController;
-import main.frontend.view.mainframe.impl.FrontEnd;
 import main.frontend.common.Content;
 import main.frontend.common.ContentBuilder;
 import main.frontend.custom.NfEntry;
