@@ -84,5 +84,173 @@ public class UpdateUserProfilePageTest {
         } catch (InterruptedException ignored) {
         }
     }
+
+    @Test
+    public void testInvalidDay() {
+        int id=19;
+        LocalDate localDate = LocalDate.now();
+        java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
+        User testUser = new User("name", "username", "male", sqlDate, 180, 60, 18);
+
+        // Find the text input box and enter text
+        JTextComponentFixture idField = window.textBox("idField");
+        idField.enterText(String.valueOf(id));
+
+        JTextComponentFixture nameField = window.textBox("nameField");
+        nameField.enterText(testUser.getName());
+
+        JTextComponentFixture usernameField = window.textBox("usernameField");
+        usernameField.enterText(testUser.getUsername());
+
+        JTextComponentFixture sexField = window.textBox("sexField");
+        sexField.enterText(testUser.getSex());
+
+        JTextComponentFixture dateOfBirthField = window.textBox("dateOfBirthField");
+        dateOfBirthField.enterText(String.valueOf("2023-200-3133"));
+
+        JTextComponentFixture heightField = window.textBox("heightField");
+        heightField.enterText(String.valueOf(testUser.getHeight()));
+
+        JTextComponentFixture weightField = window.textBox("weightField");
+        weightField.enterText(String.valueOf(testUser.getWeight()));
+
+        JTextComponentFixture ageField = window.textBox("ageField");
+        ageField.enterText(String.valueOf(testUser.getAge()));
+
+        //click submit button from register page
+        JButtonFixture submitButton = window.button("submitButton");
+        submitButton.click();
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    @Test
+    public void testInvalidMembre() {
+        int id=19;
+        LocalDate localDate = LocalDate.now();
+        java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
+        User testUser = new User("888", "888", "male", sqlDate, 180, 60, 18);
+
+        // Find the text input box and enter text
+        JTextComponentFixture idField = window.textBox("idField");
+        idField.enterText(String.valueOf(id));
+
+        JTextComponentFixture nameField = window.textBox("nameField");
+        nameField.enterText(testUser.getName());
+
+        JTextComponentFixture usernameField = window.textBox("usernameField");
+        usernameField.enterText(testUser.getUsername());
+
+        JTextComponentFixture sexField = window.textBox("sexField");
+        sexField.enterText(testUser.getSex());
+
+        JTextComponentFixture dateOfBirthField = window.textBox("dateOfBirthField");
+        dateOfBirthField.enterText(String.valueOf(testUser.getDateOfBirth()));
+
+        JTextComponentFixture heightField = window.textBox("heightField");
+        heightField.enterText(String.valueOf(testUser.getHeight()));
+
+        JTextComponentFixture weightField = window.textBox("weightField");
+        weightField.enterText(String.valueOf(testUser.getWeight()));
+
+        JTextComponentFixture ageField = window.textBox("ageField");
+        ageField.enterText(String.valueOf(testUser.getAge()));
+
+        //click submit button from register page
+        JButtonFixture submitButton = window.button("submitButton");
+        submitButton.click();
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    @Test
+    public void testInvalidAge() {
+        int id=19;
+        LocalDate localDate = LocalDate.now();
+        java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
+        User testUser = new User("888", "888", "male", sqlDate, 180, 60, 18);
+
+        // Find the text input box and enter text
+        JTextComponentFixture idField = window.textBox("idField");
+        idField.enterText(String.valueOf(id));
+
+        JTextComponentFixture nameField = window.textBox("nameField");
+        nameField.enterText(testUser.getName());
+
+        JTextComponentFixture usernameField = window.textBox("usernameField");
+        usernameField.enterText(testUser.getUsername());
+
+        JTextComponentFixture sexField = window.textBox("sexField");
+        sexField.enterText(testUser.getSex());
+
+        JTextComponentFixture dateOfBirthField = window.textBox("dateOfBirthField");
+        dateOfBirthField.enterText(String.valueOf(testUser.getDateOfBirth()));
+
+        JTextComponentFixture heightField = window.textBox("heightField");
+        heightField.enterText(String.valueOf(testUser.getHeight()));
+
+        JTextComponentFixture weightField = window.textBox("weightField");
+        weightField.enterText(String.valueOf(testUser.getWeight()));
+
+        JTextComponentFixture ageField = window.textBox("ageField");
+        ageField.enterText(String.valueOf("$$$$"));
+
+        //click submit button from register page
+        JButtonFixture submitButton = window.button("submitButton");
+        submitButton.click();
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    @Test
+    public void testInvalidAgeBounds() {
+        int id=19;
+        LocalDate localDate = LocalDate.now();
+        java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
+        User testUser = new User("888", "888", "male", sqlDate, 180, 60, 188);
+
+        // Find the text input box and enter text
+        JTextComponentFixture idField = window.textBox("idField");
+        idField.enterText(String.valueOf(id));
+
+        JTextComponentFixture nameField = window.textBox("nameField");
+        nameField.enterText(testUser.getName());
+
+        JTextComponentFixture usernameField = window.textBox("usernameField");
+        usernameField.enterText(testUser.getUsername());
+
+        JTextComponentFixture sexField = window.textBox("sexField");
+        sexField.enterText(testUser.getSex());
+
+        JTextComponentFixture dateOfBirthField = window.textBox("dateOfBirthField");
+        dateOfBirthField.enterText(String.valueOf(testUser.getDateOfBirth()));
+
+        JTextComponentFixture heightField = window.textBox("heightField");
+        heightField.enterText(String.valueOf(testUser.getHeight()));
+
+        JTextComponentFixture weightField = window.textBox("weightField");
+        weightField.enterText(String.valueOf(testUser.getWeight()));
+
+        JTextComponentFixture ageField = window.textBox("ageField");
+        ageField.enterText(String.valueOf(testUser.getAge()));
+
+        //click submit button from register page
+        JButtonFixture submitButton = window.button("submitButton");
+        submitButton.click();
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ignored) {
+        }
+    }
 }
 
