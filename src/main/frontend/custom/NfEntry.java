@@ -8,17 +8,33 @@ public class NfEntry extends JPanel {
     private JLabel titleField;
     private JTextField textField;
     private JLabel messageField;
+
+    private Dimension dimension;
     private String regex; // regular expression
     private String verifyMessage;
 
     public NfEntry(int height, int width) {
-        setLayout(new GridLayout(3, 1));
-
         titleField = new JLabel("");
         textField = new JTextField();
         messageField = new JLabel("");
 
-        Dimension dimension = new Dimension(width, height);
+        initialize(height, width);
+    }
+
+    public NfEntry(int height, int width, String type) {
+        if (!type.equals("password")) return;
+
+        titleField = new JLabel("");
+        textField = new JPasswordField();
+        messageField = new JLabel("");
+
+        initialize(height, width);
+    }
+
+    private void initialize(int height, int width) {
+        setLayout(new GridLayout(3, 1));
+
+        dimension = new Dimension(width, height);
         titleField.setPreferredSize(dimension);
         textField.setPreferredSize(dimension);
         messageField.setPreferredSize(dimension);
