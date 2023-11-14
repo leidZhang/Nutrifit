@@ -13,7 +13,18 @@ public class UserService implements IUserService {
     private IUserMapper userMapper = new UserMapper();
 
     @Override
-    public void save(User user) throws SQLException {
+    public User login(String username, String password) throws SQLException, NullPointerException {
+        User user = userMapper.login(username, password);
+        if (user == null) throw new NullPointerException("Wrong username or password");
+
+        return user;
+    }
+
+    @Override
+    public void save(User user) throws SQLException, RuntimeException {
+        String username = user.getUsername();
+        if (userMapper.getUser(username) != null) throw new RuntimeException("Duplicate username!");
+
         userMapper.save(user);
     }
 

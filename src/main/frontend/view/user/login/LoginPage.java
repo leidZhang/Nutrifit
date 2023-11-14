@@ -32,7 +32,7 @@ public class LoginPage extends Content {
             String password = entries.get("Password").getInput();
 
             // get user
-            Result res = controller.getUser(username);
+            Result res = controller.login(username, password);
             if (res.getCode().equals("200")) {
                 User user = (User) res.getData();
                 instance.setUser(user);

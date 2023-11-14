@@ -35,7 +35,12 @@ public class LoginBuilder extends ContentBuilder {
     public void setUp() {
         String[] names = {"Username", "Password"};
         for (int i=0; i<names.length; i++) {
-            entries.put(names[i], new NfEntry(25, 400));
+            if (names[i].equals("Password")) {
+                entries.put(names[i], new NfEntry(25, 400, "password"));
+            } else {
+                entries.put(names[i], new NfEntry(25, 400));
+            }
+
         }
 
         // set entries title

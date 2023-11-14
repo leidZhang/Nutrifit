@@ -1,4 +1,4 @@
-package main.frontend.view.user.register;
+package main.frontend.view.user.profile.register;
 
 import main.frontend.common.ContentBuilder;
 

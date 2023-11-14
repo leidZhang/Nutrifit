@@ -9,6 +9,16 @@ public class UserController implements IUserController {
     private IUserService service = new UserService();
 
     @Override
+    public Result login(String username, String password) {
+        try {
+            User user = service.login(username, password);
+            return Result.success(user);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    @Override
     public Result save(User user) {
         try {
             service.save(user);

@@ -7,8 +7,5 @@ public interface IUserController {
     Result save(User user);
     Result updateUser(User user);
     Result getUser(String username);
-
-
-
-
+    Result login(String username, String password);
 }

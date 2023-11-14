@@ -12,8 +12,8 @@ import main.frontend.view.mainframe.component.SideBarBuilder;
 import main.frontend.view.mainframe.component.SideBarDirector;
 import main.frontend.view.meal.MealPage;
 import main.frontend.view.user.login.LoginPage;
-import main.frontend.view.user.register.RegisterPage;
-import main.frontend.view.user.userprofile.UserProfilePage;
+import main.frontend.view.user.profile.register.RegisterPage;
+import main.frontend.view.user.profile.userprofile.UserProfilePage;
 
 import javax.swing.*;
 import java.awt.*;

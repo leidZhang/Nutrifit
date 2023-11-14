@@ -1,4 +1,4 @@
-package main.frontend.view.user.register;
+package main.frontend.view.user.profile.register;
 
 import main.backend.common.Result;
 import main.backend.user.IUserController;
@@ -6,14 +6,14 @@ import main.backend.user.entity.User;
 import main.backend.user.impl.UserController;
 import main.frontend.common.ContentBuilder;
 import main.frontend.custom.NfEntry;
-import main.frontend.view.user.userprofile.UserProfileBuilder;
-import main.frontend.view.user.userprofile.UserProfilePage;
+import main.frontend.view.user.profile.common.UserFormPage;
+import main.frontend.view.user.profile.userprofile.UserProfileBuilder;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
-public class RegisterPage extends UserProfilePage {
+public class RegisterPage extends UserFormPage {
     private String pageName = "Register Page";
     private IUserController controller = new UserController();
     private Map<String, NfEntry> entries;
