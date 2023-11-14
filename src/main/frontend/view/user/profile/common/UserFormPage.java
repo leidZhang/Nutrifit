@@ -29,10 +29,34 @@ public class UserFormPage extends Content {
     }
 
     protected void setEntryRegex(Map<String, NfEntry> entries) {
+        entries.get("Name").setRegex(
+                "^[\\p{L}']+(\\s[\\p{L}']+)*$",
+                "Illegal Name"
+        );
+        entries.get("Username").setRegex(
+                "^[a-zA-Z0-9]+$",
+                "Username must be alphanumeric"
+        );
         entries.get("Date of Birth").setRegex(
                 "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$",
                 "data input format should be yyyy-mm-dd"
         ); // set date format
+        entries.get("Sex").setRegex(
+                "^(male|female)$",
+                "Input should be male or female"
+        );
+        entries.get("Password").setRegex(
+                "^.{7,}$",
+                "Length of password must be greater than 6"
+        );
+        entries.get("Weight (kg)").setRegex(
+                "^[+-]?\\d+(\\.\\d+)?$",
+                "Weight must be numeric"
+        );
+        entries.get("Height (cm)").setRegex(
+                "^[+-]?\\d+(\\.\\d+)?$",
+                "Height must be numeric"
+        );
     }
 
     protected boolean verifyInput(Map<String, NfEntry> entries) {
