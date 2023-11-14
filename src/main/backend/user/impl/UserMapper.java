@@ -5,6 +5,7 @@ import main.backend.user.entity.User;
 import main.backend.user.IUserMapper;
 
 import java.sql.*;
+import java.util.Objects;
 
 public class UserMapper implements IUserMapper {
     @Override
@@ -18,10 +19,18 @@ public class UserMapper implements IUserMapper {
             String name = user.getName();
             String username = user.getUsername();
             String sex = user.getSex();
+            if (!Objects.equals(sex, "male")&&!Objects.equals(sex, "female"))
+                throw new IllegalArgumentException ("invalid sex");
             Date dateOfBirth = user.getDateOfBirth();
             double height = user.getHeight();
+            if (height<0)
+                throw new IllegalArgumentException ("invalid height");
             double weight = user.getWeight();
+            if (weight<0)
+                throw new IllegalArgumentException ("invalid weight");
             int age = user.getAge();
+            if (age<0)
+                throw new IllegalArgumentException ("invalid age");
 
             // use PreparedStatement with placeholders
             String query = "insert into user(name, username, sex, date_of_birth, height, weight, age) ";
@@ -94,10 +103,18 @@ public class UserMapper implements IUserMapper {
             String name = user.getName();
             String username = user.getUsername();
             String sex = user.getSex();
+            if (!Objects.equals(sex, "male")&&!Objects.equals(sex, "female"))
+                throw new IllegalArgumentException ("invalid sex");
             Date dateOfBirth = user.getDateOfBirth();
             double height = user.getHeight();
+            if (height<0)
+                throw new IllegalArgumentException ("invalid height");
             double weight = user.getWeight();
+            if (weight<0)
+                throw new IllegalArgumentException ("invalid weight");
             int age = user.getAge();
+            if (age<0)
+                throw new IllegalArgumentException ("invalid age");
 
             // use PreparedStatement with placeholders
             String query = "update user";
