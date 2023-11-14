@@ -11,6 +11,7 @@ public class User {
     private double height; // cm
     private double weight; // kg
     private int age;
+    private String password;
 
     public User(String name, String username, String sex, Date dateOfBirth, double height, double weight) {
         this.name = name;
@@ -21,8 +22,13 @@ public class User {
         this.weight = weight;
     }
 
-    public User(int id, String name, String username, String sex, Date dateOfBirth, double height, double weight) {
+    public User(String name, String username, String password, String sex, Date dateOfBirth, double height, double weight) {
         this(name, username, sex, dateOfBirth, height, weight);
+        this.password = password;
+    }
+
+    public User(int id, String name, String username, String password, String sex, Date dateOfBirth, double height, double weight) {
+        this(name, username, password, sex, dateOfBirth, height, weight);
         this.id = id;
     }
 
@@ -57,6 +63,10 @@ public class User {
 
     public int getId() {
         return id;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setAge(int age) {

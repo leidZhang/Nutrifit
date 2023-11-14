@@ -1,23 +1,17 @@
-package main.frontend.view.user.userprofile;
+package main.frontend.view.user.profile.userprofile;
 
 import main.backend.common.Result;
-import main.backend.user.IUserController;
 import main.backend.user.entity.User;
-import main.backend.user.impl.UserController;
-import main.frontend.common.Content;
 import main.frontend.common.ContentBuilder;
 import main.frontend.custom.NfEntry;
+import main.frontend.view.user.profile.common.UserFormPage;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.util.Map;
 
-public class UserProfilePage extends Content {
+public class UserProfilePage extends UserFormPage {
     private String pageName = "UserProfile";
-    private IUserController controller = new UserController();
-    private Map<String, NfEntry> entries;
-    private boolean editable = false;
 
     private void displayUserInfo(User user) {
         // get user info
@@ -25,6 +19,7 @@ public class UserProfilePage extends Content {
         String username = user.getUsername();
         String dateOfBirth = String.valueOf(user.getDateOfBirth());
         String sex = user.getSex();
+        String password = user.getPassword();
         String weight = String.valueOf(user.getWeight());
         String height = String.valueOf(user.getHeight());
         String age = String.valueOf(user.getAge());
@@ -33,22 +28,11 @@ public class UserProfilePage extends Content {
         entries.get("Name").setEntry(name);
         entries.get("Username").setEntry(username);
         entries.get("Date of Birth").setEntry(dateOfBirth);
+        entries.get("Password").setEntry(password);
         entries.get("Sex").setEntry(sex);
         entries.get("Weight (kg)").setEntry(weight);
         entries.get("Height (cm)").setEntry(height);
         entries.get("Age").setEntry(age);
-    }
-
-    protected User getNewUser(Map<String, NfEntry> entries) {
-        String name = entries.get("Name").getInput();
-        String username = entries.get("Username").getInput();
-        Date dateOfBirth = Date.valueOf(entries.get("Date of Birth").getInput());
-        String sex = entries.get("Sex").getInput();
-        double weight = Double.parseDouble(entries.get("Weight (kg)").getInput());
-        double height = Double.parseDouble(entries.get("Height (cm)").getInput());
-
-        // create new user
-        return new User(name, username, sex, dateOfBirth, height, weight);
     }
 
     private User getNewUserInfo(int id) {
@@ -57,23 +41,6 @@ public class UserProfilePage extends Content {
         user.setId(id);
 
         return user;
-    }
-
-    protected void setEntryRegex(Map<String, NfEntry> entries) {
-        entries.get("Date of Birth").setRegex(
-                "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$",
-                "data input format should be yyyy-mm-dd"
-                ); // set date format
-    }
-
-    protected boolean verifyInput(Map<String, NfEntry> entries) {
-        boolean flag = true;
-
-        for (Map.Entry<String, NfEntry> entry : entries.entrySet()) {
-            flag = flag & entry.getValue().verifyInput();
-        }
-
-        return flag;
     }
 
     private void setEditable(boolean flag) {

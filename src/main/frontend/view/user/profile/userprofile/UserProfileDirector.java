@@ -1,4 +1,4 @@
-package main.frontend.view.user.userprofile;
+package main.frontend.view.user.profile.userprofile;
 
 import main.frontend.common.ContentBuilder;
 

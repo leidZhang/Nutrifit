@@ -1,10 +1,12 @@
-package main.frontend.view.user.register;
+package main.frontend.view.user.profile.register;
 
-import main.frontend.view.user.userprofile.UserProfileBuilder;
+import main.frontend.custom.NfEntry;
+import main.frontend.view.user.profile.userprofile.UserProfileBuilder;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class RegisterBuilder extends UserProfileBuilder {
     public RegisterBuilder(JPanel page) {
