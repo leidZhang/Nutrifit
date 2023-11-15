@@ -1,45 +1,73 @@
-package main.backend.meal.entity;
+import  java.util.HashMap;
+import  java.util.Map;
 
-import java.sql.Date;
-import java.util.List;
-import java.util.Map;
+public  class  Meal  {
+     private  int  id;
+     private  Date  date;
+     private  String  type;
+     private  long  totalCalories;
+     private  Map<String,  Integer>  totalNutritions;
 
-public class Meal {
-    private int id;
-    private Date date;
-    private String type;
-    private int totalCalories;
+     public  Meal(int  id,  Date  date,  String  type,  long  totalCalories,  Map<String,  Integer>  totalNutritions)  {
+          this.id  =  id;
+          this.date  =  date;
+          this.type  =  type;
+          this.totalCalories  =  totalCalories;
+          this.totalNutritions  =  totalNutritions;
+     }
 
-    private Map<Food, Float> foodMap; // unit nutrient
+     public  int  getId()  {
+         return  id;
+     }
 
-    public Meal(int id, Date date, String type, int totalCalories) {
-        this.id = id;
-        this.date = date;
-        this.type = type;
-        this.totalCalories = totalCalories;
-    }
+     public  void  setId(int  id)  {
+          this.id  =  id;
+     }
 
-    public int getId() {
-        return id;
-    }
+     public  Date  getDate()  {
+         return  date;
+     }
 
-    public Date getDate() {
-        return date;
-    }
+     public  void  setDate(Date  date)  {
+          this.date  =  date;
+     }
 
-    public String getType() {
-        return type;
-    }
+     public  String  getType()  {
+         return  type;
+     }
 
-    public int getTotalCalories() {
-        return totalCalories;
-    }
+     public  void  setType(String  type)  {
+          this.type  =  type;
+     }
 
-    public Map<Food, Float> getFoodMap() {
-        return foodMap;
-    }
+     public  long  getTotalCalories()  {
+         return  totalCalories;
+     }
 
-    public void setFoodMap(Map<Food, Float> foodMap) {
-        this.foodMap = foodMap;
-    }
+     public  void  setTotalCalories(long  totalCalories)  {
+          this.totalCalories  =  totalCalories;
+     }
+
+     public  Map<String,  Integer>  getTotalNutritions()  {
+         return  totalNutritions;
+     }
+
+     public  void  setTotalNutritions(Map<String,  Integer>  totalNutritions)  {
+          this.totalNutritions  =  totalNutritions;
+     }
+
+     public  void  addNutrition(String  key,  Integer  value)  {
+          totalNutritions.put(key,  totalNutritions.getOrDefault(key,  0)  +  value);
+     }
+
+     @Override
+     public  String  toString()  {
+         return  "Meal{"  +
+                 "id="  +  id  +
+                 ",  date="  +  date  +
+                 ",  type='"  +  type  +  '\''  +
+                 ",  totalCalories="  +  totalCalories  +
+                 ",  totalNutritions="  +  totalNutritions  +
+                 '}';
+     }
 }
