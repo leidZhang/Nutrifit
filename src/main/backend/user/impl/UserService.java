@@ -46,6 +46,17 @@ public class UserService implements IUserService {
 
     @Override
     public void updateUser(User user) throws SQLException {
+        invalidUserJudge(user);
         userMapper.updateUser(user);
+    }
+    private void invalidUserJudge(User user) {
+        if (user.getAge() < 0) throw new IllegalArgumentException("Invalid age");
+        if (user.getWeight() < 0) throw new IllegalArgumentException("Invalid Weight");
+        if (user.getHeight() < 0) throw new IllegalArgumentException("Invalid Height");
+        if (user.getPassword().isEmpty()) throw new IllegalArgumentException("Invalid Password");
+        if (user.getUsername().isEmpty()) throw new IllegalArgumentException("Invalid Username");
+        if (user.getName().isEmpty()) throw new IllegalArgumentException("Invalid Name");
+        if (!Objects.equals(user.getSex(), "male") && !Objects.equals(user.getSex(), "female"))
+            throw new IllegalArgumentException("Invalid Sex");
     }
 }
