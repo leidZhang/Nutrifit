@@ -14,7 +14,7 @@ public class MealUtil {
 
     private IFoodService foodService = new FoodService();
 
-    private Map<Nutrient, Float> getTotalNutrient(Map<Food, Float> foodMap) {
+    public Map<Nutrient, Float> getTotalNutrient(Map<Food, Float> foodMap) {
         Map<Nutrient, Float> totalNutrientMap = new HashMap<>();
 
         for (Map.Entry<Food, Float> foodEntry : foodMap.entrySet()) {
@@ -37,7 +37,7 @@ public class MealUtil {
         return totalNutrientMap;
     }
 
-    private List<Map.Entry<Nutrient, Float>> getNutrientList(Map<Nutrient, Float> totalNutrientMap) {
+    public List<Map.Entry<Nutrient, Float>> getNutrientList(Map<Nutrient, Float> totalNutrientMap) {
         List<Map.Entry<Nutrient, Float>> nutrients = new ArrayList<>();
 
         for (Map.Entry<Nutrient, Float> entry : totalNutrientMap.entrySet()) {
@@ -59,7 +59,7 @@ public class MealUtil {
         return nutrients;
     }
 
-    private List<Map.Entry<Nutrient, Float>> sortNutrientList(List<Map.Entry<Nutrient, Float>> nutrients, int topNum) {
+    public List<Map.Entry<Nutrient, Float>> sortNutrientList(List<Map.Entry<Nutrient, Float>> nutrients, int topNum) {
         List<Map.Entry<Nutrient, Float>> res = new ArrayList<>();
 
         // define a max heap and push items into it
