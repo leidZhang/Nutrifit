@@ -1,45 +1,52 @@
-package main.backend.meal.entity;
+import  java.util.List;
+import  java.util.Set;
 
-import java.sql.Date;
-import java.util.List;
-import java.util.Map;
+public  class  Meal  {
+     private  String  foodId;
+     private  List<String>  nutrientNames;
+     private  Double  nutrientValue;
+     private  Set<Nutrient>  nutrients;
 
-public class Meal {
-    private int id;
-    private Date date;
-    private String type;
-    private int totalCalories;
+     public  Meal(String  foodId,  List<String>  nutrientNames,  Double  nutrientValue)  {
+          this.foodId  =  foodId;
+          this.nutrientNames  =  nutrientNames;
+          this.nutrientValue  =  nutrientValue;
+          this.nutrients  =  new  HashSet<>();
+     }
 
-    private Map<Food, Float> foodMap; // unit nutrient
+     public  String  getFoodId()  {
+         return  foodId;
+     }
 
-    public Meal(int id, Date date, String type, int totalCalories) {
-        this.id = id;
-        this.date = date;
-        this.type = type;
-        this.totalCalories = totalCalories;
-    }
+     public  void  setFoodId(String  foodId)  {
+          this.foodId  =  foodId;
+     }
 
-    public int getId() {
-        return id;
-    }
+     public  List<String>  getNutrientNames()  {
+         return  nutrientNames;
+     }
 
-    public Date getDate() {
-        return date;
-    }
+     public  void  setNutrientNames(List<String>  nutrientNames)  {
+          this.nutrientNames  =  nutrientNames;
+     }
 
-    public String getType() {
-        return type;
-    }
+     public  Double  getNutrientValue()  {
+         return  nutrientValue;
+     }
 
-    public int getTotalCalories() {
-        return totalCalories;
-    }
+     public  void  setNutrientValue(Double  nutrientValue)  {
+          this.nutrientValue  =  nutrientValue;
+     }
 
-    public Map<Food, Float> getFoodMap() {
-        return foodMap;
-    }
+     public  Set<Nutrient>  getNutrients()  {
+         return  nutrients;
+     }
 
-    public void setFoodMap(Map<Food, Float> foodMap) {
-        this.foodMap = foodMap;
-    }
+     public  void  setNutrients(Set<Nutrient>  nutrients)  {
+          this.nutrients  =  nutrients;
+     }
+
+     public  void  addNutrient(Nutrient  nutrient)  {
+         nutrients.add(nutrient);
+     }
 }
