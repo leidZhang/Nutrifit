@@ -5,6 +5,7 @@ import main.backend.food.IFoodController;
 import main.backend.food.entity.Food;
 import main.backend.food.impl.FoodController;
 import main.frontend.custom.dropdown.AutoComboBox;
+import main.frontend.custom.entry.NfEntry;
 import main.frontend.view.mainframe.impl.FrontEnd;
 import main.frontend.common.Content;
 
@@ -55,6 +56,11 @@ public class MealPage extends Content {
             List<Food> foodList = (List<Food>) res.getData();
             autoComboBox.setItemList(foodList);
         }
+
+        NfEntry entry = new NfEntry(20, 100);
+        entry.setTitle("Test Title");
+        gridBagConstraints.gridy = 2; // row 0
+        content.add(entry, gridBagConstraints);
 
         return "Switch to Meal Page";
     }
