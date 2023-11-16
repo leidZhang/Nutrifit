@@ -1,4 +1,6 @@
-package main.frontend.custom;
+package main.frontend.custom.table;
+
+import main.frontend.custom.table.PaginationModel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

@@ -4,13 +4,13 @@ import main.backend.user.IUserController;
 import main.backend.user.entity.User;
 import main.backend.user.impl.UserController;
 import main.frontend.common.Content;
-import main.frontend.custom.NfEntry;
+import main.frontend.custom.entry.NfEntry;
 
 import javax.swing.*;
 import java.sql.Date;
 import java.util.Map;
 
-public class UserFormPage extends Content {
+public abstract class UserFormPage extends Content { // change to public abstract in D3!
     protected IUserController controller = new UserController();
     protected Map<String, NfEntry> entries;
     protected boolean editable = false;
@@ -52,11 +52,11 @@ public class UserFormPage extends Content {
         entries.get("Weight (kg)").setRegex(
                 "^[+-]?\\d+(\\.\\d+)?$",
                 "Weight must be numeric"
-        );
+        ); // delete [+-] in code refactor stage
         entries.get("Height (cm)").setRegex(
                 "^[+-]?\\d+(\\.\\d+)?$",
                 "Height must be numeric"
-        );
+        ); // delete [+-] in code refactor stage
     }
 
     protected boolean verifyInput(Map<String, NfEntry> entries) {
@@ -70,7 +70,5 @@ public class UserFormPage extends Content {
     }
 
     @Override
-    public String showContent(JPanel content) {
-        return null;
-    }
+    public abstract String showContent(JPanel content); // avoided refused bequest here
 }

@@ -1,4 +1,4 @@
-package main.backend.meal.entity;
+package main.backend.food.entity;
 
 import java.util.Map;
 
@@ -27,5 +27,10 @@ public class Food {
 
     public void setNutrientFloatMap(Map<Nutrient, Float> nutrientFloatMap) {
         this.nutrientFloatMap = nutrientFloatMap;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -14,9 +14,9 @@ public abstract class Content implements IContent {
         // default constructor
     }
 
-    protected void notifyMainframe(String pageName) {
-        System.out.println("Receive notification from" + pageName);
-    }
+//    protected void notifyMainframe(String pageName) {
+//        System.out.println("Receive notification from" + pageName);
+//    }
 
     @Override
     public abstract String showContent(JPanel content);

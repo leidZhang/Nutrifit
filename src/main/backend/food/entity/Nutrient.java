@@ -1,4 +1,4 @@
-package main.backend.meal.entity;
+package main.backend.food.entity;
 
 public class Nutrient {
     private String name;
