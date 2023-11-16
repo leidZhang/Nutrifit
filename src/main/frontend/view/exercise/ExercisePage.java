@@ -4,8 +4,8 @@ import main.backend.exercise.IExerciseMapper;
 import main.backend.exercise.entity.Exercise;
 import main.backend.exercise.impl.ExerciseMapper;
 import main.backend.user.entity.User;
-import main.frontend.custom.PaginationModel;
-import main.frontend.custom.PaginationTable;
+import main.frontend.custom.table.PaginationModel;
+import main.frontend.custom.table.PaginationTable;
 import main.frontend.session.UserSession;
 import main.frontend.common.Content;
 

@@ -1,14 +1,14 @@
 package main.frontend.view.user.profile.common;
 
 import main.frontend.common.ContentBuilder;
-import main.frontend.custom.NfEntry;
+import main.frontend.custom.entry.NfEntry;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class UserFormBuilder extends ContentBuilder {
+public abstract class UserFormBuilder extends ContentBuilder { // change to public abstract
     protected Map<String, NfEntry> entries = new LinkedHashMap<>();
 
     public UserFormBuilder(JPanel page) {

@@ -1,4 +1,4 @@
-package main.frontend.custom;
+package main.frontend.custom.table;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
