@@ -58,7 +58,7 @@ public class FoodMapper implements IFoodMapper {
             query += "from `nutrient name` as nn inner join `nutrient amount` as na ";
             query += "on nn.NutrientID = na.NutrientNameID) as nt ";
             query += "on fn.FoodID = nt.FoodID and fn.FoodID = ? and nt.NutrientName <> 'ENERGY (KILOCALORIES)' ";
-            query += "and nt.NutrientName <> 'ENERGY (KILOJOULES)' ";
+            query += "and nt.NutrientName <> 'ENERGY (KILOJOULES)' and nt.NutrientName <> 'TOTAL NIACIN EQUIVALENT'";
             query += "and nt.NutrientName <> 'VITAMIN D (INTERNATIONAL UNITS)' and nt.NutrientValue <> 0";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
