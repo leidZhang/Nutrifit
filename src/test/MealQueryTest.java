@@ -1,10 +1,10 @@
 package test;
 
-import main.backend.meal.IFoodMapper;
+import main.backend.food.IFoodMapper;
 import main.backend.meal.IMealMapper;
 import main.backend.meal.entity.Meal;
-import main.backend.meal.entity.Nutrient;
-import main.backend.meal.impl.FoodMapper;
+import main.backend.food.entity.Nutrient;
+import main.backend.food.impl.FoodMapper;
 import main.backend.meal.impl.MealMapper;
 import main.backend.user.IUserMapper;
 import main.backend.user.entity.User;

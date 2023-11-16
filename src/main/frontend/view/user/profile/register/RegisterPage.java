@@ -5,7 +5,7 @@ import main.backend.user.IUserController;
 import main.backend.user.entity.User;
 import main.backend.user.impl.UserController;
 import main.frontend.common.ContentBuilder;
-import main.frontend.custom.NfEntry;
+import main.frontend.custom.entry.NfEntry;
 import main.frontend.view.user.profile.common.UserFormPage;
 import main.frontend.view.user.profile.userprofile.UserProfileBuilder;
 

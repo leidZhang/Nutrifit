@@ -1,4 +1,4 @@
-package main.frontend.custom;
+package main.frontend.custom.entry;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;

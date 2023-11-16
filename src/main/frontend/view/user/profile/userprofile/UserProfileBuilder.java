@@ -1,13 +1,10 @@
 package main.frontend.view.user.profile.userprofile;
 
-import main.frontend.custom.NfEntry;
 import main.frontend.view.user.profile.common.UserFormBuilder;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class UserProfileBuilder extends UserFormBuilder {
     public UserProfileBuilder(JPanel page) {

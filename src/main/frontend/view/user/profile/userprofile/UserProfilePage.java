@@ -3,7 +3,7 @@ package main.frontend.view.user.profile.userprofile;
 import main.backend.common.Result;
 import main.backend.user.entity.User;
 import main.frontend.common.ContentBuilder;
-import main.frontend.custom.NfEntry;
+import main.frontend.custom.entry.NfEntry;
 import main.frontend.view.user.profile.common.UserFormPage;
 
 import javax.swing.*;

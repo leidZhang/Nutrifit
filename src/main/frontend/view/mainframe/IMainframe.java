@@ -1,5 +1,6 @@
 package main.frontend.view.mainframe;
 
+import main.frontend.common.Content;
 import main.frontend.common.IContent;
 
 import javax.swing.*;

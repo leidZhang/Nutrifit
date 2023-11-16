@@ -1,7 +1,7 @@
 package main.frontend.view.user.login;
 
 import main.frontend.common.ContentBuilder;
-import main.frontend.custom.NfEntry;
+import main.frontend.custom.entry.NfEntry;
 
 import javax.swing.*;
 import java.awt.*;

@@ -6,7 +6,7 @@ import main.backend.user.entity.User;
 import main.backend.user.impl.UserController;
 import main.frontend.common.Content;
 import main.frontend.common.ContentBuilder;
-import main.frontend.custom.NfEntry;
+import main.frontend.custom.entry.NfEntry;
 import main.frontend.session.UserSession;
 
 import javax.swing.*;
