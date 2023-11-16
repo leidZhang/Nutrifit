@@ -48,10 +48,10 @@ public class UserService implements IUserService {
 
     @Override
     public void updateUser(User user) throws IllegalArgumentException, SQLException {
-        invalidUserJudge(user);
+        validateUser(user);
         userMapper.updateUser(user);
     }
-    private void invalidUserJudge(User user) throws IllegalArgumentException { // change to validateUser in refactor stage 
+    private void validateUser(User user) throws IllegalArgumentException { // change to validateUser in refactor stage 
         if (user.getAge() < 0) throw new IllegalArgumentException("Invalid age");
         if (user.getWeight() < 0) throw new IllegalArgumentException("Invalid Weight");
         if (user.getHeight() < 0) throw new IllegalArgumentException("Invalid Height");
