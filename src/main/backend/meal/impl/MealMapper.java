@@ -94,9 +94,11 @@ public class MealMapper implements IMealMapper { // not tested yet
         for (Meal meal : mealList) {
             int id = meal.getId();
 
-            String query = "select fu.food_id, fn.FoodDescription, fu.quantity ";
+            String query = "select ct.food_id, ct.FoodDescription, fg.FoodGroupName, ct.quantity from ( ";
+            query += "select fu.food_id, fn.FoodDescription,  fn.FoodGroupID, fu.quantity ";
             query += "from `food used` fu join `food name` fn ";
-            query += "on fn.FoodID = fu.food_id and fu.meal_id = ?";
+            query += "on fn.FoodID = fu.food_id and fu.meal_id = ?) as ct join `food group` as fg ";
+            query += "on ct.FoodGroupID = fg.FoodGroupID";
             ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             res = ps.executeQuery();
@@ -104,9 +106,10 @@ public class MealMapper implements IMealMapper { // not tested yet
                 int foodID = res.getInt("food_id");
                 String description = res.getString("FoodDescription");
                 float quantity = res.getFloat("quantity");
+                String group = res.getString("FoodGroupName");
 
                 Map<Food, Float> foodMap = meal.getFoodMap();
-                Food food = new Food(foodID, description);
+                Food food = new Food(foodID, description, group);
                 foodMap.put(food, quantity);
                 meal.setFoodMap(foodMap);
             }

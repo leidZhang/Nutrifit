@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MealQueryTest {
-    public static void main(String[] args) throws SQLException { // demonstration code, delete before submission 
+    public static void main(String[] args) throws SQLException { // demonstration code, delete before submission
         // query food
         // IFoodMapper mapper = new FoodMapper();
 
@@ -63,7 +63,7 @@ public class MealQueryTest {
                 Food food = entry.getKey();
                 Float val = entry.getValue();
 
-                System.out.println(food + ": " + val + "g");
+                System.out.println(food + ": " + val + "g, " + food.getGroup());
             }
         }
     }
