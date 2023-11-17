@@ -5,6 +5,7 @@ import java.util.Map;
 public class Food {
     private int id;
     private String name;
+    private String group;
 
     private Map<Nutrient, Float> nutrientFloatMap;
 
@@ -13,12 +14,21 @@ public class Food {
         this.name = name;
     }
 
+    public Food(int id, String name, String group) {
+        this(id, name);
+        this.group = group;
+    }
+
     public int getId() {
         return id;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getGroup() {
+        return group;
     }
 
     public Map<Nutrient, Float> getNutrientFloatMap() {

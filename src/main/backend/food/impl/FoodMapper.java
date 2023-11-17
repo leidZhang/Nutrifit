@@ -22,14 +22,18 @@ public class FoodMapper implements IFoodMapper {
         try {
             connection = ConnectionUtil.getConnection();
 
-            String query = "select FoodID, FoodDescription from `food name`";
+            String query = "select fn.FoodID, fn.FoodDescription, fg.FoodGroupName ";
+            query += "from `food name` fn join `food group` fg ";
+            query += "where fn.FoodGroupID = fg.FoodGroupID";
             ps = connection.prepareStatement(query);
             // execute the query
             res = ps.executeQuery();
             while (res.next()) {
                 int id = res.getInt("FoodID");
                 String foodDescription = res.getString("FoodDescription");
-                Food food = new Food(id, foodDescription);
+                String foodGroup = res.getString("FoodGroupName");
+
+                Food food = new Food(id, foodDescription, foodGroup);
                 list.add(food);
             }
         } catch (SQLException e) {

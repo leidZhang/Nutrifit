@@ -37,6 +37,19 @@ public class MealUtil {
         return totalNutrientMap;
     }
 
+    public Map<Nutrient, Float> getDailyNutrient(Map<Nutrient, Float> totalNutrientMap, int days) {
+        Map<Nutrient, Float> res = new HashMap<>();
+
+        for (Map.Entry<Nutrient, Float> entry : totalNutrientMap.entrySet()) {
+            Nutrient nutrient = entry.getKey();
+            Float dailyValue = entry.getValue() / days;
+
+            res.put(nutrient, dailyValue);
+        }
+
+        return res;
+    }
+
     public List<Map.Entry<Nutrient, Float>> getNutrientList(Map<Nutrient, Float> totalNutrientMap) {
         List<Map.Entry<Nutrient, Float>> nutrients = new ArrayList<>();
 
