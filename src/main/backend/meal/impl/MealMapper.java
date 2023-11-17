@@ -8,6 +8,7 @@ import main.backend.user.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,6 +90,29 @@ public class MealMapper implements IMealMapper { // not tested yet
         }
     }
 
+    private void setMealFoodMap(List<Meal> mealList, Connection conn, PreparedStatement ps, ResultSet res) throws SQLException {
+        for (Meal meal : mealList) {
+            int id = meal.getId();
+
+            String query = "select fu.food_id, fn.FoodDescription, fu.quantity ";
+            query += "from `food used` fu join `food name` fn ";
+            query += "on fn.FoodID = fu.food_id and fu.meal_id = ?";
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            res = ps.executeQuery();
+            while (res.next()) {
+                int foodID = res.getInt("food_id");
+                String description = res.getString("FoodDescription");
+                float quantity = res.getFloat("quantity");
+
+                Map<Food, Float> foodMap = meal.getFoodMap();
+                Food food = new Food(foodID, description);
+                foodMap.put(food, quantity);
+                meal.setFoodMap(foodMap);
+            }
+        }
+    }
+
     @Override
     public List<Meal> getByUser(User user) throws SQLException {
         Connection connection = null;
@@ -116,9 +140,12 @@ public class MealMapper implements IMealMapper { // not tested yet
                 int totalCalories = res.getInt("total_calories");
                 // create a new Exercise object with the data
                 Meal meal = new Meal(mealId, date, type, totalCalories);
+                meal.setFoodMap(new HashMap<>());
                 // add the object to the list
                 mealList.add(meal);
             }
+
+            setMealFoodMap(mealList, connection, ps, res);
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         } finally {
@@ -160,6 +187,8 @@ public class MealMapper implements IMealMapper { // not tested yet
                 // add the object to the list
                 mealList.add(meal);
             }
+
+            setMealFoodMap(mealList, connection, ps, res);
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         } finally {

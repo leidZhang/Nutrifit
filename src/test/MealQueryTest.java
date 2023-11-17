@@ -18,40 +18,53 @@ import java.util.List;
 import java.util.Map;
 
 public class MealQueryTest {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException { // demonstration code, delete before submission 
         // query food
-        IFoodMapper mapper = new FoodMapper();
+        // IFoodMapper mapper = new FoodMapper();
 
         // traverse map to get unit nutrient value
-        Map<Nutrient, Float> nutrientFloatMap = mapper.getUnitNutrientValue(2);
-        for (Map.Entry<Nutrient, Float> entry : nutrientFloatMap.entrySet()) {
-            String nutrientName = entry.getKey().getName();
-            float nutrientValue = entry.getValue();
-            String nutrientUnit = entry.getKey().getUnit();
-            System.out.println(nutrientName + ": " + nutrientValue + nutrientUnit);
-        }
-        System.out.println("\n");
+//        Map<Nutrient, Float> nutrientFloatMap = mapper.getUnitNutrientValue(2);
+//        for (Map.Entry<Nutrient, Float> entry : nutrientFloatMap.entrySet()) {
+//            String nutrientName = entry.getKey().getName();
+//            float nutrientValue = entry.getValue();
+//            String nutrientUnit = entry.getKey().getUnit();
+//            System.out.println(nutrientName + ": " + nutrientValue + nutrientUnit);
+//        }
+//        System.out.println("\n");
 
-        Food food = new Food(2, "test_food");
-        food.setNutrientFloatMap(nutrientFloatMap);
-        Map<Food, Float> foodMap = new HashMap<>();
-        foodMap.put(food, 200.0F);
 
-        MealUtil util = new MealUtil();
-        Map<Nutrient, Float> nutrientMap = util.getTotalNutrient(foodMap);
-        List<Map.Entry<Nutrient, Float>> nutrientList = util.getNutrientList(nutrientMap);
-        List<Map.Entry<Nutrient, Float>> res = util.sortNutrientList(nutrientList, 10);
-
-        for (Map.Entry<Nutrient, Float> entry : res) {
-            System.out.println(entry.getKey().getName() + ": " + entry.getValue() + "g");
-        }
+//        Food food = new Food(2, "test_food");
+//        food.setNutrientFloatMap(nutrientFloatMap);
+//        Map<Food, Float> foodMap = new HashMap<>();
+//        foodMap.put(food, 200.0F);
+//
+//        MealUtil util = new MealUtil();
+//        Map<Nutrient, Float> nutrientMap = util.getTotalNutrient(foodMap);
+//        List<Map.Entry<Nutrient, Float>> nutrientList = util.getNutrientList(nutrientMap);
+//        List<Map.Entry<Nutrient, Float>> res = util.sortNutrientList(nutrientList, 10);
+//
+//        for (Map.Entry<Nutrient, Float> entry : res) {
+//            System.out.println(entry.getKey().getName() + ": " + entry.getValue() + "g");
+//        }
 
         // get user
         IUserMapper userMapper = new UserMapper();
         IMealMapper mealMapper = new MealMapper();
 
-        User user = userMapper.getUser("js288c");
+        User user = userMapper.getUser("jd123");
         List<Meal> mealList = mealMapper.getByUser(user);
         System.out.println("\nThe user has " + mealList.size() + " meal records");
+
+        for (Meal meal : mealList) {
+            Map<Food, Float> map = meal.getFoodMap();
+
+            if (map.size() == 0) break;
+            for (Map.Entry<Food, Float> entry : map.entrySet()) {
+                Food food = entry.getKey();
+                Float val = entry.getValue();
+
+                System.out.println(food + ": " + val + "g");
+            }
+        }
     }
 }
