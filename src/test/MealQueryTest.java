@@ -12,6 +12,7 @@ import main.backend.user.IUserMapper;
 import main.backend.user.entity.User;
 import main.backend.user.impl.UserMapper;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -53,9 +54,12 @@ public class MealQueryTest {
 
         User user = userMapper.getUser("jd123");
         List<Meal> mealList = mealMapper.getByUser(user);
-        System.out.println("\nThe user has " + mealList.size() + " meal records");
+        System.out.println("\nThe user has " + mealList.size() + " meal records\n");
 
         for (Meal meal : mealList) {
+            Date date = meal.getDate();
+            String type = meal.getType();
+            System.out.println(user.getName() + " " + date + ", " + type);
             Map<Food, Float> map = meal.getFoodMap();
 
             if (map.size() == 0) break;
