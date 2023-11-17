@@ -31,7 +31,7 @@ public class ExercisePage extends Content {
         ExerciseBuilder builder = new ExerciseBuilder(content);
         ExerciseDirector director = new ExerciseDirector(builder);
         director.constructPage();
-        //loadExerciseLog(builder);
+        // loadExerciseLog(builder);
         return "Switch to Exercise page";
     }
     private void loadExerciseLog(ExerciseBuilder builder) {

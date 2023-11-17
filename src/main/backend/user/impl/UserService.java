@@ -23,7 +23,7 @@ public class UserService implements IUserService {
 
     @Override
     public void save(User user) throws SQLException, RuntimeException {
-        invalidUserJudge(user);
+        validateUser(user);
         String username = user.getUsername();
         if (userMapper.getUser(username) != null) throw new RuntimeException("Duplicate username!");
 
