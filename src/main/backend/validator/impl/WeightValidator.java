@@ -3,7 +3,7 @@ package main.backend.validator.impl;
 import main.backend.validator.Validator;
 
 public class WeightValidator extends Validator {
-    private final double MAX_WEIGHT = 2.80F;
+    private final double MAX_WEIGHT = 750.0F;
 
     public WeightValidator(Object obj) {
         super(obj);

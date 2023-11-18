@@ -3,7 +3,7 @@ package main.backend.validator.impl;
 import main.backend.validator.Validator;
 
 public class HeightValidator extends Validator {
-    private final double MAX_HEIGHT = 2.80F;
+    private final double MAX_HEIGHT = 280.0F;
 
     public HeightValidator(Object obj) {
         super(obj);
