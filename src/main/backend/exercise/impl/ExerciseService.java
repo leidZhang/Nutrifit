@@ -15,17 +15,19 @@ import java.util.List;
 public class ExerciseService implements IExerciseService {
     private IExerciseMapper exerciseMapper = new ExerciseMapper();
 
-    public void saveExerciseData(ExerciseData data, User user) {
-        int burnCalories = calBurnCalories(data, user);
-        Exercise exercise = new Exercise(data.getDate(), data.getType(), data.getIntensity(), data.getDuration(), burnCalories);
-        save(exercise, user);
-    }
+//    public void saveExerciseData(Exercise data, User user) {
+//        int burnCalories = calBurnCalories(data, user);
+//        Exercise exercise = new Exercise(data.getDate(), data.getType(), data.getIntensity(), data.getDuration(), burnCalories);
+//        save(exercise, user);
+//    }
 
     @Override
     public void save(Exercise exercise, User user) {
-        String username = user.getUsername();
         try {
-            exerciseMapper.save(exercise, username);
+            int calories = calBurnCalories(exercise, user);
+            System.out.println("Burned: " + calories);
+            exercise.setBurnCalories(calories);
+            exerciseMapper.save(exercise, user);
         } catch (SQLException e) {
             throw new RuntimeException("Database error: Unable to save exercise.", e);
         }
@@ -58,26 +60,27 @@ public class ExerciseService implements IExerciseService {
         }
     }
 
-    private int calBurnCalories(ExerciseData data, User user) {
-        int calories;
+    private int calBurnCalories(Exercise data, User user) {
+        System.out.println("pass cal BC");
+
         int MET;
         long bmr = calBMR(user);
         String intensity = data.getIntensity();
         int duration = data.getDuration();
 
         MET = switch (intensity) {
-            case "very high" -> 11;
-            case "high" -> 8;
-            case "medium" -> 5;
-            case "low" -> 3;
+            case "Very High" -> 11;
+            case "High" -> 8;
+            case "Medium" -> 5;
+            case "Low" -> 3;
             default -> throw new IllegalStateException("Unexpected value: " + intensity);
         };
 
-        calories = (int) (bmr * MET / 24 * (duration / 60));
-        return calories;
+        return (int) (bmr * MET / 24.0 * (duration / 60.0));
     }
 
     private Long calBMR(User user) {
+        System.out.println("pass cal BMR");
         //bmr计算似乎放在user中更合理一些
         long bmr;
         double weight = user.getWeight();

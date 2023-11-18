@@ -30,4 +30,8 @@ public class PaginationTable extends JTable {
     public void setModelData(List<Object[]> data) {
         model.setData(data);
     }
+
+    public void setModelTitle(Object[] titleRow) {
+        model.setColumnIdentifiers(titleRow);
+    }
 }

@@ -66,14 +66,10 @@ public class RegisterPage extends UserFormPage {
 
     @Override
     public String showContent(JPanel content) {
-        // add listener
-        ActionListener submitListener = handleSubmit(content);
-        ActionListener backListener = handleBack(content);
-
         // construct page
         ContentBuilder builder = new RegisterBuilder(content);
         RegisterDirector director = new RegisterDirector(builder);
-        director.constructPage("Register", submitListener, backListener);
+        director.constructPage("Register", handleSubmit(content), handleBack(content));
 
         // get entries and setup entries
         entries = ((UserProfileBuilder) builder).getFormData();

@@ -20,6 +20,7 @@ public class PaginationModel extends DefaultTableModel {
         }
 
         List<Object[]> pageData = getPageData();
+        System.out.println(pageData.size());
         for (Object[] record : pageData) {
             addRow(record);
         }
