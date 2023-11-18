@@ -18,13 +18,36 @@ public class UserQueryTest { // Need more test case
 
     @Test
     public void TestRegisterCase1() {
-        // Testing new user registration
+        //Testing new user registration
         String dateOfBirthString = "2001-11-16";
         Date sqlDate = TransformDate(dateOfBirthString);
-        User user1 = new User("red", "red", "password", "male", sqlDate, 180, 60);
-
+        User user1 = new User("red",
+                "red",
+                "password",
+                "male",
+                sqlDate,
+                180,
+                60);
+        User user2 = new User("blue",
+                "blue",
+                "password",
+                "female",
+                sqlDate,
+                180,
+                60);
+        User user3 = new User("yellow",
+                "yellow",
+                "password",
+                "male",
+                sqlDate,
+                180,
+                60);
         Result res1 = userController.save(user1);
         assertEquals("200", res1.getCode());
+        Result res2 = userController.save(user2);
+        assertEquals("200", res2.getCode());
+        Result res3 = userController.save(user3);
+        assertEquals("200", res3.getCode());
     }
 
     @Test
@@ -32,7 +55,7 @@ public class UserQueryTest { // Need more test case
         //Testing user registration twice
         String dateOfBirthString = "2001-11-16";
         Date sqlDate = TransformDate(dateOfBirthString);
-        User user = new User("name", "username", "password", "male", sqlDate, 180, 60);
+        User user = new User("name", "username", "password", "male", sqlDate, 180, 60); // name is not valid
         Result res1 = userController.save(user);
         assertEquals("200", res1.getCode());
         System.out.println(res1.getMessage());
