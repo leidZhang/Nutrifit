@@ -65,8 +65,6 @@ public class ExercisePage extends Content {
     }
 
     private void loadExerciseLog(User user) {
-
-
         Result result = controller.getByUsername(user.getUsername());
         String code = result.getCode();
         if (code.equals("200")) {
