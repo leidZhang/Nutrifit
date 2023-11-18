@@ -56,11 +56,11 @@ public class FoodMapper implements IFoodMapper {
             connection = ConnectionUtil.getConnection();
 
             // get nutrient values from Nutrient amount
-            String query = "select nt.NutrientName, nt.NutrientValue, nt.NutrientUnit ";
+            String query = "select nt.NutrientSymbol, nt.NutrientName, nt.NutrientValue, nt.NutrientUnit ";
             query += "from `food name` as fn inner join (";
-            query += "select na.FoodID, nn.NutrientID, nn.NutrientName, na.NutrientValue, nn.NutrientUnit ";
+            query += "select na.FoodID, nn.NutrientID, nn.NutrientSymbol, nn.NutrientName, na.NutrientValue, nn.NutrientUnit ";
             query += "from `nutrient name` as nn inner join `nutrient amount` as na ";
-            query += "on nn.NutrientID = na.NutrientNameID) as nt ";
+            query += "on nn.NutrientID = na.NutrientNameID and nn.NutrientSymbol not regexp '^[0-9]+') as nt ";
             query += "on fn.FoodID = nt.FoodID and fn.FoodID = ? and nt.NutrientName <> 'ENERGY (KILOCALORIES)' ";
             query += "and nt.NutrientName <> 'ENERGY (KILOJOULES)' and nt.NutrientName <> 'TOTAL NIACIN EQUIVALENT'";
             query += "and nt.NutrientName <> 'VITAMIN D (INTERNATIONAL UNITS)' and nt.NutrientValue <> 0";
@@ -70,10 +70,11 @@ public class FoodMapper implements IFoodMapper {
             // execute the query
             res = ps.executeQuery();
             while (res.next()) {
+                String nutrientSymbol = res.getString("NutrientSymbol");
                 String nutrientName = res.getString("NutrientName");
                 float unitValue = res.getFloat("NutrientValue");
                 String nutrientUnit = res.getString("NutrientUnit");
-                Nutrient nutrient = new Nutrient(nutrientName, nutrientUnit);
+                Nutrient nutrient = new Nutrient(nutrientSymbol, nutrientUnit, nutrientName);
                 nutrientFloatMap.put(nutrient, unitValue);
             }
         } catch (SQLException e) {

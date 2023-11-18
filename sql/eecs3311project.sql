@@ -11,11 +11,31 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 17/11/2023 20:03:02
+ Date: 18/11/2023 13:28:37
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for accessory
+-- ----------------------------
+DROP TABLE IF EXISTS `accessory`;
+CREATE TABLE `accessory`  (
+  `id` int NOT NULL,
+  `category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  CONSTRAINT `accessory_id` FOREIGN KEY (`id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of accessory
+-- ----------------------------
+INSERT INTO `accessory` VALUES (1, 'test cate');
+INSERT INTO `accessory` VALUES (2, 'test cate');
+INSERT INTO `accessory` VALUES (3, 'test cate');
+INSERT INTO `accessory` VALUES (4, 'test cate');
+INSERT INTO `accessory` VALUES (5, 'test cate');
 
 -- ----------------------------
 -- Table structure for conversion fac
@@ -78,7 +98,7 @@ CREATE TABLE `exercise`  (
   PRIMARY KEY (`exercise_id`) USING BTREE,
   INDEX `fk1`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of exercise
@@ -101,6 +121,15 @@ INSERT INTO `exercise` VALUES (16, '2023-10-25', 'jogging', 'low', 100, 1500, 1)
 INSERT INTO `exercise` VALUES (17, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
 INSERT INTO `exercise` VALUES (18, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
 INSERT INTO `exercise` VALUES (19, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
+INSERT INTO `exercise` VALUES (21, '2023-11-18', 'Walking', 'Very High', 33, 0, 4);
+INSERT INTO `exercise` VALUES (22, '2023-11-17', 'Walking', 'Very High', 55, 0, 4);
+INSERT INTO `exercise` VALUES (23, '2023-11-18', 'Walking', 'Very High', 22, 0, 4);
+INSERT INTO `exercise` VALUES (24, '2023-11-18', 'Walking', 'Very High', 55, 0, 4);
+INSERT INTO `exercise` VALUES (25, '2023-11-18', 'Walking', 'Very High', 55, 0, 4);
+INSERT INTO `exercise` VALUES (26, '2023-11-18', 'Walking', 'Very High', 21, 0, 4);
+INSERT INTO `exercise` VALUES (27, '2023-11-18', 'Walking', 'Very High', 33, 0, 4);
+INSERT INTO `exercise` VALUES (28, '2021-11-18', 'Walking', 'Very High', 33, 461, 4);
+INSERT INTO `exercise` VALUES (29, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
 
 -- ----------------------------
 -- Table structure for food group
@@ -263,6 +292,10 @@ CREATE TABLE `meal`  (
   `date` date NULL DEFAULT NULL,
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `total_calories` int NULL DEFAULT NULL,
+  `total_vitamins` double NULL DEFAULT 0,
+  `total_proteins` double NULL DEFAULT 0,
+  `total_carbs` double NULL DEFAULT 0,
+  `total_others` double NULL DEFAULT 0,
   `user_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`meal_id`) USING BTREE,
   INDEX `mUserID`(`user_id` ASC) USING BTREE,
@@ -272,8 +305,8 @@ CREATE TABLE `meal`  (
 -- ----------------------------
 -- Records of meal
 -- ----------------------------
-INSERT INTO `meal` VALUES (1, '2023-10-28', 'lunch', 1000, 1);
-INSERT INTO `meal` VALUES (2, '2023-10-28', 'dinner', 2500, 4);
+INSERT INTO `meal` VALUES (1, '2023-10-28', 'lunch', 1000, 0, 0, 0, 0, 1);
+INSERT INTO `meal` VALUES (2, '2023-10-28', 'dinner', 2500, 0, 0, 0, 0, 4);
 
 -- ----------------------------
 -- Table structure for measure name
