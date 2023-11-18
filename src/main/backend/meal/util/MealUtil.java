@@ -5,6 +5,7 @@ import main.backend.food.entity.Food;
 import main.backend.food.entity.Nutrient;
 import main.backend.food.impl.FoodService;
 
+import java.awt.datatransfer.FlavorEvent;
 import java.util.*;
 
 public class MealUtil {
@@ -14,6 +15,20 @@ public class MealUtil {
 
     private IFoodService foodService = new FoodService();
 
+    private void calNutrient(Food food, Float foodWeight, Map<Nutrient, Float> totalNutrientMap) {
+        Map<Nutrient, Float> nutrientMap = food.getNutrientFloatMap();
+        for (Map.Entry<Nutrient, Float> entry : nutrientMap.entrySet()) {
+            Nutrient nutrient = entry.getKey();
+            Float value = entry.getValue();
+
+            if (!totalNutrientMap.containsKey(nutrient)) {
+                totalNutrientMap.put(nutrient, value * foodWeight / 100); // unit value is the value per 100g
+            } else {
+                totalNutrientMap.put(nutrient, value * foodWeight / 100 + totalNutrientMap.get(nutrient));
+            }
+        }
+    }
+
     public Map<Nutrient, Float> getTotalNutrient(Map<Food, Float> foodMap) {
         Map<Nutrient, Float> totalNutrientMap = new HashMap<>();
 
@@ -21,17 +36,7 @@ public class MealUtil {
             Food food = foodEntry.getKey();
             Float foodWeight = foodEntry.getValue();
 
-            Map<Nutrient, Float> nutrientMap = food.getNutrientFloatMap();
-            for (Map.Entry<Nutrient, Float> entry : nutrientMap.entrySet()) {
-                Nutrient nutrient = entry.getKey();
-                Float value = entry.getValue();
-
-                if (!totalNutrientMap.containsKey(nutrient)) {
-                    totalNutrientMap.put(nutrient, value * foodWeight / 100); // unit value is the value per 100g
-                } else {
-                    totalNutrientMap.put(nutrient, value * foodWeight / 100 + totalNutrientMap.get(nutrient));
-                }
-            }
+            calNutrient(food, foodWeight, totalNutrientMap);
         }
 
         return totalNutrientMap;
