@@ -1,14 +1,14 @@
-package main.backend.food;
+package main.backend.food.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FoodTempClass {
+public class GroupConverter { // use this to convert cnf groups to cfg groups
     private Map<String, List<String>> foodCategories = new HashMap<>();
 
-    public FoodTempClass() {
+    public GroupConverter() {
         initVegetablesAndFruits();
         initProtein();
         initWholeGrain();

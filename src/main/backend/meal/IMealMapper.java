@@ -10,6 +10,7 @@ import java.util.List;
 public interface IMealMapper {
     void save(Meal meal, User user) throws SQLException;
     void delete(int id) throws SQLException;
+    Meal getByID(int id) throws SQLException;
     List<Meal> getByUser(User user) throws SQLException;
     List<Meal> getByPeriod(User user, Date startDate, Date endDate) throws SQLException;
 }

@@ -27,17 +27,26 @@ public class MealMapper implements IMealMapper { // not tested yet
             Date date = meal.getDate();
             String type = meal.getType();
             int totalCalories = meal.getTotalCalories();
+            float totalProtein = meal.getTotalProtein();
+            float totalCarbs = meal.getTotalCarbs();
+            float totalVitamin = meal.getTotalVitamins();
+            float totalOthers = meal.getTotalOthers();
             Map<Food, Float> foodMap = meal.getFoodMap();
 
             // use PreparedStatement with placeholders
-            String query = "insert into meal(date, type, total_calories, user_id) ";
-            query += "values (?, ?, ?, ?, ?)";
+            String query = "insert into meal(date, type, total_calories, total_vitamins, ";
+            query += "total_proteins, total_carbs, total_others, user_id) ";
+            query += "values (?, ?, ?, ?, ?, ?, ?, ?)";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setDate(1, date);
             ps.setString(2, type);
             ps.setInt(3, totalCalories);
-            ps.setInt(4, userID);
+            ps.setFloat(4, totalVitamin);
+            ps.setFloat(5, totalProtein);
+            ps.setFloat(6, totalCarbs);
+            ps.setFloat(7, totalOthers);
+            ps.setInt(8, userID);
             // insert row
             ps.executeUpdate();
 
@@ -116,6 +125,58 @@ public class MealMapper implements IMealMapper { // not tested yet
         }
     }
 
+    private Meal setMeal(ResultSet res) throws SQLException {
+        // get the data from each column
+        int mealId = res.getInt("meal_id");
+        Date date = res.getDate("date");
+        String type = res.getString("type");
+        int totalCalories = res.getInt("total_calories");
+        float totalVitamin = res.getFloat("total_vitamins");
+        float totalProtein = res.getFloat("total_proteins");
+        float totalCarbs = res.getFloat("total_carbs");
+        float totalOthers = res.getFloat("total_others");
+        // create a new Exercise object with the data
+        Meal meal = new Meal(mealId, date, type);
+        meal.setTotalCalories(totalCalories);
+        meal.setTotalCarbs(totalCarbs);
+        meal.setTotalOthers(totalOthers);
+        meal.setTotalProtein(totalProtein);
+        meal.setTotalVitamins(totalVitamin);
+
+        meal.setFoodMap(new HashMap<>());
+
+        return meal;
+    }
+
+    @Override
+    public Meal getByID(int id) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        Meal meal = null;
+
+        try {
+            connection = ConnectionUtil.getConnection();
+            // use PreparedStatement with placeholders
+            String query = "select meal_id, date, type, total_calories, total_vitamins, ";
+            query += "total_proteins, total_carbs, total_others ";
+            query += "from meal where meal_id = ?";
+            ps = connection.prepareStatement(query);
+            // set parameters with corresponding methods
+            ps.setInt(1, id);
+            if (res.next()) {
+                // set meal
+                meal = setMeal(res);
+            }
+        } catch (SQLException e) {
+            throw new SQLException(e.getMessage());
+        } finally {
+            ConnectionUtil.close(connection, ps, res);
+        }
+
+        return meal;
+    }
+
     @Override
     public List<Meal> getByUser(User user) throws SQLException {
         Connection connection = null;
@@ -128,7 +189,8 @@ public class MealMapper implements IMealMapper { // not tested yet
         try {
             connection = ConnectionUtil.getConnection();
             // use PreparedStatement with placeholders
-            String query = "select meal_id, date, type, total_calories  ";
+            String query = "select meal_id, date, type, total_calories, total_vitamins, ";
+            query += "total_proteins, total_carbs, total_others ";
             query += "from meal where user_id = ?";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
@@ -136,14 +198,8 @@ public class MealMapper implements IMealMapper { // not tested yet
             // execute the query
             res = ps.executeQuery();
             while (res.next()) {
-                // get the data from each column
-                int mealId = res.getInt("meal_id");
-                Date date = res.getDate("date");
-                String type = res.getString("type");
-                int totalCalories = res.getInt("total_calories");
-                // create a new Exercise object with the data
-                Meal meal = new Meal(mealId, date, type, totalCalories);
-                meal.setFoodMap(new HashMap<>());
+                // set meal
+                Meal meal = setMeal(res);
                 // add the object to the list
                 mealList.add(meal);
             }
@@ -170,7 +226,8 @@ public class MealMapper implements IMealMapper { // not tested yet
         try {
             connection = ConnectionUtil.getConnection();
             // use PreparedStatement with placeholders
-            String query = "select meal_id, date, type, total_calories  ";
+            String query = "select meal_id, date, type, total_calories, total_vitamins, ";
+            query += "total_proteins, total_carbs, total_others ";
             query += "from meal where user_id = ? and Date between ? and ?";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
@@ -180,13 +237,8 @@ public class MealMapper implements IMealMapper { // not tested yet
             // execute the query
             res = ps.executeQuery();
             while (res.next()) {
-                // get the data from each column
-                int mealId = res.getInt("meal_id");
-                Date date = res.getDate("date");
-                String type = res.getString("type");
-                int totalCalories = res.getInt("total_calories");
-                // create a new Exercise object with the data
-                Meal meal = new Meal(mealId, date, type, totalCalories);
+                // set meal
+                Meal meal = setMeal(res);
                 // add the object to the list
                 mealList.add(meal);
             }
