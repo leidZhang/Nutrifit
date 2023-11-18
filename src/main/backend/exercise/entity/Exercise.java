@@ -10,6 +10,13 @@ public class Exercise {
     private int duration;
     private int burnCalories;
 
+    public Exercise(Date date, String type, String intensity, int duration) {
+        this.date = date;
+        this.type = type;
+        this.intensity = intensity;
+        this.duration = duration;
+    }
+
     public Exercise(Date date, String type, String intensity, int duration, int burnCalories) {
         this.date = date;
         this.type = type;
@@ -47,4 +54,7 @@ public class Exercise {
         return type;
     }
 
+    public void setBurnCalories(int burnCalories) {
+        this.burnCalories = burnCalories;
+    }
 }

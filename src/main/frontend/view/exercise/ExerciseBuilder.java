@@ -3,11 +3,14 @@ package main.frontend.view.exercise;
 import main.frontend.common.ContentBuilder;
 import main.frontend.custom.dropdown.AutoComboBox;
 import main.frontend.custom.entry.NfEntry;
+import main.frontend.custom.table.PaginationModel;
+import main.frontend.custom.table.PaginationTable;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.Arrays;
+import java.awt.event.ActionListener;
+import java.util.*;
+import java.util.List;
 
 //未添加显示页数和页数跳转部分
 //未设置添加新记录后刷新表格功能
@@ -17,37 +20,49 @@ import java.util.Arrays;
 //需要精简代码和美化设计
 
 public class ExerciseBuilder extends ContentBuilder {
-    private GridBagConstraints constraints = new GridBagConstraints();
-    private JTable exerciseLogTable;
+    private final int PAGE_SIZE = 10; // you decide the page size
+    // private GridBagConstraints constraints = new GridBagConstraints(); // parent class has an GridBagConstraint
+    private PaginationTable exerciseLogTable;
     private JButton nextButton;
     private JButton prevButton;
     private JButton saveButton;
 
+    private Map<String, JComponent> entries = new HashMap<>();
+
     public ExerciseBuilder(JPanel page) {
         super(page);
-        page.setLayout(new GridBagLayout());
-        constraints.anchor = GridBagConstraints.NORTHWEST;
-        constraints.weightx = 1;
-        constraints.weighty = 1;
-        constraints.insets = new Insets(5, 5, 5, 5);
+        constraints = new GridBagConstraints();
+
+        List<Object[]> rowList = new ArrayList<>();
+        exerciseLogTable = new PaginationTable(new PaginationModel(rowList, PAGE_SIZE));
+        prevButton = new JButton("Prev Page");
+        nextButton = new JButton("Next Page");
+        saveButton = new JButton("Save");
     }
 
     @Override
     public void setUp() {
         //需要增添setup以精简之后的method
-        prevButton = new JButton("Prev Page");
-        nextButton = new JButton("Next Page");
+        page.setLayout(new GridBagLayout());
+        constraints.gridx = 0;
+        constraints.gridy = gridy++;
+        constraints.gridwidth = GridBagConstraints.REMAINDER;
+        constraints.anchor = GridBagConstraints.CENTER;
+        constraints.fill = GridBagConstraints.NONE;
+//        constraints.anchor = GridBagConstraints.NORTHWEST;
+//        constraints.weightx = 1;
+//        constraints.weighty = 1;
+        constraints.insets = new Insets(5, 5, 5, 5);
+
         Dimension buttonSize = new Dimension(100, 30);
         nextButton.setPreferredSize(buttonSize);
         prevButton.setPreferredSize(buttonSize);
-
-        saveButton = new JButton("Save");
         saveButton.setPreferredSize(buttonSize);
     }
 
     @Override
     public void buildMainContent() {
-        setTitle();
+        // setTitle();
         showExerciseLogTable();
         addSaveExerciseModule();
     }
@@ -55,14 +70,11 @@ public class ExerciseBuilder extends ContentBuilder {
     public void setTitle() {
         JLabel titleLabel = new JLabel("Welcome to exercise page!");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20)); // 可以设置字体和大小
-        constraints.gridx = 0;
-        constraints.gridy = gridy++;
-        constraints.gridwidth = GridBagConstraints.REMAINDER;
-        constraints.anchor = GridBagConstraints.CENTER;
-        constraints.fill = GridBagConstraints.NONE;
+
         constraints.insets = new Insets(5, 0, 5, 5);
         page.add(titleLabel, constraints);
     }
+
     public void showExerciseLogTable() {
         //create log table title
         JLabel logTableLabel = new JLabel("Check your exercise log here!");
@@ -80,10 +92,11 @@ public class ExerciseBuilder extends ContentBuilder {
         constraints.gridy = gridy++;
         page.add(deleteLabel, constraints);
 
-        //create log table
-        DefaultTableModel basicModel = new DefaultTableModel();
-        basicModel.setColumnIdentifiers(new Object[]{"Type", "Date", "Duration", "Intensity", "Calories"});
-        exerciseLogTable = new JTable(basicModel);
+        exerciseLogTable.setModelTitle(new Object[]{"#", "Type", "Date", "Duration", "Intensity", "Calories"});
+        // hide exercise id
+        exerciseLogTable.getColumnModel().getColumn(0).setMinWidth(0);
+        exerciseLogTable.getColumnModel().getColumn(0).setMaxWidth(0);
+
         constraints.gridx = 0;
         constraints.gridy = gridy++;
         constraints.gridwidth = GridBagConstraints.REMAINDER;
@@ -93,7 +106,6 @@ public class ExerciseBuilder extends ContentBuilder {
         constraints.insets = new Insets(5, 20, 5, 20);
         page.add(new JScrollPane(exerciseLogTable), constraints);
 
-        //add prev and next buttons
         addLogTableButtons();
     }
 
@@ -122,9 +134,6 @@ public class ExerciseBuilder extends ContentBuilder {
         gridy++;
     }
 
-    public JTable getLogTable() {
-        return exerciseLogTable;
-    }
     public JButton getNextButton() {
         return nextButton;
     }
@@ -133,7 +142,7 @@ public class ExerciseBuilder extends ContentBuilder {
         return prevButton;
     }
 
-    public void addSaveExerciseModule() {
+    public void addSaveExerciseModule() { // may need refactor in d3
         //create title
         JLabel saveModuleLabel = new JLabel("Save your new exercise here!");
         saveModuleLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -152,16 +161,19 @@ public class ExerciseBuilder extends ContentBuilder {
         java.util.List<String> exerciseTypes = Arrays.asList("Walking", "Running", "Biking", "Swimming", "Others");
         exerciseTypeEntry.setItemList(exerciseTypes);
         addComponent(exerciseTypeEntry);
+        entries.put("Type", exerciseTypeEntry);
 
         // create date entry
         NfEntry dateEntry = new NfEntry(20, 200);
         dateEntry.setTitle("Date");
         addComponent(dateEntry);
+        entries.put("Date", dateEntry);
 
         // create duration entry
         NfEntry durationEntry = new NfEntry(20, 200);
         durationEntry.setTitle("Duration(min)");
         addComponent(durationEntry);
+        entries.put("Duration(min)", durationEntry);
 
         // create intensity entry
         AutoComboBox<String> intensityEntry = new AutoComboBox<>(20, 200);
@@ -169,6 +181,7 @@ public class ExerciseBuilder extends ContentBuilder {
         java.util.List<String> intensities = Arrays.asList("Very High", "High", "Medium", "Low");
         intensityEntry.setItemList(intensities);
         addComponent(intensityEntry);
+        entries.put("Intensity", intensityEntry);
 
         // add save button
         constraints.gridx = GridBagConstraints.RELATIVE;
@@ -188,6 +201,20 @@ public class ExerciseBuilder extends ContentBuilder {
         constraints.weightx = 0.5;
         constraints.weighty = 0.1;
         page.add(component, constraints);
+    }
+
+    public PaginationTable getTable() {
+        return exerciseLogTable;
+    }
+
+    public Map<String, JComponent> getEntries() {
+        return entries;
+    }
+
+    public void setTableButton(ActionListener prevListener, ActionListener nextListener, ActionListener submitListener) {
+        prevButton.addActionListener(prevListener);
+        nextButton.addActionListener(nextListener);
+        saveButton.addActionListener(submitListener);
     }
 }
 

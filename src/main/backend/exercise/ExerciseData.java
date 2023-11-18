@@ -2,7 +2,7 @@ package main.backend.exercise;
 
 import java.sql.Date;
 
-public class ExerciseData {
+public class ExerciseData { // you decide leave this or not 
     private final Date date;
     private final String type;
     private final String intensity;

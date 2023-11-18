@@ -3,6 +3,7 @@ package main.backend.exercise.impl;
 import main.backend.common.ConnectionUtil;
 import main.backend.exercise.IExerciseMapper;
 import main.backend.exercise.entity.Exercise;
+import main.backend.user.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +11,8 @@ import java.util.List;
 
 public class ExerciseMapper implements IExerciseMapper {
     @Override
-    public void save(Exercise exercise, String username) throws SQLException {
+    public void save(Exercise exercise, User user) throws SQLException {
+        String username = user.getUsername();
         Connection connection = null;
         PreparedStatement ps = null;
 

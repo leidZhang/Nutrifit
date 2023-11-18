@@ -12,15 +12,11 @@ import java.util.List;
 
 
 public class ExerciseController implements IExerciseController {
-    private IExerciseService exerciseService;
+    private IExerciseService exerciseService = new ExerciseService();
 
-    public ExerciseController(IExerciseService exerciseService) {
-        this.exerciseService = exerciseService;
-    }
-
-    public void saveExerciseData(ExerciseData data, User user) {
-        exerciseService.saveExerciseData(data, user);
-    }
+//    public void saveExerciseData(ExerciseData data, User user) {
+//        exerciseService.saveExerciseData(data, user);
+//    }
 
     @Override
     public Result save(Exercise exercise, User user) {

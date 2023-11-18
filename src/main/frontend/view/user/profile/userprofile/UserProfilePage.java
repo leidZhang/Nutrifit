@@ -100,13 +100,10 @@ public class UserProfilePage extends UserFormPage {
         // get user from session
         User user = instance.getUser();
 
-        ActionListener submitListener = handleSubmit(content, user); // add submit listener
-        ActionListener modifyListener = handleModify(); // add modify listener
-
         // construct page
         ContentBuilder builder = new UserProfileBuilder(content);
         UserProfileDirector director = new UserProfileDirector(builder);
-        director.constructPage("My Profile", submitListener, modifyListener);
+        director.constructPage("My Profile", handleSubmit(content, user), handleModify());
 
         // get entries and setup entries
         entries = ((UserProfileBuilder) builder).getFormData();

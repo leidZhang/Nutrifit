@@ -7,7 +7,7 @@ import java.util.List;
 
 public class AutoComboBox<T> extends JPanel {
     private JLabel titleField;
-    JComboBox comboBox;
+    private JComboBox comboBox;
     private JLabel messageField;
     private Object[] itemList;
 
@@ -99,5 +99,9 @@ public class AutoComboBox<T> extends JPanel {
             return false;
         }
         return true;
+    }
+
+    public String getInput() {
+        return comboBox.getSelectedItem().toString();
     }
 }
