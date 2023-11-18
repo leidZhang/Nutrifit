@@ -3,12 +3,12 @@ package main.backend.user.impl;
 import main.backend.user.entity.User;
 import main.backend.user.IUserMapper;
 import main.backend.user.IUserService;
+import main.backend.user.validator.UserValidator;
 
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Objects;
 
 public class UserService implements IUserService {
     private IUserMapper userMapper = new UserMapper();
@@ -23,7 +23,7 @@ public class UserService implements IUserService {
 
     @Override
     public void save(User user) throws SQLException, RuntimeException {
-        invalidUserJudge(user);
+        validateUser(user);
         String username = user.getUsername();
         if (userMapper.getUser(username) != null) throw new RuntimeException("Duplicate username!");
 
@@ -51,14 +51,8 @@ public class UserService implements IUserService {
         validateUser(user);
         userMapper.updateUser(user);
     }
-    private void validateUser(User user) throws IllegalArgumentException { // change to validateUser in refactor stage 
-        if (user.getAge() < 0) throw new IllegalArgumentException("Invalid age");
-        if (user.getWeight() < 0) throw new IllegalArgumentException("Invalid Weight");
-        if (user.getHeight() < 0) throw new IllegalArgumentException("Invalid Height");
-        if (user.getPassword().isEmpty()) throw new IllegalArgumentException("Invalid Password");
-        if (user.getUsername().isEmpty()) throw new IllegalArgumentException("Invalid Username");
-        if (user.getName().isEmpty()) throw new IllegalArgumentException("Invalid Name");
-        if (!Objects.equals(user.getSex(), "male") && !Objects.equals(user.getSex(), "female"))
-            throw new IllegalArgumentException("Invalid Sex");
+    private void validateUser(User user) throws IllegalArgumentException { // change to validateUser in refactor stage
+        UserValidator validator = new UserValidator(user);
+        validator.validate();
     }
 }

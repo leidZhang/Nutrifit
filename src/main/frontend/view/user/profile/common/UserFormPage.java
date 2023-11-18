@@ -50,12 +50,12 @@ public abstract class UserFormPage extends Content { // change to public abstrac
                 "Length of password must be greater than 6"
         );
         entries.get("Weight (kg)").setRegex(
-                "^[+-]?\\d+(\\.\\d+)?$",
-                "Weight must be numeric"
+                "^\\d+(\\.\\d+)?$",
+                "Weight value must be a positive number"
         ); // delete [+-] in code refactor stage
         entries.get("Height (cm)").setRegex(
-                "^[+-]?\\d+(\\.\\d+)?$",
-                "Height must be numeric"
+                "^\\d+(\\.\\d+)?$",
+                "Height value must be positives number"
         ); // delete [+-] in code refactor stage
     }
 

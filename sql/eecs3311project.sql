@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 06/11/2023 14:41:50
+ Date: 17/11/2023 20:03:02
 */
 
 SET NAMES utf8mb4;
@@ -78,7 +78,7 @@ CREATE TABLE `exercise`  (
   PRIMARY KEY (`exercise_id`) USING BTREE,
   INDEX `fk1`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of exercise
@@ -86,6 +86,21 @@ CREATE TABLE `exercise`  (
 INSERT INTO `exercise` VALUES (1, '2023-10-25', 'jogging', 'high', 30, 1000, 1);
 INSERT INTO `exercise` VALUES (2, '2023-10-25', 'swimming', 'low', 100, 1500, 4);
 INSERT INTO `exercise` VALUES (4, '2023-10-24', 'jogging', 'low', 30, 1100, 4);
+INSERT INTO `exercise` VALUES (5, '2023-10-25', 'jogging', 'high', 30, 1100, 1);
+INSERT INTO `exercise` VALUES (6, '2023-10-25', 'jogging', 'high', 30, 1200, 1);
+INSERT INTO `exercise` VALUES (7, '2023-10-25', 'jogging', 'high', 30, 1300, 1);
+INSERT INTO `exercise` VALUES (8, '2023-10-25', 'jogging', 'high', 30, 1400, 1);
+INSERT INTO `exercise` VALUES (9, '2023-10-25', 'jogging', 'high', 30, 1400, 1);
+INSERT INTO `exercise` VALUES (10, '2023-10-25', 'jogging', 'high', 30, 1500, 1);
+INSERT INTO `exercise` VALUES (11, '2023-10-25', 'jogging', 'high', 30, 1400, 1);
+INSERT INTO `exercise` VALUES (12, '2023-10-25', 'jogging', 'high', 30, 1400, 1);
+INSERT INTO `exercise` VALUES (13, '2023-10-25', 'jogging', 'high', 30, 1400, 1);
+INSERT INTO `exercise` VALUES (14, '2023-10-25', 'jogging', 'high', 30, 1400, 1);
+INSERT INTO `exercise` VALUES (15, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
+INSERT INTO `exercise` VALUES (16, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
+INSERT INTO `exercise` VALUES (17, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
+INSERT INTO `exercise` VALUES (18, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
+INSERT INTO `exercise` VALUES (19, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
 
 -- ----------------------------
 -- Table structure for food group
@@ -237,6 +252,7 @@ CREATE TABLE `food used`  (
 INSERT INTO `food used` VALUES (1, 2, 100);
 INSERT INTO `food used` VALUES (1, 4, 150);
 INSERT INTO `food used` VALUES (1, 6, 80);
+INSERT INTO `food used` VALUES (1, 8, 10);
 
 -- ----------------------------
 -- Table structure for meal
@@ -4199,19 +4215,22 @@ CREATE TABLE `user`  (
   `date_of_birth` date NULL DEFAULT NULL,
   `height` double NULL DEFAULT NULL,
   `weight` double NULL DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'Jane Doe', 'jd123', 'female', '1998-10-08', 178, 52);
-INSERT INTO `user` VALUES (4, 'John Smith', 'js288c', 'male', '1996-12-31', 180, 70);
-INSERT INTO `user` VALUES (5, 'Hua Li', 'lima2', 'male', '2023-10-26', 180, 70);
-INSERT INTO `user` VALUES (6, 'Mark Johnson', 'mj123', 'male', '2021-11-03', 180, 77);
-INSERT INTO `user` VALUES (8, 'Miller Kastar', 'mika', 'male', '2011-02-18', 181, 70);
-INSERT INTO `user` VALUES (9, 'Lily Hahn', 'lhahn', 'female', '2011-01-08', 167, 65);
-INSERT INTO `user` VALUES (10, 'Henry Saunder', 'hs233', 'male', '1998-10-14', 169, 77);
+INSERT INTO `user` VALUES (1, 'Jane Doe', 'jd123', 'female', '1998-10-08', 178, 52, '1234567');
+INSERT INTO `user` VALUES (4, 'John Smith', 'js288c', 'male', '1997-12-31', 180, 70, '000000');
+INSERT INTO `user` VALUES (5, 'Hua Li', 'lima2', 'male', '2023-10-26', 180, 70, '000000');
+INSERT INTO `user` VALUES (6, 'Mark Johnson', 'mj123', 'male', '2021-11-03', 180, 77, '000000');
+INSERT INTO `user` VALUES (8, 'Miller Kastar', 'mika', 'male', '2011-02-18', 181, 70, '000000');
+INSERT INTO `user` VALUES (9, 'Lily Hahn', 'lhahn', 'female', '2011-01-08', 167, 65, '000000');
+INSERT INTO `user` VALUES (10, 'Henry Saunder', 'hs233', 'male', '1998-10-14', 169, 77, '000000');
+INSERT INTO `user` VALUES (11, 'Alan Johnson', 'aj', 'male', '1968-01-05', 167, 80, '000000');
+INSERT INTO `user` VALUES (12, 'Mark Lee', 'mlee', 'male', '1973-01-05', 190, 88, '000000');
 
 -- ----------------------------
 -- Table structure for yield amount
