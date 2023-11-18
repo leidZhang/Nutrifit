@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class ConnectionUtil {
     private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/eecs3311project?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/eecs3311test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 
     private static final String USER = "root";
     private static final String PASS = "password"; // your database password
