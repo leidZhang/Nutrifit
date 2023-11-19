@@ -4,7 +4,7 @@ import main.backend.meal.entity.Meal;
 import main.backend.user.entity.User;
 
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public interface IMealService {

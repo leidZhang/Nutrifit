@@ -1,5 +1,6 @@
 package main.backend.meal.util;
 
+import main.backend.food.entity.Food;
 import main.backend.food.entity.Nutrient;
 
 import java.util.Map;
