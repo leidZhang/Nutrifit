@@ -10,7 +10,9 @@ import main.frontend.view.home.Home;
 import main.frontend.view.mainframe.IMainframe;
 import main.frontend.view.mainframe.component.SideBarBuilder;
 import main.frontend.view.mainframe.component.SideBarDirector;
-import main.frontend.view.meal.MealPage;
+import main.frontend.view.meal.form.add.MealAddForm;
+import main.frontend.view.meal.table.MealTablePage;
+import main.frontend.view.meal.visualization.MealVisualPage;
 import main.frontend.view.user.login.LoginPage;
 import main.frontend.view.user.profile.register.RegisterPage;
 import main.frontend.view.user.profile.userprofile.UserProfilePage;
@@ -33,7 +35,9 @@ public class FrontEnd extends JFrame implements IMainframe {
         pageMap.put("Register", new RegisterPage());
         pageMap.put("Login", new LoginPage((Content) pageMap.get("Register")));
         pageMap.put("Exercise", new ExercisePage());
-        pageMap.put("Meal", new MealPage());
+        pageMap.put("Meal Records", new MealTablePage());
+        pageMap.put("Meal", new MealVisualPage((Content) pageMap.get("Meal Records")));
+        pageMap.put("Meal Form", new MealAddForm());
 
         initialize(); // initialize GUI
     }

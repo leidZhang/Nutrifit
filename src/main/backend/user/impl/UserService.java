@@ -18,6 +18,9 @@ public class UserService implements IUserService {
         User user = userMapper.login(username, password);
         if (user == null) throw new NullPointerException("Wrong username or password");
 
+        Date dateOfBirth = user.getDateOfBirth();
+        user.setAge(calAge(dateOfBirth));
+
         return user;
     }
 
@@ -30,18 +33,22 @@ public class UserService implements IUserService {
         userMapper.save(user);
     }
 
+    private int calAge(Date dateOfBirth) {
+        Date today = new Date(System.currentTimeMillis());
+        LocalDate todayLocal = today.toLocalDate();
+        LocalDate birthdayLocal = dateOfBirth.toLocalDate();
+
+        return (int) ChronoUnit.YEARS.between(birthdayLocal, todayLocal);
+    }
+
     @Override
     public User getByUsername(String username) throws SQLException, NullPointerException {
         User user = userMapper.getUser(username);
         if (user == null) throw new NullPointerException("User does not exist");
 
-        Date today = new Date(System.currentTimeMillis());
-        Date dateOfBirth = user.getDateOfBirth();
-        LocalDate todayLocal = today.toLocalDate();
-        LocalDate birthdayLocal = dateOfBirth.toLocalDate();
 
-        int age = (int) ChronoUnit.YEARS.between(birthdayLocal, todayLocal);
-        user.setAge(age);
+        Date dateOfBirth = user.getDateOfBirth();
+        user.setAge(calAge(dateOfBirth));
 
         return user;
     }
