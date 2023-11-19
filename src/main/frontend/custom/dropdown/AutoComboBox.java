@@ -101,7 +101,16 @@ public class AutoComboBox<T> extends JPanel {
         return true;
     }
 
-    public String getInput() {
-        return comboBox.getSelectedItem().toString();
+    public void setEditable(boolean flag) {
+        comboBox.setEditable(flag);
+        comboBox.setEnabled(flag);
+    }
+
+    public void setItem(Object obj) {
+        comboBox.setSelectedItem(obj);
+    }
+
+    public Object getInput() {
+        return comboBox.getSelectedItem();
     }
 }

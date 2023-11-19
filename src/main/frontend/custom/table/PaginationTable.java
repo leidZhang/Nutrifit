@@ -31,7 +31,15 @@ public class PaginationTable extends JTable {
         model.setData(data);
     }
 
+    public void addData(Object[] data) {
+        model.addRow(data);
+    }
+
     public void setModelTitle(Object[] titleRow) {
         model.setColumnIdentifiers(titleRow);
+    }
+
+    public void clearTable() {
+        model.setRowCount(0);
     }
 }

@@ -8,6 +8,7 @@ import main.backend.food.entity.Nutrient;
 import main.backend.food.impl.FoodMapper;
 import main.backend.meal.impl.MealMapper;
 import main.backend.meal.util.MealUtil;
+import main.backend.meal.util.NutrientCalculator;
 import main.backend.user.IUserMapper;
 import main.backend.user.entity.User;
 import main.backend.user.impl.UserMapper;
@@ -34,23 +35,32 @@ public class MealQueryTest {
 //        System.out.println("\n");
 
 
-//        Food food = new Food(2, "test_food");
-//        food.setNutrientFloatMap(nutrientFloatMap);
-//        Map<Food, Float> foodMap = new HashMap<>();
-//        foodMap.put(food, 200.0F);
-//
-//        MealUtil util = new MealUtil();
-//        Map<Nutrient, Float> nutrientMap = util.getTotalNutrient(foodMap);
-//        List<Map.Entry<Nutrient, Float>> nutrientList = util.getNutrientList(nutrientMap);
-//        List<Map.Entry<Nutrient, Float>> res = util.sortNutrientList(nutrientList, 10);
-//
-//        for (Map.Entry<Nutrient, Float> entry : res) {
-//            System.out.println(entry.getKey().getName() + ": " + entry.getValue() + "g");
-//        }
+        Food food = new Food(2, "test_food");
+        food.setNutrientFloatMap(nutrientFloatMap);
+        Map<Food, Float> foodMap = new HashMap<>();
+        foodMap.put(food, 15.0F);
+
+        MealUtil util = new MealUtil();
+        Map<Nutrient, Float> nutrientMap = util.getNutrientMap(foodMap);
+
+        for (Map.Entry<Nutrient, Float> entry : nutrientMap.entrySet()) {
+            System.out.println(entry.getKey().getName() + ": " + entry.getValue() + "g");
+        }
+
+        NutrientCalculator calculator = new NutrientCalculator(); // replace it with interface
+        float vitaminValue = calculator.getTotalVitamin(nutrientMap);
+        float carbValue = calculator.getTotalCarbs(nutrientMap);
+        float proteinValue = calculator.getTotalProtein(nutrientMap);
+        float otherValue = calculator.getTotalOthers(nutrientMap);
+
+        System.out.println("\nVitamin: " + vitaminValue);
+        System.out.println("Carb: " + carbValue);
+        System.out.println("Protein: " + proteinValue);
+        System.out.println("Other: " + otherValue);
 //
 //        // get user
 //        IUserMapper userMapper = new UserMapper();
-        IMealMapper mealMapper = new MealMapper();
+//        IMealMapper mealMapper = new MealMapper();
 //
 //        User user = userMapper.getUser("jd123");
 //        List<Meal> mealList = mealMapper.getByUser(user);
@@ -71,7 +81,7 @@ public class MealQueryTest {
 //            }
 //        }
 
-        Meal meal2 = mealMapper.getByID(1);
-        System.out.println(meal2);
+//        Meal meal2 = mealMapper.getByID(1);
+//        System.out.println(meal2);
     }
 }

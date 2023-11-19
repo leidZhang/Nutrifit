@@ -7,10 +7,8 @@ import main.backend.meal.entity.Meal;
 import main.backend.user.entity.User;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
 public class MealMapper implements IMealMapper { // not tested yet
     @Override
@@ -37,7 +35,7 @@ public class MealMapper implements IMealMapper { // not tested yet
             String query = "insert into meal(date, type, total_calories, total_vitamins, ";
             query += "total_proteins, total_carbs, total_others, user_id) ";
             query += "values (?, ?, ?, ?, ?, ?, ?, ?)";
-            ps = connection.prepareStatement(query);
+            ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             // set parameters with corresponding methods
             ps.setDate(1, date);
             ps.setString(2, type);
@@ -48,7 +46,7 @@ public class MealMapper implements IMealMapper { // not tested yet
             ps.setFloat(7, totalOthers);
             ps.setInt(8, userID);
             // insert row
-            ps.executeUpdate();
+            ps.execute();
 
             // get the new id
             int mealID = -1;
@@ -59,7 +57,7 @@ public class MealMapper implements IMealMapper { // not tested yet
                 int foodID = food.getId();
                 float quantity = entry.getValue();
                 // use PreparedStatement with placeholders
-                query = "insert into food used(meal_id, food_id, quantity) ";
+                query = "insert into `food used`(meal_id, food_id, quantity) ";
                 query += "values (?, ?, ?)";
                 ps = connection.prepareStatement(query);
                 // set parameters with corresponding methods
@@ -169,6 +167,8 @@ public class MealMapper implements IMealMapper { // not tested yet
                 // set meal
                 meal = setMeal(res);
             }
+
+            setMealFoodMap(Collections.singletonList(meal), connection, ps, res);
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         } finally {
@@ -192,7 +192,7 @@ public class MealMapper implements IMealMapper { // not tested yet
             // use PreparedStatement with placeholders
             String query = "select meal_id, date, type, total_calories, total_vitamins, ";
             query += "total_proteins, total_carbs, total_others ";
-            query += "from meal where user_id = ?";
+            query += "from meal where user_id = ? order by date desc";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setInt(1, userId);
@@ -229,7 +229,7 @@ public class MealMapper implements IMealMapper { // not tested yet
             // use PreparedStatement with placeholders
             String query = "select meal_id, date, type, total_calories, total_vitamins, ";
             query += "total_proteins, total_carbs, total_others ";
-            query += "from meal where user_id = ? and Date between ? and ?";
+            query += "from meal where user_id = ? and Date between ? and ?  order by date desc";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setInt(1, userId);

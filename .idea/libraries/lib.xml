@@ -4,6 +4,8 @@
       <root url="jar://$PROJECT_DIR$/lib/assertj-core-3.21.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/mysql-connector-j-8.0.31.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/assertj-swing-3.9.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jfreechart-1.0.19.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jcommon-1.0.23.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
