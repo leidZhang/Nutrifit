@@ -164,6 +164,7 @@ public class MealMapper implements IMealMapper { // not tested yet
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setInt(1, id);
+            res = ps.executeQuery();
             if (res.next()) {
                 // set meal
                 meal = setMeal(res);

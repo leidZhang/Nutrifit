@@ -10,18 +10,52 @@ public class MealUtil {
     private final String UNIT_UG = "μg";
     private final String UNIT_G = "g";
 
+    public Map<Food, Float> mergeFoodMap(Map<Food, Float> target, Map<Food, Float> source) {
+        for (Map.Entry<Food, Float> entry : source.entrySet()) {
+            Food food = entry.getKey();
+            float value = entry.getValue();
+
+            target.put(food, value + target.getOrDefault(food, 0f));
+        }
+
+        return target;
+    }
+
     private void calNutrient(Food food, Float foodWeight, Map<Nutrient, Float> totalNutrientMap) {
         Map<Nutrient, Float> nutrientMap = food.getNutrientFloatMap();
         for (Map.Entry<Nutrient, Float> entry : nutrientMap.entrySet()) {
             Nutrient nutrient = entry.getKey();
             Float value = entry.getValue();
 
-            if (!totalNutrientMap.containsKey(nutrient)) {
-                totalNutrientMap.put(nutrient, value * foodWeight / 100); // unit value is the value per 100g
-            } else {
-                totalNutrientMap.put(nutrient, value * foodWeight / 100 + totalNutrientMap.get(nutrient));
-            }
+            totalNutrientMap.put(nutrient,  value * foodWeight / 100 + totalNutrientMap.getOrDefault(nutrient, 0f));
         }
+    }
+
+    public Map<Nutrient, Float> getSortedNutrientMap(Map<Food, Float> foodMap, int days) {
+        Map<Nutrient, Float> rawMap = getTotalNutrient(foodMap); // get raw data
+
+        Map<Nutrient, Float> dailyMap = getDailyNutrient(rawMap, days); // get daily value
+        List<Map.Entry<Nutrient, Float>> processedList = getNutrientList(dailyMap); // convert unit to g
+        List<Map.Entry<Nutrient, Float>> sortedList = sortNutrientList(processedList, 10); // assume we need top 10
+        Map<Nutrient, Float> sortedMap = entryListToMap(sortedList);
+
+        return toPercentageMap(sortedMap);
+    }
+
+    public <T> Map<T, Float> toPercentageMap(Map<? extends T, Float> weightMap) {
+        float total = 0; // cal total nutrient weight
+        for (Map.Entry<? extends T, Float> entry : weightMap.entrySet()) {
+            total += entry.getValue();
+        }
+
+        Map<T, Float> percentageMap = new LinkedHashMap<>();
+        for (Map.Entry<? extends T, Float> entry : weightMap.entrySet()) {
+            T key = entry.getKey();
+            float val = entry.getValue();
+            percentageMap.put(key, val / total);
+        }
+
+        return percentageMap;
     }
 
     public Map<Nutrient, Float> getTotalNutrient(Map<Food, Float> foodMap) {
@@ -37,7 +71,7 @@ public class MealUtil {
         return totalNutrientMap;
     }
 
-    public Map<Nutrient, Float> getDailyNutrient(Map<Nutrient, Float> totalNutrientMap, int days) {
+    private Map<Nutrient, Float> getDailyNutrient(Map<Nutrient, Float> totalNutrientMap, int days) {
         Map<Nutrient, Float> res = new HashMap<>();
 
         for (Map.Entry<Nutrient, Float> entry : totalNutrientMap.entrySet()) {
@@ -50,7 +84,7 @@ public class MealUtil {
         return res;
     }
 
-    public List<Map.Entry<Nutrient, Float>> getNutrientList(Map<Nutrient, Float> totalNutrientMap) {
+    private List<Map.Entry<Nutrient, Float>> getNutrientList(Map<Nutrient, Float> totalNutrientMap) {
         List<Map.Entry<Nutrient, Float>> nutrients = new ArrayList<>();
 
         for (Map.Entry<Nutrient, Float> entry : totalNutrientMap.entrySet()) {
@@ -74,8 +108,8 @@ public class MealUtil {
         return nutrients;
     }
 
-    public Map<Nutrient, Float> EntryListToMap(List<Map.Entry<Nutrient, Float>> list) {
-        Map<Nutrient, Float> processedMap = new HashMap<>();
+    private Map<Nutrient, Float> entryListToMap(List<Map.Entry<Nutrient, Float>> list) {
+        Map<Nutrient, Float> processedMap = new LinkedHashMap<>();
         for (Map.Entry<Nutrient, Float> entry : list) {
             processedMap.put(entry.getKey(), entry.getValue());
         }
@@ -93,7 +127,7 @@ public class MealUtil {
         return pq;
     }
 
-    public List<Map.Entry<Nutrient, Float>> sortNutrientList(List<Map.Entry<Nutrient, Float>> nutrients, int topNum) {
+    private List<Map.Entry<Nutrient, Float>> sortNutrientList(List<Map.Entry<Nutrient, Float>> nutrients, int topNum) {
         List<Map.Entry<Nutrient, Float>> res = new ArrayList<>();
         PriorityQueue<Map.Entry<Nutrient, Float>> pq = getMaxHeap( nutrients);
 
