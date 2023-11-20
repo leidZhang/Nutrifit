@@ -26,10 +26,37 @@ import java.util.Map;
 public class MealAddForm extends MealFormPage {
     private IFoodController foodController = new FoodController();
 
+    private void setRegex() {
+        ((NfEntry) entries.get("Date")).setRegex(
+                "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$",
+                "data input format should be yyyy-mm-dd");
+        ((NfEntry) entries.get("Quantity")).setRegex(
+                "^\\d+(\\.\\d+)?$",
+                "Quantity value must be positives number");
+    }
+
+    private boolean verifyAddFood() {
+        boolean flag = true;
+
+        flag = flag & ((NfEntry) entries.get("Quantity")).verifyInput();
+
+        return flag;
+    }
+
+    private boolean verifySubmit() {
+        boolean flag = true;
+
+        flag = flag & ((NfEntry) entries.get("Date")).verifyInput();
+
+        return flag;
+    }
+
     private ActionListener handleSubmit() {
         User user = instance.getUser();
 
         return e -> {
+            if (!verifySubmit()) return;
+
             Map<Food, Float> foodMap = new HashMap<>();
             for (int i=0; i<table.getRowCount(); i++) {
                 Food food = (Food) table.getValueAt(i, 0);
@@ -57,6 +84,8 @@ public class MealAddForm extends MealFormPage {
 
     private ActionListener handleAddFood() {
         return e -> {
+            if (!verifyAddFood()) return;
+
             AutoComboBox foodBox = (AutoComboBox) entries.get("Food");
             NfEntry quantityEntry = (NfEntry) entries.get("Quantity");
             Object item = foodBox.getInput();
@@ -79,6 +108,7 @@ public class MealAddForm extends MealFormPage {
 
     private void mount() {
         getFoodList();
+        setRegex();
 
         buttons.get("Back").addActionListener(handleBack());
         buttons.get("Submit").addActionListener(handleSubmit());

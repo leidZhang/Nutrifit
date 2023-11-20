@@ -52,8 +52,28 @@ public class MealTablePage extends Content {
         };
     }
 
+    private void setRegex() {
+        String[] names = {"Start Date", "End Date"};
+        for (String name : names) {
+            entries.get(name).setRegex(
+                    "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$",
+                    "data input format should be yyyy-mm-dd");
+        }
+    }
+
+    private boolean verify() {
+        boolean flag = true;
+
+        flag = flag & entries.get("Start Date").verifyInput();
+        flag = flag & entries.get("End Date").verifyInput();
+
+        return flag;
+    }
+
     private ActionListener handleApply(JPanel content) {
         return e -> {
+            if (!verify()) return;
+
             User user = instance.getUser();
             Date startDate = Date.valueOf(entries.get("Start Date").getInput());
             Date endDate = Date.valueOf(entries.get("End Date").getInput());
@@ -164,6 +184,7 @@ public class MealTablePage extends Content {
     private void mount(JPanel content) { // render data add apply listeners
         initTableData(content);
         setTablePopUp();
+        setRegex();
 
         buttons.get("Prev Page").addActionListener(handlePrevPage());
         buttons.get("Next Page").addActionListener(handleNextPage());

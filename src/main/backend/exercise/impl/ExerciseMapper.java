@@ -7,7 +7,9 @@ import main.backend.user.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExerciseMapper implements IExerciseMapper {
     @Override
@@ -145,5 +147,43 @@ public class ExerciseMapper implements IExerciseMapper {
         }
 
         return exerciseList;
+    }
+
+    @Override
+    public Map<Date, Float> getCaloriesByDate(User user, Date startDate, Date endDate) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        Map<Date, Float> calories = new HashMap<>();
+        int userId = user.getId();
+
+        try {
+            connection = ConnectionUtil.getConnection();
+            // use PreparedStatement with placeholders
+            String query = "select date, sum(burn_calories) as total_calories ";
+            query += "from exercise where user_id = ? and date between ? and ? ";
+            query += "group by date";
+            ps = connection.prepareStatement(query);
+            // set parameters with corresponding methods
+            ps.setInt(1, userId);
+            ps.setDate(2, startDate);
+            ps.setDate(3, endDate);
+            // execute the query
+            res = ps.executeQuery();
+            while (res.next()) {
+                // set meal
+                Date date = res.getDate("date");
+                float value = res.getFloat("total_calories");
+                // add the object to the list
+                calories.put(date, value);
+            }
+        } catch (SQLException e) {
+            throw new SQLException(e.getMessage());
+        } finally {
+            ConnectionUtil.close(connection, ps, res);
+        }
+
+        return calories;
     }
 }
