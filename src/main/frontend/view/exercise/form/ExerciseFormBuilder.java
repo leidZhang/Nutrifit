@@ -1,4 +1,4 @@
-package main.frontend.view.exercise;
+package main.frontend.view.exercise.form;
 
 import main.frontend.common.ContentBuilder;
 import main.frontend.custom.dropdown.AutoComboBox;
@@ -13,23 +13,22 @@ import java.util.*;
 import java.util.List;
 
 //未添加显示页数和页数跳转部分
-//未设置添加新记录后刷新表格功能
 //未添加visualization部分
 //需要更改：将可视化放在界面中，点击details按钮浏览logtable表单
-//展示tdee放在home page，可以和选择日期计算可减去多少脂肪的模块放一起
-//需要精简代码和美化设计
 
-public class ExerciseBuilder extends ContentBuilder {
+public class ExerciseFormBuilder extends ContentBuilder {
     private final int PAGE_SIZE = 10; // you decide the page size
     // private GridBagConstraints constraints = new GridBagConstraints(); // parent class has an GridBagConstraint
     private PaginationTable exerciseLogTable;
     private JButton nextButton;
     private JButton prevButton;
     private JButton saveButton;
+    private JPopupMenu popupMenu;
+    private JMenuItem deleteItem;
 
     private Map<String, JComponent> entries = new HashMap<>();
 
-    public ExerciseBuilder(JPanel page) {
+    public ExerciseFormBuilder(JPanel page) {
         super(page);
         constraints = new GridBagConstraints();
 
@@ -38,22 +37,20 @@ public class ExerciseBuilder extends ContentBuilder {
         prevButton = new JButton("Prev Page");
         nextButton = new JButton("Next Page");
         saveButton = new JButton("Save");
+        popupMenu = new JPopupMenu();
+        deleteItem = new JMenuItem("Delete");
+        popupMenu.add(deleteItem);
     }
 
     @Override
     public void setUp() {
-        //需要增添setup以精简之后的method
         page.setLayout(new GridBagLayout());
         constraints.gridx = 0;
         constraints.gridy = gridy++;
         constraints.gridwidth = GridBagConstraints.REMAINDER;
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.NONE;
-//        constraints.anchor = GridBagConstraints.NORTHWEST;
-//        constraints.weightx = 1;
-//        constraints.weighty = 1;
         constraints.insets = new Insets(5, 5, 5, 5);
-
         Dimension buttonSize = new Dimension(100, 30);
         nextButton.setPreferredSize(buttonSize);
         prevButton.setPreferredSize(buttonSize);
@@ -62,22 +59,13 @@ public class ExerciseBuilder extends ContentBuilder {
 
     @Override
     public void buildMainContent() {
-        // setTitle();
         showExerciseLogTable();
         addSaveExerciseModule();
     }
 
-    public void setTitle() {
-        JLabel titleLabel = new JLabel("Welcome to exercise page!");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20)); // 可以设置字体和大小
-
-        constraints.insets = new Insets(5, 0, 5, 5);
-        page.add(titleLabel, constraints);
-    }
-
     public void showExerciseLogTable() {
         //create log table title
-        JLabel logTableLabel = new JLabel("Check your exercise log here!");
+        JLabel logTableLabel = new JLabel("View your exercise log here!");
         logTableLabel.setFont(new Font("Arial", Font.BOLD, 18));
         //create delete exercise reminder for log table
         JLabel deleteLabel = new JLabel("Right-click to delete...");
@@ -96,6 +84,7 @@ public class ExerciseBuilder extends ContentBuilder {
         // hide exercise id
         exerciseLogTable.getColumnModel().getColumn(0).setMinWidth(0);
         exerciseLogTable.getColumnModel().getColumn(0).setMaxWidth(0);
+        exerciseLogTable.setComponentPopupMenu(popupMenu);
 
         constraints.gridx = 0;
         constraints.gridy = gridy++;
@@ -107,6 +96,7 @@ public class ExerciseBuilder extends ContentBuilder {
         page.add(new JScrollPane(exerciseLogTable), constraints);
 
         addLogTableButtons();
+
     }
 
     public void addLogTableButtons() {
@@ -134,17 +124,9 @@ public class ExerciseBuilder extends ContentBuilder {
         gridy++;
     }
 
-    public JButton getNextButton() {
-        return nextButton;
-    }
-
-    public JButton getPrevButton() {
-        return prevButton;
-    }
-
     public void addSaveExerciseModule() { // may need refactor in d3
         //create title
-        JLabel saveModuleLabel = new JLabel("Save your new exercise here!");
+        JLabel saveModuleLabel = new JLabel("Add and save your new exercise record here!");
         saveModuleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         constraints.gridx = 0;
         constraints.gridy = gridy++;
@@ -215,6 +197,10 @@ public class ExerciseBuilder extends ContentBuilder {
         prevButton.addActionListener(prevListener);
         nextButton.addActionListener(nextListener);
         saveButton.addActionListener(submitListener);
+    }
+
+    public void setDeleteMenuItem(ActionListener deleteListener) {
+        deleteItem.addActionListener(deleteListener);
     }
 }
 
