@@ -11,6 +11,7 @@ import main.frontend.custom.table.PaginationTable;
 import main.frontend.common.Content;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class ExercisePage extends Content {
         //construct page
         ExerciseBuilder builder = new ExerciseBuilder(content);
         ExerciseDirector director = new ExerciseDirector(builder);
-        director.constructPage("Exercise Record", handlePerv(), handleNext(), handleSubmit(user, content), handleDelete(user, content));
+        director.constructPage("Exercise Record", handlePerv(), handleNext(), handleSubmit(user, content), handleDelete());
 
 
         table = builder.getTable();
@@ -57,23 +58,30 @@ public class ExercisePage extends Content {
             Exercise exercise = new Exercise(date, type, intensity, duration);
             Result res = controller.save(exercise, user);
             if (res.getCode().equals("200")) {
-                JOptionPane.showMessageDialog(content, "Information updated!", "Message", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(content, "Record added!", "Message", JOptionPane.INFORMATION_MESSAGE);
+                loadExerciseLog(user);
             } else {
                 JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         };
     }
 
-    private ActionListener handleDelete(User user, JPanel content) {
+    private ActionListener handleDelete() {
         return e -> {
-            int selectedRow = table.getSelectedRow();
-            if (selectedRow != -1) {
-                Result res = controller.delete(selectedRow);
+            int row = table.getSelectedRow();
+            if (row != -1) {
+                DefaultTableModel model = (DefaultTableModel) table.getModel();
+                Object[] rowData = model.getDataVector().elementAt(row).toArray();
+                int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this record?", "Confirm", JOptionPane.YES_NO_OPTION);
+                if (choice == JOptionPane.NO_OPTION) return;
+
+                int id = (int) rowData[0];
+                Result res = controller.delete(id);
                 if (res.getCode().equals("200")) {
-                    JOptionPane.showMessageDialog(content, "deleted!", "Message", JOptionPane.INFORMATION_MESSAGE);
-                    loadExerciseLog(user);
+                    JOptionPane.showMessageDialog(null, "Delete success", "Message", JOptionPane.INFORMATION_MESSAGE);
+                    model.removeRow(row);
                 } else {
-                    JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         };
