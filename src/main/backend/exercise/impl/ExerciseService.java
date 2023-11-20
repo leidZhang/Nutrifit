@@ -1,10 +1,8 @@
 package main.backend.exercise.impl;
 
-import main.backend.exercise.ExerciseData;
 import main.backend.exercise.IExerciseMapper;
 import main.backend.exercise.IExerciseService;
 import main.backend.exercise.entity.Exercise;
-import main.backend.exercise.impl.ExerciseMapper;
 import main.backend.user.entity.User;
 
 import java.sql.Date;
@@ -16,14 +14,9 @@ import java.util.Map;
 public class ExerciseService implements IExerciseService {
     private IExerciseMapper exerciseMapper = new ExerciseMapper();
 
-//    public void saveExerciseData(Exercise data, User user) {
-//        int burnCalories = calBurnCalories(data, user);
-//        Exercise exercise = new Exercise(data.getDate(), data.getType(), data.getIntensity(), data.getDuration(), burnCalories);
-//        save(exercise, user);
-//    }
-
     @Override
     public void save(Exercise exercise, User user) throws SQLException {
+        validateExercise(exercise);
         int calories = calBurnCalories(exercise, user);
         System.out.println("Burned: " + calories);
         exercise.setBurnCalories(calories);
@@ -48,6 +41,10 @@ public class ExerciseService implements IExerciseService {
     @Override
     public Map<Date, Float> getCaloriesByDate(User user, Date startDate, Date endDate) throws SQLException {
         return exerciseMapper.getCaloriesByDate(user, startDate, endDate);
+    }
+
+    private void validateExercise(Exercise exercise) throws IllegalArgumentException{
+
     }
 
     private int calBurnCalories(Exercise data, User user) {
