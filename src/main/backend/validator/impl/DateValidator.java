@@ -4,8 +4,8 @@ import main.backend.validator.Validator;
 
 import java.sql.Date;
 
-public class BirthdayValidator extends Validator {
-    public BirthdayValidator(Object obj) {
+public class DateValidator extends Validator {
+    public DateValidator(Object obj) {
         super(obj);
     }
 

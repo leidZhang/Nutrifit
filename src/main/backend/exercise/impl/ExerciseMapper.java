@@ -6,10 +6,8 @@ import main.backend.exercise.entity.Exercise;
 import main.backend.user.entity.User;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
 public class ExerciseMapper implements IExerciseMapper {
     @Override
@@ -79,7 +77,8 @@ public class ExerciseMapper implements IExerciseMapper {
             connection = ConnectionUtil.getConnection();
             // use PreparedStatement with placeholders
             String query = "select exercise_id, date, type, intensity, duration, burn_calories ";
-            query += "from exercise where user_id = (select user_id from user where username = ?)";
+            query += "from exercise where user_id = (select user_id from user where username = ?) ";
+            query += "order by date desc";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setString(1, username);
@@ -119,7 +118,7 @@ public class ExerciseMapper implements IExerciseMapper {
             // use PreparedStatement with placeholders
             String query = "select exercise_id, date, type, intensity, duration, burn_calories ";
             query += "from exercise where user_id = (select user_id from user where username = ?) ";
-            query += "and Date between ? and ?";
+            query += "and Date between ? and ? order by date desc";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setString(1, username);
@@ -155,7 +154,7 @@ public class ExerciseMapper implements IExerciseMapper {
         PreparedStatement ps = null;
         ResultSet res = null;
 
-        Map<Date, Float> calories = new HashMap<>();
+        Map<Date, Float> calories = new LinkedHashMap<>();
         int userId = user.getId();
 
         try {
@@ -163,7 +162,7 @@ public class ExerciseMapper implements IExerciseMapper {
             // use PreparedStatement with placeholders
             String query = "select date, sum(burn_calories) as total_calories ";
             query += "from exercise where user_id = ? and date between ? and ? ";
-            query += "group by date";
+            query += "group by date order by date asc";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setInt(1, userId);

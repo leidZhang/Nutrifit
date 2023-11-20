@@ -18,7 +18,6 @@ import java.time.LocalDate;
 import java.util.Map;
 
 public class MealVisualPage extends Content {
-    private final String DEFAULT_START_DATE = "1970-01-01";
     private final String DEFAULT_CATEGORY = "Your Intake";
     private Content recordPage;
     private IMealController controller = new MealController();
@@ -48,6 +47,13 @@ public class MealVisualPage extends Content {
         };
     }
 
+    private void  handleDefaultRender() {
+        LocalDate today = LocalDate.now();
+        LocalDate start = today.minusDays(14);
+        renderPieChart(Date.valueOf(start), Date.valueOf(today));
+        renderRadarChart(Date.valueOf(start), Date.valueOf(today));
+    }
+
     private ActionListener handleReset() {
         return e -> {
             for (Map.Entry<String, NfEntry> entry : entries.entrySet()) {
@@ -55,11 +61,7 @@ public class MealVisualPage extends Content {
                 entry.getValue().setMessage("");
             }
 
-            Date startDate = Date.valueOf(DEFAULT_START_DATE);
-            Date endDate = Date.valueOf(LocalDate.now());
-
-            renderPieChart(startDate, endDate);
-            renderRadarChart(startDate, endDate);
+            handleDefaultRender();
         };
     }
 
@@ -126,10 +128,7 @@ public class MealVisualPage extends Content {
         buttonMap.get("View Records").addActionListener(handleViewRecords());
         setUpEntries();
 
-        Date startDate = Date.valueOf(DEFAULT_START_DATE);
-        Date endDate = Date.valueOf(LocalDate.now());
-        renderPieChart(startDate, endDate);
-        renderRadarChart(startDate, endDate);
+        handleDefaultRender();
     }
 
     @Override

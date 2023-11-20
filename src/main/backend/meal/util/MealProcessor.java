@@ -5,7 +5,7 @@ import main.backend.food.entity.Nutrient;
 
 import java.util.*;
 
-public class MealUtil {
+public class MealProcessor {
     private final String UNIT_MG = "mg";
     private final String UNIT_UG = "μg";
     private final String UNIT_G = "g";

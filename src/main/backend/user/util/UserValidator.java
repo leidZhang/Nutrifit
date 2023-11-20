@@ -1,4 +1,4 @@
-package main.backend.user.validator;
+package main.backend.user.util;
 
 import main.backend.user.entity.User;
 import main.backend.validator.Validator;
@@ -9,7 +9,7 @@ public class UserValidator {
 
     public UserValidator(User user) {
         VALIDATORS = new Validator[]{
-                new BirthdayValidator(user.getDateOfBirth()),
+                new DateValidator(user.getDateOfBirth()),
                 new HeightValidator(user.getHeight()),
                 new WeightValidator(user.getWeight()),
                 new NameValidator(user.getName()),
