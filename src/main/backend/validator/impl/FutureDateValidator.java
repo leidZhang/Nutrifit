@@ -4,8 +4,8 @@ import main.backend.validator.Validator;
 
 import java.sql.Date;
 
-public class BirthdayValidator extends Validator {
-    public BirthdayValidator(Object obj) {
+public class FutureDateValidator extends Validator {
+    public FutureDateValidator(Object obj) {
         super(obj);
     }
 
@@ -13,8 +13,8 @@ public class BirthdayValidator extends Validator {
     public void validate() throws IllegalArgumentException {
         if (obj instanceof Date input) {
             Date today = new Date(System.currentTimeMillis());
-            if (input.after(today)) {
-                throw new IllegalStateException("Date must before today");
+            if (!input.after(today)) {
+                throw new IllegalStateException("Date must after today");
             }
         } else {
             throw new IllegalStateException("Invalid Date");

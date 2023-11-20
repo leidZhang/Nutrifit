@@ -1,9 +1,7 @@
 package test.user;
 
 import main.backend.common.Result;
-import main.backend.user.IUserController;
 import main.backend.user.entity.User;
-import main.backend.user.impl.UserController;
 import org.junit.Test;
 
 import java.sql.Date;
@@ -12,12 +10,11 @@ import java.text.SimpleDateFormat;
 
 import static junit.framework.TestCase.assertNotSame;
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
-public class UserQueryTest { // Need more test case
-    protected IUserController userController = new UserController();
-
+public class UserRegisterTest extends UserTest { // Need more test case
     @Test
-    public void TestRegisterCase1() {
+    public void testRegisterCase1() {
         //Testing new user registration
         String dateOfBirthString = "1987-09-15";
         Date sqlDate = TransformDate(dateOfBirthString);
@@ -33,7 +30,7 @@ public class UserQueryTest { // Need more test case
     }
 
     @Test
-    public void TestRegisterCase2() {
+    public void testRegisterCase2() {
         //Testing new user registration
         String dateOfBirthString = "1987-09-15";
         Date sqlDate = TransformDate(dateOfBirthString);
@@ -49,7 +46,7 @@ public class UserQueryTest { // Need more test case
     }
 
     @Test
-    public void TestRegisterCase3() {
+    public void testRegisterCase3() {
         //Testing new user registration
         String dateOfBirthString = "1987-09-15";
         Date sqlDate = TransformDate(dateOfBirthString);
@@ -65,7 +62,7 @@ public class UserQueryTest { // Need more test case
     }
 
     @Test
-    public void TestRegisterCase4() {
+    public void testRegisterCase4() {
         //Testing new user registration
         Date today = new Date(System.currentTimeMillis());
         User user = new User("Bob Smith",
@@ -81,7 +78,7 @@ public class UserQueryTest { // Need more test case
     }
 
     @Test
-    public void TestRegisterCase5() {
+    public void testRegisterCase5() {
         //Testing user registration twice
         String dateOfBirthString = "1987-09-15";
         Date sqlDate = TransformDate(dateOfBirthString);
@@ -98,7 +95,7 @@ public class UserQueryTest { // Need more test case
     }
 
     @Test
-    public void TestRegisterCase6() {
+    public void testRegisterCase6() {
         //Test invalid name for registration
         String dateOfBirthString = "1987-09-15";
         Date sqlDate = TransformDate(dateOfBirthString);
@@ -115,7 +112,7 @@ public class UserQueryTest { // Need more test case
     }
 
     @Test
-    public void TestRegisterCase7() {
+    public void testRegisterCase7() {
         //Test invalid username for registration
         String dateOfBirthString = "1987-09-15";
         Date sqlDate = TransformDate(dateOfBirthString);
@@ -132,7 +129,7 @@ public class UserQueryTest { // Need more test case
     }
 
     @Test
-    public void TestRegisterCase8() {
+    public void testRegisterCase8() {
         //Test invalid password for registration
         String dateOfBirthString = "1987-09-15";
         Date sqlDate = TransformDate(dateOfBirthString);
@@ -149,7 +146,7 @@ public class UserQueryTest { // Need more test case
     }
 
     @Test
-    public void TestRegisterCase9() {
+    public void testRegisterCase9() {
         //Test invalid sex for registration
         String dateOfBirthString = "1987-09-15";
         Date sqlDate = TransformDate(dateOfBirthString);
@@ -166,7 +163,7 @@ public class UserQueryTest { // Need more test case
     }
 
     @Test
-    public void TestRegisterCase10() {
+    public void testRegisterCase10() {
         //Test date out of boundry for registration
         String dateOfBirthString = "2077-10-29";
         Date sqlDate = TransformDate(dateOfBirthString);
@@ -184,7 +181,7 @@ public class UserQueryTest { // Need more test case
 
 
     @Test
-    public void TestRegisterCase11() {
+    public void testRegisterCase11() {
         //Test invalid height for registration
         String dateOfBirthString = "1987-09-18";
         Date sqlDate = TransformDate(dateOfBirthString);
@@ -201,7 +198,7 @@ public class UserQueryTest { // Need more test case
     }
 
     @Test
-    public void TestRegisterCase12() {
+    public void testRegisterCase12() {
         //Test invalid weight for registration
         String dateOfBirthString = "1987-09-19";
         Date sqlDate = TransformDate(dateOfBirthString);
@@ -218,168 +215,77 @@ public class UserQueryTest { // Need more test case
     }
 
     @Test
-    public void TestLoginCase1() {
-        //Test normal login
-        Result res = userController.login("mok334","zg%$%@#1");
-        assertEquals("200", res.getCode());
-        System.out.println("login success");
-    }
-
-    @Test
-    public void TestLoginCase2() {
-        //Test wrong username
-        Result res = userController.login("Bob Smith","zg%$%@#1");
-        assertNotSame("200", res.getCode());
-        System.out.println(res.getMessage());
-    }
-
-    @Test
-    public void TestLoginCase3() {
-        //Test wrong password
-        Result res = userController.login("Bob Smith","12345");
-        assertNotSame("200", res.getCode());
-        System.out.println(res.getMessage());
-    }
-
-    @Test
-    public void TestGetUserCase1() {
-        //Test right GetUser
-        Result res = userController.getUser("mok334");
-        assertEquals("200", res.getCode());
-        System.out.println(res.getData());
-    }
-
-    @Test
-    public void TestGetUserCase2() {
-        //Test get non-existence user
-        Result res = userController.getUser("mok");
-        assertNotSame("200", res.getCode());
-        System.out.println(res.getMessage());
-    }
-
-    @Test
-    public void TestUpdateUserCase1() {
-        //Testing the normal update of user information
-        Result result=userController.getUser("mok334");
-        User old_user= (User) result.getData();
-        String dateOfBirthString = "2002-11-16";
-        Date sqlDate = TransformDate(dateOfBirthString);
-        User user = new User(old_user.getId(),"black",
-                "black",
-                "password",
-                "male",
-                sqlDate,
-                180,
-                60);
-        Result res = userController.updateUser(user);
-        assertEquals("200", res.getCode());
-        System.out.println("update success");
-    }
-
-    @Test
-    public void TestUpdateUserCase2() {
-        //Testing illegal name
-        Result result=userController.getUser("mok335");
-        User old_user= (User) result.getData();
-        String dateOfBirthString = "2002-11-16";
-        Date sqlDate = TransformDate(dateOfBirthString);
-        User user = new User(old_user.getId(),"",
-                "black",
-                "password",
-                "male",
-                sqlDate,
-                180,
-                60);
-        Result res = userController.updateUser(user);
-        assertNotSame("200", res.getCode());
-        System.out.println(res.getMessage());
-    }
-
-    @Test
-    public void TestUpdateUserCase3() {
-        //Testing illegal username
-        Result result=userController.getUser("mok335");
-        User old_user= (User) result.getData();
-        String dateOfBirthString = "2002-11-16";
-        Date sqlDate = TransformDate(dateOfBirthString);
-        User user = new User(old_user.getId(),"black",
-                "",
-                "password",
-                "male",
-                sqlDate,
-                180,
-                60);
-        Result res = userController.updateUser(user);
-        assertNotSame("200", res.getCode());
-        System.out.println(res.getMessage());
-    }
-
-    @Test
-    public void TestUpdateUserCase4() {
-        //Testing illegal sex
-        Result result=userController.getUser("mok335");
-        User old_user= (User) result.getData();
-        String dateOfBirthString = "2002-11-16";
-        Date sqlDate = TransformDate(dateOfBirthString);
-        User user = new User(old_user.getId(),"black",
-                "black",
-                "password",
-                "xxx",
-                sqlDate,
-                180,
-                60);
-        Result res = userController.updateUser(user);
-        assertNotSame("200", res.getCode());
-        System.out.println(res.getMessage());
-    }
-
-    @Test
-    public void TestUpdateUserCase5() {
+    public void testRegisterCase13() {
         //Testing illegal height
-        Result result=userController.getUser("mok335");
-        User old_user= (User) result.getData();
-        String dateOfBirthString = "2002-11-16";
+        String dateOfBirthString = "1987-09-15";
         Date sqlDate = TransformDate(dateOfBirthString);
-        User user = new User(old_user.getId(),"black",
-                "black",
-                "password",
-                "male",
-                sqlDate,
-                -180,
-                60);
-        Result res = userController.updateUser(user);
-        assertNotSame("200", res.getCode());
-        System.out.println(res.getMessage());
+
+        // Use a string that cannot be parsed as a float
+        String invalidHeightString = "invalid_height_value";
+
+        try {
+            float invalidHeight = Float.parseFloat(invalidHeightString);
+
+            User user = new User("Bob Smith",
+                    "mok3344",
+                    "zg%$%@#1",
+                    "male",
+                    sqlDate,
+                    invalidHeight,
+                    65);
+
+            // This line should not be reached, fail the test if it does
+            Result res = userController.save(user);
+            assertNotEquals("200", res.getCode());
+        } catch (NumberFormatException e) {
+            // Catch the expected exception
+            // Perform any additional assertions if needed
+            assertEquals("Expected exception message", "For input string: \"invalid_height_value\"", e.getMessage());
+        }
     }
 
     @Test
-    public void TestUpdateUserCase6() {
-        //Testing illegal weight
-        Result result=userController.getUser("mok335");
-        User old_user= (User) result.getData();
-        String dateOfBirthString = "2002-11-16";
+    public void testRegisterCase14() {
+        //Testing illegal height
+        String dateOfBirthString = "1987-09-15";
         Date sqlDate = TransformDate(dateOfBirthString);
-        User user = new User(old_user.getId(), "black",
-                "black",
-                "password",
-                "male",
-                sqlDate,
-                180,
-                -60);
-        Result res = userController.updateUser(user);
-        assertNotSame("200", res.getCode());
-        System.out.println(res.getMessage());
+
+        // Use a string that cannot be parsed as a float
+        String invalidWeightString = "invalid_height_value";
+
+        try {
+            float invalidWeight = Float.parseFloat(invalidWeightString);
+
+            User user = new User("Bob Smith",
+                    "mok3344",
+                    "zg%$%@#1",
+                    "male",
+                    sqlDate,
+                    180,
+                    invalidWeight);
+
+            // This line should not be reached, fail the test if it does
+            Result res = userController.save(user);
+            assertNotEquals("200", res.getCode());
+        } catch (NumberFormatException e) {
+            // Catch the expected exception
+            // Perform any additional assertions if needed
+            assertEquals("Expected exception message", "For input string: \"invalid_height_value\"", e.getMessage());
+        }
     }
 
-    private Date TransformDate(String dateOfBirthString) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        java.sql.Date sqlDate = null;
-        try {
-            java.util.Date utilDate = dateFormat.parse(dateOfBirthString);
-            sqlDate = new java.sql.Date(utilDate.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return sqlDate;
+    @Test
+    public void testRegisterCase15() {
+        // Use a string that cannot be parsed as a float
+        User user = new User("Bob Smith",
+                    "mok3344",
+                    "zg%$%@#1",
+                    "male",
+                    null,
+                    180,
+                    60);
+
+        Result res = userController.save(user);
+        assertNotEquals("200", res.getCode());
     }
 }

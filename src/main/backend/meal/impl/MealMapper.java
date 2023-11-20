@@ -260,7 +260,7 @@ public class MealMapper implements IMealMapper { // not tested yet
         PreparedStatement ps = null;
         ResultSet res = null;
 
-        Map<Date, Float> calories = new HashMap<>();
+        Map<Date, Float> calories = new LinkedHashMap<>();
         int userId = user.getId();
 
         try {
@@ -268,7 +268,7 @@ public class MealMapper implements IMealMapper { // not tested yet
             // use PreparedStatement with placeholders
             String query = "select date, sum(total_calories) as total_calories ";
             query += "from meal where user_id = ? and date between ? and ? ";
-            query += "group by date";
+            query += "group by date order by date asc";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setInt(1, userId);
