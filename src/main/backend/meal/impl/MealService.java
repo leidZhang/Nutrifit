@@ -1,5 +1,6 @@
 package main.backend.meal.impl;
 
+import main.backend.common.PeriodValidator;
 import main.backend.food.IFoodService;
 import main.backend.food.entity.Food;
 import main.backend.food.entity.Nutrient;
@@ -8,9 +9,11 @@ import main.backend.food.util.GroupConverter;
 import main.backend.meal.IMealMapper;
 import main.backend.meal.IMealService;
 import main.backend.meal.entity.Meal;
-import main.backend.meal.util.MealUtil;
+import main.backend.meal.util.MealProcessor;
+import main.backend.meal.util.MealValidator;
 import main.backend.meal.util.NutrientCalculator;
 import main.backend.user.entity.User;
+import main.backend.validator.impl.DateValidator;
 
 import java.sql.SQLException;
 import java.sql.Date;
@@ -20,11 +23,11 @@ import java.util.List;
 import java.util.Map;
 
 public class MealService implements IMealService {
-    IMealMapper mapper = new MealMapper();
-    IFoodService service = new FoodService();
-    MealUtil util = new MealUtil(); // replace it with interface
-    NutrientCalculator calculator = new NutrientCalculator(); // replace it with interface
-    GroupConverter converter = new GroupConverter(); // replace it with interface
+    private IMealMapper mapper = new MealMapper();
+    private IFoodService service = new FoodService();
+    private MealProcessor util = new MealProcessor(); // replace it with interface
+    private NutrientCalculator calculator = new NutrientCalculator(); // replace it with interface
+    private GroupConverter converter = new GroupConverter(); // replace it with interface
 
     private int calCalories(Map<Food, Float> foodMap) throws SQLException {
         int res = 0;
@@ -47,7 +50,10 @@ public class MealService implements IMealService {
     }
 
     @Override
-    public void save(Meal meal, User user) throws SQLException {
+    public void save(Meal meal, User user) throws SQLException, IllegalArgumentException {
+        MealValidator validator = new MealValidator(meal);
+        validator.validate();
+
         // Meal need to calculate general nutrition
         Map<Food, Float> foodMap = meal.getFoodMap(); // we can load food map in front end
         Map<Nutrient, Float> mealNutrientMap = util.getNutrientMap(foodMap); // raw nutrient map
@@ -84,7 +90,10 @@ public class MealService implements IMealService {
     }
 
     @Override
-    public List<Meal> getByPeriod(User user, Date startDate, Date endDate) throws SQLException {
+    public List<Meal> getByPeriod(User user, Date startDate, Date endDate) throws IllegalArgumentException, SQLException {
+        PeriodValidator validator = new PeriodValidator(startDate, endDate);
+        validator.validate();
+
         return mapper.getByPeriod(user, startDate, endDate);
     }
 
@@ -100,6 +109,9 @@ public class MealService implements IMealService {
 
     @Override
     public Map<Nutrient, Float> getSortedDailyNutrient(User user, Date startDate, Date endDate) throws SQLException {
+        PeriodValidator validator = new PeriodValidator(startDate, endDate);
+        validator.validate();
+
         // as requested in use case 5, we have to provide a sorted data structure for the pie diagram
         List<Meal> mealList = mapper.getByPeriod(user, startDate, endDate);
         Map<Food, Float> totalFoodMap = getTotalFoodMap(mealList);
@@ -116,6 +128,8 @@ public class MealService implements IMealService {
 
     @Override
     public Map<String, Float> getMealGroups(User user, Date startDate, Date endDate) throws SQLException {
+        PeriodValidator validator = new PeriodValidator(startDate, endDate);
+        validator.validate();
         // as requested in use case 7, we have to provide a data structure with CFG alignment, radar chart is recommended
         List<Meal> mealList = mapper.getByPeriod(user, startDate, endDate);
         Map<Food, Float> totalFoodMap = getTotalFoodMap(mealList);
@@ -137,6 +151,8 @@ public class MealService implements IMealService {
 
     @Override
     public Map<Date, Float> getCaloriesByDate(User user, Date startDate, Date endDate) throws SQLException {
+        PeriodValidator validator = new PeriodValidator(startDate, endDate);
+        validator.validate();
         return mapper.getCaloriesByDate(user, startDate, endDate);
     }
 }
