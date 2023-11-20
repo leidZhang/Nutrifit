@@ -11,7 +11,7 @@ import static junit.framework.TestCase.assertNotSame;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 
-public class UserUpdateTest extends UserTest {
+public class UserUpdateTest extends UserBaseTest {
     @Test
     public void testUpdateUserCase1() {
         //Testing the normal update of user information

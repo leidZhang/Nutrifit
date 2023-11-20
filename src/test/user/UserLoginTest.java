@@ -6,7 +6,7 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotSame;
 
-public class UserLoginTest extends UserTest {
+public class UserLoginTest extends UserBaseTest {
     @Test
     public void testLoginCase1() {
         //Test normal login

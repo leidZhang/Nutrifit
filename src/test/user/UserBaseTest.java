@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public abstract class UserTest {
+public abstract class UserBaseTest {
     protected IUserController userController = new UserController();
 
     protected Date TransformDate(String dateOfBirthString) {
