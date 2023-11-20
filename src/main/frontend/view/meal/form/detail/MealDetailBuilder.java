@@ -24,7 +24,7 @@ public class MealDetailBuilder extends MealFormBuilder {
         constraints.gridwidth = 0; // one component per row
         constraints.gridx = 0;
 
-        nutrientTable.setModelTitle(new Object[]{"Nutrition", "Amount (g)"});
+        nutrientTable.setModelTitle(new Object[]{"Nutrition", "Amount"});
         JScrollPane scrollPane2 = new JScrollPane(nutrientTable);
         scrollPane2.setPreferredSize(new Dimension(800, 250));
 

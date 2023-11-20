@@ -75,4 +75,13 @@ public class MealController implements IMealController {
             return Result.error(e.getMessage());
         }
     }
+
+    @Override
+    public Result getCaloriesByDate(User user, Date startDate, Date endDate) {
+        try {
+            return Result.success(service.getCaloriesByDate(user, startDate, endDate));
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
 }

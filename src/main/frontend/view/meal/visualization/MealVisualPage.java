@@ -67,7 +67,7 @@ public class MealVisualPage extends Content {
         boolean flag = true;
         for (Map.Entry<String, NfEntry> entry : entries.entrySet()) {
             entry.getValue().setMessage("");
-            flag = flag && entry.getValue().verifyInput();
+            flag = flag & entry.getValue().verifyInput();
         }
 
         return flag;

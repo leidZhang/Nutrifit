@@ -17,4 +17,5 @@ public interface IMealController {
     Result getByPeriod(User user, Date startDate, Date endDate);
     Result getSortedDailyNutrient(User user, Date startDate, Date endDate);
     Result getMealGroups(User user, Date startDate, Date endDate);
+    Result getCaloriesByDate(User user, Date startDate, Date endDate);
 }
