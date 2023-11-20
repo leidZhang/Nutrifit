@@ -1,15 +1,15 @@
-package main.frontend.view.exercise;
+package main.frontend.view.exercise.form;
 
 import main.frontend.common.ContentBuilder;
 
 import java.awt.event.ActionListener;
 
-public class ExerciseDirector {
-    private ExerciseBuilder builder;
+public class ExerciseFormDirector {
+    private ExerciseFormBuilder builder;
 
 
-    public ExerciseDirector(ContentBuilder builder) {
-        this.builder = (ExerciseBuilder) builder;
+    public ExerciseFormDirector(ContentBuilder builder) {
+        this.builder = (ExerciseFormBuilder) builder;
     }
 
     public void constructPage(String title, ActionListener prevListener, ActionListener nextListener, ActionListener submitListener, ActionListener deleteListener) {

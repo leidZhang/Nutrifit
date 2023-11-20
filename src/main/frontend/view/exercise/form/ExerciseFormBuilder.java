@@ -1,4 +1,4 @@
-package main.frontend.view.exercise;
+package main.frontend.view.exercise.form;
 
 import main.frontend.common.ContentBuilder;
 import main.frontend.custom.dropdown.AutoComboBox;
@@ -15,10 +15,8 @@ import java.util.List;
 //未添加显示页数和页数跳转部分
 //未添加visualization部分
 //需要更改：将可视化放在界面中，点击details按钮浏览logtable表单
-//展示tdee放在home page，可以和选择日期计算可减去多少脂肪的模块放一起
-//需要精简代码和美化设计
 
-public class ExerciseBuilder extends ContentBuilder {
+public class ExerciseFormBuilder extends ContentBuilder {
     private final int PAGE_SIZE = 10; // you decide the page size
     // private GridBagConstraints constraints = new GridBagConstraints(); // parent class has an GridBagConstraint
     private PaginationTable exerciseLogTable;
@@ -30,7 +28,7 @@ public class ExerciseBuilder extends ContentBuilder {
 
     private Map<String, JComponent> entries = new HashMap<>();
 
-    public ExerciseBuilder(JPanel page) {
+    public ExerciseFormBuilder(JPanel page) {
         super(page);
         constraints = new GridBagConstraints();
 
@@ -128,7 +126,7 @@ public class ExerciseBuilder extends ContentBuilder {
 
     public void addSaveExerciseModule() { // may need refactor in d3
         //create title
-        JLabel saveModuleLabel = new JLabel("Save your new exercise here!");
+        JLabel saveModuleLabel = new JLabel("Add and save your new exercise record here!");
         saveModuleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         constraints.gridx = 0;
         constraints.gridy = gridy++;
