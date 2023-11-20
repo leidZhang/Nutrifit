@@ -147,7 +147,7 @@ public class MealUtil {
         }
         // rest items
         float otherValue = 0;
-        Nutrient otherNutrient = new Nutrient("Other", UNIT_G);
+        Nutrient otherNutrient = new Nutrient("Other nutritions", UNIT_G);
         while (!pq.isEmpty()) {
             otherValue += pq.poll().getValue();
         }

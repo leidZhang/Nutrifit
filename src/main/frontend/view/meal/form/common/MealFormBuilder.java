@@ -53,6 +53,10 @@ public abstract class MealFormBuilder extends ContentBuilder {
         constraints.weightx = 1;
         constraints.weighty = 0;
         constraints.gridwidth = 0; // one component per row
+
+        for (Map.Entry<String, JButton> entry : buttons.entrySet()) {
+            entry.getValue().setPreferredSize(new Dimension(150, 30));
+        }
     }
 
     public void buildTopRow() {

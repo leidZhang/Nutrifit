@@ -22,7 +22,7 @@ public class MealVisualBuilder extends ContentBuilder {
     private final int DATE_ENTRY_HEIGHT = 20;
     private final int DATE_ENTRY_WIDTH = 200;
     private final String CFG_RECOMMEND = "CFG Recommendation";
-    private final Dimension CHART_DIMENSION = new Dimension(330, 500);
+    private final Dimension CHART_DIMENSION = new Dimension(420, 500);
     private final Object[][] CFG_RECOMMENDATION = new Object[][]{
             {50.0f, "Vegetables and Fruits"},
             {25.0f, "Protein"},
@@ -74,32 +74,15 @@ public class MealVisualBuilder extends ContentBuilder {
         constraints.gridx = i++;
         page.add(buttonMap.get("Reset"), constraints);
 
+        constraints.gridwidth = 1;
+        constraints.weightx = 0;
         constraints.gridy = gridy++;
-    }
-
-    private void buildRecordButton() {
-        constraints.anchor = GridBagConstraints.EAST;
-        // Add some empty space after the title
-        constraints.gridx = 0;
-        constraints.gridy = gridy++;
-        page.add(Box.createVerticalStrut(20), constraints);
-        constraints.weightx = 0.5;
-        constraints.gridy = gridy++;
-        page.add(buttonMap.get("View Records"), constraints);
-        constraints.gridy = gridy++;
-    }
-
-    private void plotCFGRecommendation(DefaultCategoryDataset dataset) {
-        for (Object[] obj : CFG_RECOMMENDATION) {
-            float val = (float) obj[0];
-            String category = (String) obj[1];
-            dataset.addValue(val, CFG_RECOMMEND, category);
-        }
     }
 
     private void buildRadarChart() {
-        constraints.gridx = 1;
-        constraints.anchor = GridBagConstraints.EAST;
+        constraints.gridx = 0;
+        constraints.gridwidth = 2;
+        constraints.anchor = GridBagConstraints.CENTER;
 
         radarPlot.setMaxValue(100);
         radarPlot.setDirection(Rotation.CLOCKWISE);
@@ -117,7 +100,7 @@ public class MealVisualBuilder extends ContentBuilder {
 
     private void buildPieChart() {
         constraints.gridx = 2;
-
+        constraints.gridwidth = 2;
         ChartPanel chartPanel = new ChartPanel(pieChart);
         chartPanel.setPreferredSize(CHART_DIMENSION);
         chartPanel.setFillZoomRectangle(true);
@@ -127,6 +110,29 @@ public class MealVisualBuilder extends ContentBuilder {
         PiePlot plot = (PiePlot) pieChart.getPlot();
         PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {2}");
         plot.setLabelGenerator(labelGenerator);
+    }
+
+    private void buildRecordButton() {
+        constraints.anchor = GridBagConstraints.CENTER;
+        // Add some empty space after the title
+        constraints.gridx = 1;
+        constraints.gridy = gridy++;
+        page.add(Box.createVerticalStrut(20), constraints);
+
+        constraints.weightx = 0.5;
+        constraints.gridy = gridy++;
+        page.add(buttonMap.get("View Records"), constraints);
+
+        constraints.weightx = 0;
+        constraints.gridy = gridy++;
+    }
+
+    private void plotCFGRecommendation(DefaultCategoryDataset dataset) {
+        for (Object[] obj : CFG_RECOMMENDATION) {
+            float val = (float) obj[0];
+            String category = (String) obj[1];
+            dataset.addValue(val, CFG_RECOMMEND, category);
+        }
     }
 
     @Override
