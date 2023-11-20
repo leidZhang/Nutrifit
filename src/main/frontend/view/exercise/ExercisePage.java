@@ -49,10 +49,10 @@ public class ExercisePage extends Content {
 
     private ActionListener handleSubmit(User user, JPanel content) {
         return e -> {
-            String type = ((AutoComboBox) entries.get("Type")).getInput();
+            String type = (String) ((AutoComboBox) entries.get("Type")).getInput();
             Date date = Date.valueOf(((NfEntry) entries.get("Date")).getInput());
             int duration = Integer.parseInt(((NfEntry) entries.get("Duration(min)")).getInput());
-            String intensity = ((AutoComboBox) entries.get("Intensity")).getInput();
+            String intensity = (String) ((AutoComboBox) entries.get("Intensity")).getInput();
 
             Exercise exercise = new Exercise(date, type, intensity, duration);
             Result res = controller.save(exercise, user);

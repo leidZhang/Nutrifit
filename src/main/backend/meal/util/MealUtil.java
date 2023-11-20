@@ -31,7 +31,7 @@ public class MealUtil {
         }
     }
 
-    public Map<Nutrient, Float> getSortedNutrientMap(Map<Food, Float> foodMap, int days) {
+    public Map<Nutrient, Float> getSortedDailyNutrient(Map<Food, Float> foodMap, int days) {
         Map<Nutrient, Float> rawMap = getTotalNutrient(foodMap); // get raw data
 
         Map<Nutrient, Float> dailyMap = getDailyNutrient(rawMap, days); // get daily value
@@ -39,7 +39,16 @@ public class MealUtil {
         List<Map.Entry<Nutrient, Float>> sortedList = sortNutrientList(processedList, 10); // assume we need top 10
         Map<Nutrient, Float> sortedMap = entryListToMap(sortedList);
 
-        return toPercentageMap(sortedMap);
+        return sortedMap;
+    }
+
+    public Map<Nutrient, Float> getNutrientMap(Map<Food, Float> foodMap) {
+        Map<Nutrient, Float> rawMap = getTotalNutrient(foodMap); // get raw data
+
+        List<Map.Entry<Nutrient, Float>> processedList = getNutrientList(rawMap); // convert unit to g
+        Map<Nutrient, Float> nutrientMap = entryListToMap(processedList);
+
+        return nutrientMap;
     }
 
     public <T> Map<T, Float> toPercentageMap(Map<? extends T, Float> weightMap) {
@@ -52,13 +61,13 @@ public class MealUtil {
         for (Map.Entry<? extends T, Float> entry : weightMap.entrySet()) {
             T key = entry.getKey();
             float val = entry.getValue();
-            percentageMap.put(key, val / total);
+            percentageMap.put(key, (val / total) * 100);
         }
 
         return percentageMap;
     }
 
-    public Map<Nutrient, Float> getTotalNutrient(Map<Food, Float> foodMap) {
+    private Map<Nutrient, Float> getTotalNutrient(Map<Food, Float> foodMap) {
         Map<Nutrient, Float> totalNutrientMap = new HashMap<>();
 
         for (Map.Entry<Food, Float> foodEntry : foodMap.entrySet()) {

@@ -34,6 +34,8 @@ public class FoodMapper implements IFoodMapper {
                 String foodGroup = res.getString("FoodGroupName");
 
                 Food food = new Food(id, foodDescription, foodGroup);
+                food.setNutrientFloatMap(getUnitNutrientValue(id));
+
                 list.add(food);
             }
         } catch (SQLException e) {
@@ -60,10 +62,13 @@ public class FoodMapper implements IFoodMapper {
             query += "from `food name` as fn inner join (";
             query += "select na.FoodID, nn.NutrientID, nn.NutrientSymbol, nn.NutrientName, na.NutrientValue, nn.NutrientUnit ";
             query += "from `nutrient name` as nn inner join `nutrient amount` as na ";
-            query += "on nn.NutrientID = na.NutrientNameID and nn.NutrientSymbol not regexp '^[0-9]+') as nt ";
+            query += "on nn.NutrientID = na.NutrientNameID and nn.NutrientName not regexp '^^FATTY ACID(?!.*TOTAL$).*') as nt ";
             query += "on fn.FoodID = nt.FoodID and fn.FoodID = ? and nt.NutrientName <> 'ENERGY (KILOCALORIES)' ";
             query += "and nt.NutrientName <> 'ENERGY (KILOJOULES)' and nt.NutrientName <> 'TOTAL NIACIN EQUIVALENT'";
-            query += "and nt.NutrientName <> 'VITAMIN D (INTERNATIONAL UNITS)' and nt.NutrientValue <> 0";
+            query += "and nt.NutrientName <> 'VITAMIN D (INTERNATIONAL UNITS)' and nt.NutrientValue <> 0 ";
+            query += "and nt.NutrientName <> 'ASH, TOTAL' and nt.NutrientName <> 'SUGARS, TOTAL' ";
+            query += "and nt.NutrientName <> 'FAT (TOTAL LIPIDS)' and nt.NutrientName <> 'FIBRE, TOTAL DIETARY'";
+            query += "and nt.NutrientName <> 'TOTAL FOLACIN'";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setInt(1, id);
