@@ -17,6 +17,7 @@ public abstract class ContentBuilder {
         Font titleFont = new Font("Arial", Font.BOLD, 25);
         titleLabel.setFont(titleFont);
 
+        constraints.gridwidth = GridBagConstraints.REMAINDER;
         constraints.gridy = gridy++;
         page.add(titleLabel, constraints);
 

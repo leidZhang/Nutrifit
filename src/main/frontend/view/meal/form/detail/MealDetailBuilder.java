@@ -40,9 +40,8 @@ public class MealDetailBuilder extends MealFormBuilder {
 
     private void buildBottomRow() {
         int i = 0;
-        constraints.gridwidth = 1; // one component per row
-
-        constraints.gridx = i++;
+        constraints.gridwidth = 2; // one component per row
+        buttons.get("Back").setPreferredSize(new Dimension(200, 30));
         page.add(buttons.get("Back"), constraints);
 
         constraints.gridy = gridy++;
