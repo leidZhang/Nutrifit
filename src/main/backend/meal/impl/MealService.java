@@ -134,4 +134,9 @@ public class MealService implements IMealService {
 
         return util.toPercentageMap(res);
     }
+
+    @Override
+    public Map<Date, Float> getCaloriesByDate(User user, Date startDate, Date endDate) throws SQLException {
+        return mapper.getCaloriesByDate(user, startDate, endDate);
+    }
 }

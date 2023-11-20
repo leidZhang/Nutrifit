@@ -17,4 +17,5 @@ public interface IMealService {
     List<Meal> getByPeriod(User user, Date startDate, Date endDate) throws SQLException;
     Map<Nutrient, Float> getSortedDailyNutrient(User user, Date startDate, Date endDate) throws SQLException;
     Map<String, Float> getMealGroups(User user, Date startDate, Date endDate) throws SQLException;
+    Map<Date, Float> getCaloriesByDate(User user, Date startDate, Date endDate) throws SQLException;
 }

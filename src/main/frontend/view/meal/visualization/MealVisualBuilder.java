@@ -22,6 +22,7 @@ public class MealVisualBuilder extends ContentBuilder {
     private final int DATE_ENTRY_HEIGHT = 20;
     private final int DATE_ENTRY_WIDTH = 200;
     private final String CFG_RECOMMEND = "CFG Recommendation";
+    private final Dimension BUTTON_DIMENSION = new Dimension(150, 30);
     private final Dimension CHART_DIMENSION = new Dimension(420, 500);
     private final Object[][] CFG_RECOMMENDATION = new Object[][]{
             {50.0f, "Vegetables and Fruits"},
@@ -70,9 +71,14 @@ public class MealVisualBuilder extends ContentBuilder {
         }
 
         constraints.gridx = i++;
-        page.add(buttonMap.get("Apply"), constraints);
+        JButton applyButton = buttonMap.get("Apply");
+        applyButton.setPreferredSize(BUTTON_DIMENSION);
+        page.add(applyButton, constraints);
+
         constraints.gridx = i++;
-        page.add(buttonMap.get("Reset"), constraints);
+        JButton resetButton = buttonMap.get("Reset");
+        resetButton.setPreferredSize(BUTTON_DIMENSION);
+        page.add(resetButton, constraints);
 
         constraints.gridwidth = 1;
         constraints.weightx = 0;
@@ -108,7 +114,7 @@ public class MealVisualBuilder extends ContentBuilder {
         constraints.gridy = gridy++;
 
         PiePlot plot = (PiePlot) pieChart.getPlot();
-        PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} = {2}");
+        PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator("{0} {2}");
         plot.setLabelGenerator(labelGenerator);
     }
 
