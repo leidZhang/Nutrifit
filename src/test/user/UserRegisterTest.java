@@ -5,14 +5,12 @@ import main.backend.user.entity.User;
 import org.junit.Test;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import static junit.framework.TestCase.assertNotSame;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class UserRegisterTest extends UserTest { // Need more test case
+public class UserRegisterTest extends UserBaseTest { // Need more test case
     @Test
     public void testRegisterCase1() {
         //Testing new user registration
