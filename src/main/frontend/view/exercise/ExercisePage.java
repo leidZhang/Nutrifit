@@ -29,7 +29,7 @@ public class ExercisePage extends Content {
         //construct page
         ExerciseBuilder builder = new ExerciseBuilder(content);
         ExerciseDirector director = new ExerciseDirector(builder);
-        director.constructPage("Exercise Record", handlePerv(), handleNext(), handleSubmit(user, content));
+        director.constructPage("Exercise Record", handlePerv(), handleNext(), handleSubmit(user, content), handleDelete(user, content));
 
 
         table = builder.getTable();
@@ -60,6 +60,21 @@ public class ExercisePage extends Content {
                 JOptionPane.showMessageDialog(content, "Information updated!", "Message", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        };
+    }
+
+    private ActionListener handleDelete(User user, JPanel content) {
+        return e -> {
+            int selectedRow = table.getSelectedRow();
+            if (selectedRow != -1) {
+                Result res = controller.delete(selectedRow);
+                if (res.getCode().equals("200")) {
+                    JOptionPane.showMessageDialog(content, "deleted!", "Message", JOptionPane.INFORMATION_MESSAGE);
+                    loadExerciseLog(user);
+                } else {
+                    JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         };
     }

@@ -12,7 +12,7 @@ public class ExerciseDirector {
         this.builder = (ExerciseBuilder) builder;
     }
 
-    public void constructPage(String title, ActionListener prevListener, ActionListener nextListener, ActionListener submitListener) {
+    public void constructPage(String title, ActionListener prevListener, ActionListener nextListener, ActionListener submitListener, ActionListener deleteListener) {
         builder.clearPage(); // call this function in every build process
         builder.setUp();
 
@@ -20,5 +20,6 @@ public class ExerciseDirector {
         builder.buildMainContent();
         // builder.addLogTableButtons();
         builder.setTableButton(prevListener, nextListener, submitListener);
+        builder.setDeleteMenuItem(deleteListener);
     }
 }
