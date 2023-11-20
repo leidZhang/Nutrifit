@@ -1,36 +1,28 @@
 package main.frontend.view.home;
 
 import main.frontend.common.Content;
+import main.frontend.common.ContentBuilder;
+import main.frontend.custom.entry.NfEntry;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
-import java.awt.*;
+import java.util.Map;
 
 
 public class Home extends Content {
+    private Map<String, NfEntry> entries;
+    private Map<String, JButton> buttons;
+    private DefaultCategoryDataset dataSet;
+
     @Override
     public String showContent(JPanel content) {
-        content.removeAll();
+        ContentBuilder builder = new HomeBuilder(content);
+        HomeDirector director = new HomeDirector(builder);
+        director.constructPage("Welcome to Nutrifit");
 
-        content.setLayout(new GridBagLayout());
-
-        // set up button attributes
-        JLabel label = new JLabel("Welcome to Home Page"); // get login user info
-        label.setForeground(Color.BLACK);
-        label.setPreferredSize(new Dimension(200, 20));
-
-        // set up GridBagLayout
-        content.setLayout(new GridBagLayout());
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        // set up common constraints for buttons
-        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST; // align: top left
-        gridBagConstraints.weightx = 1.0; // allocate horizontal space
-        gridBagConstraints.weighty = 1.0; // allocate vertical space
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5); // component border
-
-        // add button to the first row and first column
-        gridBagConstraints.gridx = 0; // column 0
-        gridBagConstraints.gridy = 0; // row 0
-        content.add(label, gridBagConstraints);
+        entries = ((HomeBuilder) builder).getEntries();
+        buttons = ((HomeBuilder) builder).getButtons();
+        dataSet = ((HomeBuilder) builder).getDataSet();
 
         return "Switch to Home Page";
     }
