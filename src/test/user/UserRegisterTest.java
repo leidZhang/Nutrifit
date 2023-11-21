@@ -64,7 +64,7 @@ public class UserRegisterTest extends UserBaseTest { // Need more test case
         //Testing new user registration
         Date today = new Date(System.currentTimeMillis());
         User user = new User("Bob Smith",
-                "mok3362",
+                "mok336",
                 "zg%$%@#1",
                 "male",
                 today,
@@ -76,11 +76,12 @@ public class UserRegisterTest extends UserBaseTest { // Need more test case
     }
 
     @Test
-    public void testRegisterCase5() {
+    public void testRegisterCase5() throws InterruptedException {
         //Testing user registration twice
+        Thread.sleep(5000); // must execute after test case 2
         String dateOfBirthString = "1987-09-15";
         Date sqlDate = TransformDate(dateOfBirthString);
-        User user = new User("1234",
+        User user = new User("Bob Smith",
                 "mok336",
                 "zg%$%@#2",
                 "male",
