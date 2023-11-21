@@ -1,0 +1,74 @@
+@startuml
+'https://plantuml.com/class-diagram
+abstract class ContentBuilder {
+    #page: JPanel
+    #constraints: GridBagConstraints
+    #gridy: int
+
+    +buildTitle(String): void
+    +buildMainContent(): void
+    +setUp(): void
+    +clearPage(): void
+}
+
+abstract class Content {
+    #instance: UserSession = UserSession.getInstance()
+    #frontEnd: WeakReference<IMainframe>
+
+    +setMainframe(IMainframe): void
+    +showContent(JPanel): String
+}
+
+abstract class UserFormPage {
+  #controller: IUserController
+  #entries: Map<String, NfEntry>
+  #editable: boolean
+
+  #getNewUser(Map<String, NfEntry>): User
+  #setEntryRegex(Map<String, NfEntry>): void
+  #verifyInput(Map<String, NfEntry>): boolean
+}
+
+abstract class UserFormBuilder {
+  -entries: Map<String, NfEntry>
+  -constraints: GridBagConstraints
+
+  +buildMainContent(): void
+  +setHeadHorizontalSpace(width: int): void
+  +setTailHorizontalSpace(width: int): void
+  +setUp(): void
+  +getFormData(): Map<String, NfEntry>
+  +enableForm(flag: boolean): void
+}
+
+class RegisterPage {
+  -pageName: String
+
+  -handleSubmit(JPanel): ActionListener
+  -handleBack(JPanel): ActionListener
+}
+
+class RegisterDirector {
+  -builder: RegisterBuilder
+
+  +constructPage(String, ActionListener, ActionListener): void
+}
+
+class RegisterBuilder {
++ buildBackButton(ActionListener): void
+}
+
+interface IContent {
+  +showContent(content: JPanel): String
+}
+
+UserFormPage --|> Content
+RegisterPage -right-|> UserFormPage
+RegisterBuilder -up-|> UserFormBuilder
+UserFormBuilder -up-|> ContentBuilder
+RegisterDirector -left-> RegisterBuilder
+RegisterPage --> RegisterDirector
+RegisterPage -left-> ContentBuilder
+Content ..|> IContent
+
+@enduml
