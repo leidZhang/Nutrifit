@@ -105,16 +105,19 @@ public class MealMapper implements IMealMapper { // not tested yet
         PreparedStatement ps = null;
 
         try {
+            connection = ConnectionUtil.getConnection();
             int userId = user.getId();
 
             String query = "select * from meal where user_id = ? and date = ? and type = ?";
             ps = connection.prepareStatement(query);
+            // set parameters with corresponding methods
             ps.setInt(1, userId);
             ps.setDate(2, date);
             ps.setString(3, type);
             res = ps.executeQuery();
-
-            meal = setMeal(res);
+            if (res.next()) {
+                meal = setMeal(res);
+            }
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         } finally {
@@ -167,7 +170,7 @@ public class MealMapper implements IMealMapper { // not tested yet
         meal.setTotalOthers(totalOthers);
         meal.setTotalProtein(totalProtein);
         meal.setTotalVitamins(totalVitamin);
-
+        System.out.println("pass");
         meal.setFoodMap(new HashMap<>());
 
         return meal;
@@ -219,7 +222,7 @@ public class MealMapper implements IMealMapper { // not tested yet
             // use PreparedStatement with placeholders
             String query = "select meal_id, date, type, total_calories, total_vitamins, ";
             query += "total_proteins, total_carbs, total_others ";
-            query += "from meal where user_id = ? order by date desc";
+            query += "from meal where user_id = ? order by date desc, meal_id desc";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setInt(1, userId);
@@ -256,7 +259,7 @@ public class MealMapper implements IMealMapper { // not tested yet
             // use PreparedStatement with placeholders
             String query = "select meal_id, date, type, total_calories, total_vitamins, ";
             query += "total_proteins, total_carbs, total_others ";
-            query += "from meal where user_id = ? and Date between ? and ?  order by date desc";
+            query += "from meal where user_id = ? and Date between ? and ?  order by meal_id desc";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setInt(1, userId);
