@@ -11,6 +11,7 @@ import java.util.Map;
 public interface IMealMapper {
     void save(Meal meal, User user) throws SQLException;
     void delete(int id) throws SQLException;
+    Meal getByDateAndType(Date date, User user, String type) throws SQLException;
     Meal getByID(int id) throws SQLException;
     List<Meal> getByUser(User user) throws SQLException;
     List<Meal> getByPeriod(User user, Date startDate, Date endDate) throws SQLException;
