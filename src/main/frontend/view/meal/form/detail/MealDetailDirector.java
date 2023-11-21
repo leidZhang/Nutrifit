@@ -3,10 +3,10 @@ package main.frontend.view.meal.form.detail;
 import main.frontend.common.ContentBuilder;
 
 public class MealDetailDirector {
-    MealDetailBuilder builder;
+    private ContentBuilder builder;
 
     public MealDetailDirector(ContentBuilder builder) {
-        this.builder = (MealDetailBuilder) builder;
+        this.builder = builder;
     }
 
     public void constructPage(String title) {

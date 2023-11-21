@@ -3,7 +3,7 @@ package main.frontend.view.meal.visualization;
 import main.frontend.common.ContentBuilder;
 
 public class MealVisualDirector {
-    MealVisualBuilder builder;
+    private MealVisualBuilder builder;
 
     public MealVisualDirector(ContentBuilder builder) {
         this.builder = (MealVisualBuilder) builder;

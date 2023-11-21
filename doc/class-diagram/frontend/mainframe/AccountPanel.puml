@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class ContentBuilder {
+    #page: JPanel
+    #constraints: GridBagConstraints
+    #gridy: int
+
+    +buildTitle(String): void
+    +buildMainContent(): void
+    +setUp(): void
+    +clearPage(): void
+}
+
+class AccountPanel {
+  - usernameLabel: JLabel
+  - logoutButton: JButton
+  - frontEnd: IMainframe
+
+  + setLogoutButton(): void
+}
+
+class SideBarBuilder {
+  - accountPanel: JPanel
+  - buttonMap: Map<String, JButton>
+  - frontEnd: IMainframe
+
+  + buildAccountPanel(String)
+  + buildFooter(): void
+  + setListener(): void
+}
+
+class SideBarDirector {
+ - builder: ContentBuilder
+
+ + constructSideBar(String)
+}
+
+SideBarBuilder -right-|> ContentBuilder
+SideBarDirector -right-> SideBarBuilder
+AccountPanel --> ContentBuilder
+AccountPanel -left-> SideBarDirector
+
+@enduml

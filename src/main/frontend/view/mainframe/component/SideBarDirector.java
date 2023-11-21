@@ -4,7 +4,7 @@ import main.frontend.common.ContentBuilder;
 import main.frontend.view.mainframe.component.SideBarBuilder;
 
 public class SideBarDirector {
-    private SideBarBuilder builder;
+    private ContentBuilder builder;
 
     public SideBarDirector(ContentBuilder builder) {
         this.builder = (SideBarBuilder) builder;
@@ -12,9 +12,9 @@ public class SideBarDirector {
 
     public void constructSideBar(String username) {
         builder.setUp();
-        builder.buildAccountPanel(username);
+        ((SideBarBuilder)builder).buildAccountPanel(username);
         builder.buildMainContent();
-        builder.setListener();
-        builder.buildFooter();
+        ((SideBarBuilder)builder).setListener();
+        ((SideBarBuilder)builder).buildFooter();
     }
 }

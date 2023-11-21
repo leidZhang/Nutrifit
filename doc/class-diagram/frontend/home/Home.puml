@@ -1,0 +1,76 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface IContent {
+  +showContent(JPanel): String
+}
+
+abstract class Content {
+    #instance: UserSession
+    #frontEnd: WeakReference<IMainframe>
+
+    +setMainframe(IMainframe): void
+    +showContent(JPanel): String
+}
+
+abstract class ContentBuilder {
+    #page: JPanel
+    #constraints: GridBagConstraints
+    #gridy: int
+
+    +buildTitle(String): void
+    +buildMainContent(): void
+    +setUp(): void
+    +clearPage(): void
+}
+
+class Home {
+  - UNIT_KG: String
+  - today: LocalDate
+  - defaultStartDate: LocalDate
+  - entries: Map<String, NfEntry> entries
+  - dataSet: DefaultCategoryDataset
+  - mealController: IMealController
+  - exerciseController: IExerciseController
+  - predictController: IPredictController
+
+  - verifyPeriod(): void
+  - handleApply(): ActionListener
+  - handleCalculate(): ActionListener
+  - handleReset(): ActionListener
+  - setRegex(): void
+  - plotLineChart(Result, String): void
+  - renderLineChart(Date, Date): void
+  - mount(): void
+}
+
+class HomeBuilder {
+  - ENTRY_DIMENSION: int[]
+  - entries: Map<String, NfEntry>
+  - buttons: Map<String, JButton>
+  - lineChartDataSet: DefaultCategoryDataset
+  - lineChart: JFreeChart
+
+  - buildDataRow(): void
+  - buildLineChart(): void
+  - buildPredictEntry(): void
+  - buildButtonRow(): void
+  + getButtons(): Map<String, JButton>
+  + getEntries(): Map<String, NfEntry>
+  + getDataSet(): DefaultCategoryDataset
+}
+
+class HomeDirector {
+  - builder: ContentBuilder
+
+  + constructPage(String): void
+}
+
+HomeBuilder -right-|> ContentBuilder
+HomeDirector -left-> ContentBuilder
+Home --> ContentBuilder
+Home --> HomeDirector
+Home -left-|> Content
+Content .left.> IContent
+
+@enduml

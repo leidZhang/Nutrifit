@@ -39,7 +39,7 @@ class LoginPage {
 }
 
 abstract class Content {
-    #instance: UserSession = UserSession.getInstance()
+    #instance: UserSession
     #frontEnd: WeakReference<IMainframe>
 
     +setMainframe(IMainframe): void
@@ -47,7 +47,7 @@ abstract class Content {
 }
 
 interface IContent {
-  +showContent(content: JPanel): String
+  +showContent(JPanel): String
 }
 
 LoginDirector -right-> ContentBuilder
