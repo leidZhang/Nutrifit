@@ -259,7 +259,7 @@ public class MealMapper implements IMealMapper { // not tested yet
             // use PreparedStatement with placeholders
             String query = "select meal_id, date, type, total_calories, total_vitamins, ";
             query += "total_proteins, total_carbs, total_others ";
-            query += "from meal where user_id = ? and Date between ? and ?  order by meal_id desc";
+            query += "from meal where user_id = ? and Date between ? and ? order by date desc, meal_id desc";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setInt(1, userId);
