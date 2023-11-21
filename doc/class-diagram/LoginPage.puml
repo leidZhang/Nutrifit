@@ -8,11 +8,10 @@ class LoginDirector {
 }
 
 abstract class ContentBuilder {
-    -page: JPanel
-    -constraints: GridBagConstraints
-    -gridy: int
+    #page: JPanel
+    #constraints: GridBagConstraints
+    #gridy: int
 
-    +ContentBuilder(JPanel)
     +buildTitle(String): void
     +buildMainContent(): void
     +setUp(): void
@@ -24,44 +23,38 @@ class LoginBuilder {
     -constraints: GridBagConstraints
     -gridy: int
 
-    +LoginBuilder(page: JPanel)
-    +buildMainContent(): void
-    +setUp(): void
-    +buildRegisterButton(ActionListener): void
-    +buildSubmitButton(ActionListener): void
+    -buildRegisterButton(ActionListener): void
+    -buildSubmitButton(ActionListener): void
     +getFormData(): Map<String, NfEntry>
 }
 
 class LoginPage {
-    -pageName: String = "login page"
-    -instance: UserSession = UserSession.getInstance()
-    -controller: IUserController = UserController()
+    -pageName: String
+    -controller: IUserController
     -entries: Map<String, NfEntry>
     -registerPage: Content
 
-    +LoginPage(Content)
-    +handleLogin(JPanel): ActionListener
-    +handleRegister(JPanel): ActionListener
-    +showContent(JPanel): String
+    -handleLogin(JPanel): ActionListener
+    -handleRegister(JPanel): ActionListener
 }
 
 abstract class Content {
-    -instance: UserSession = UserSession.getInstance()
-    -frontEnd: WeakReference<IMainframe>
+    #instance: UserSession = UserSession.getInstance()
+    #frontEnd: WeakReference<IMainframe>
 
-    +Content()
     +setMainframe(IMainframe): void
     +showContent(JPanel): String
 }
 
-class JPanel
+interface IContent {
+  +showContent(content: JPanel): String
+}
 
-LoginDirector o-right- ContentBuilder
-LoginBuilder -up-|> ContentBuilder
-LoginBuilder --right-> JPanel
-LoginPage --> LoginDirector
-LoginPage --> LoginBuilder
-LoginPage --> JPanel
-Content <|-right- LoginPage
+LoginDirector -right-> ContentBuilder
+LoginBuilder -left-|> ContentBuilder
+LoginPage -up-> LoginDirector
+LoginPage -up-> ContentBuilder
+Content <|-left-- LoginPage
+IContent <|.left. Content
 
 @enduml
