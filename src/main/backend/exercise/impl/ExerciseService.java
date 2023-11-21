@@ -1,8 +1,10 @@
 package main.backend.exercise.impl;
 
+import main.backend.common.PeriodValidator;
 import main.backend.exercise.IExerciseMapper;
 import main.backend.exercise.IExerciseService;
 import main.backend.exercise.entity.Exercise;
+import main.backend.exercise.util.ExerciseValidator;
 import main.backend.user.entity.User;
 
 import java.sql.Date;
@@ -15,11 +17,13 @@ public class ExerciseService implements IExerciseService {
     private IExerciseMapper exerciseMapper = new ExerciseMapper();
 
     @Override
-    public void save(Exercise exercise, User user) throws SQLException {
-        validateExercise(exercise);
-        int calories = calBurnCalories(exercise, user);
+    public void save(Exercise exercise, User user) throws SQLException, IllegalArgumentException {
+        ExerciseValidator validator = new ExerciseValidator(exercise);
+        validator.validate();
+
+        int calories = calBurnCalories(exercise, user);//calculate burned calories
         System.out.println("Burned: " + calories);
-        exercise.setBurnCalories(calories);
+        exercise.setBurnCalories(calories); //set burned calories for exercise
         exerciseMapper.save(exercise, user);
     }
 
@@ -34,17 +38,19 @@ public class ExerciseService implements IExerciseService {
     }
 
     @Override
-    public List<Exercise> getByPeriod(String username, Date startDate, Date endDate) throws SQLException {
+    public List<Exercise> getByPeriod(String username, Date startDate, Date endDate) throws SQLException, IllegalArgumentException {
+        PeriodValidator validator = new PeriodValidator(startDate, endDate);
+        validator.validate();
+
         return exerciseMapper.getByPeriod(username, startDate, endDate);
     }
 
     @Override
-    public Map<Date, Float> getCaloriesByDate(User user, Date startDate, Date endDate) throws SQLException {
+    public Map<Date, Float> getCaloriesByDate(User user, Date startDate, Date endDate) throws SQLException, IllegalArgumentException {
+        PeriodValidator validator = new PeriodValidator(startDate, endDate);
+        validator.validate();
+
         return exerciseMapper.getCaloriesByDate(user, startDate, endDate);
-    }
-
-    private void validateExercise(Exercise exercise) throws IllegalArgumentException{
-
     }
 
     private int calBurnCalories(Exercise data, User user) {
