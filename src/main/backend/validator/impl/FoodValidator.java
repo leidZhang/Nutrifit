@@ -16,9 +16,10 @@ public class FoodValidator extends Validator {
         Map<Food, Float> foodMap = foodMapClass.cast(obj);
 
         if (foodMap != null) {
+            if (foodMap.size() == 0) throw new IllegalArgumentException("Food list cannot be empty");
             for (Food food : foodMap.keySet()) {
                 if (food == null) throw new IllegalArgumentException("Food cannot be null");
-                if (foodMap.get(food) < 0) throw new IllegalArgumentException("Quantity must be positive");
+                if (foodMap.get(food) <= 0) throw new IllegalArgumentException("Quantity must be positive");
             }
         } else {
             throw new IllegalArgumentException("Invalid Food");

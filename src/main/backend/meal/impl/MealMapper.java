@@ -97,6 +97,33 @@ public class MealMapper implements IMealMapper { // not tested yet
         }
     }
 
+    @Override
+    public Meal getByDateAndType(Date date, User user, String type) throws SQLException {
+        Meal meal = null;
+        ResultSet res = null;
+        Connection connection = null;
+        PreparedStatement ps = null;
+
+        try {
+            int userId = user.getId();
+
+            String query = "select * from meal where user_id = ? and date = ? and type = ?";
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, userId);
+            ps.setDate(2, date);
+            ps.setString(3, type);
+            res = ps.executeQuery();
+
+            meal = setMeal(res);
+        } catch (SQLException e) {
+            throw new SQLException(e.getMessage());
+        } finally {
+            ConnectionUtil.close(connection, ps, null);
+        }
+
+        return meal;
+    }
+
     private void setMealFoodMap(List<Meal> mealList, Connection conn, PreparedStatement ps, ResultSet res) throws SQLException {
         for (Meal meal : mealList) {
             int id = meal.getId();

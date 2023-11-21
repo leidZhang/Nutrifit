@@ -13,7 +13,7 @@ import main.backend.meal.util.MealProcessor;
 import main.backend.meal.util.MealValidator;
 import main.backend.meal.util.NutrientCalculator;
 import main.backend.user.entity.User;
-import main.backend.validator.impl.DateValidator;
+import main.backend.validator.impl.IdValidator;
 
 import java.sql.SQLException;
 import java.sql.Date;
@@ -49,10 +49,17 @@ public class MealService implements IMealService {
         return total - vitaminValue - carbValue - proteinValue;
     }
 
+    private void validateDuplicate(Date date, User user, String type) throws SQLException, IllegalArgumentException {
+        if (type.equals("Snack")) return;
+        Meal meal = mapper.getByDateAndType(date, user, type);
+        if (meal != null) throw new IllegalArgumentException("Duplicate meal today!");
+    }
+
     @Override
     public void save(Meal meal, User user) throws SQLException, IllegalArgumentException {
         MealValidator validator = new MealValidator(meal);
         validator.validate();
+        validateDuplicate(meal.getDate(), user, meal.getType());
 
         // Meal need to calculate general nutrition
         Map<Food, Float> foodMap = meal.getFoodMap(); // we can load food map in front end
@@ -74,13 +81,20 @@ public class MealService implements IMealService {
         mapper.save(meal, user);
     }
 
+    private void validateId(int id) {
+        IdValidator validator = new IdValidator(id);
+        validator.validate();
+    }
+
     @Override
-    public void delete(int id) throws SQLException {
+    public void delete(int id) throws SQLException, IllegalArgumentException {
+        validateId(id);
         mapper.delete(id);
     }
 
     @Override
-    public Meal getById(int id) throws SQLException {
+    public Meal getById(int id) throws SQLException, IllegalArgumentException {
+        validateId(id);
         return mapper.getByID(id);
     }
 
