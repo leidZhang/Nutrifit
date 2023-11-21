@@ -12,7 +12,7 @@ abstract class ContentBuilder {
 }
 
 abstract class Content {
-    #instance: UserSession = UserSession.getInstance()
+    #instance: UserSession
     #frontEnd: WeakReference<IMainframe>
 
     +setMainframe(IMainframe): void
@@ -63,7 +63,7 @@ class UserProfileBuilder {
 }
 
 interface IContent {
-  +showContent(content: JPanel): String
+  +showContent(JPanel): String
 }
 
 UserFormPage --|> Content

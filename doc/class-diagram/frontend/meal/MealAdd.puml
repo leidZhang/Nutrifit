@@ -1,0 +1,80 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface IContent {
+  +showContent(JPanel): String
+}
+
+abstract class Content {
+    #instance: UserSession
+    #frontEnd: WeakReference<IMainframe>
+
+    +setMainframe(IMainframe): void
+    +showContent(JPanel): String
+}
+
+abstract class ContentBuilder {
+    #page: JPanel
+    #constraints: GridBagConstraints
+    #gridy: int
+
+    +buildTitle(String): void
+    +buildMainContent(): void
+    +setUp(): void
+    +clearPage(): void
+}
+
+abstract class MealForm {
+  #entries: Map<String, JComponent>
+  #buttons: Map<String, JButton>
+  #table: PaginationTable
+  #mealController: IMealController
+
+  #handleBack(): void
+}
+
+abstract class MealFormBuilder {
+  #buttons: Map<String, JButton>
+  #entries: Map<String, JComponent>
+  #table: PaginationTable
+
+  + buildTopRow()
+  + buildTable()
+  + getButtons(): Map<String, JButton>
+  + getEntries(): Map<String, JComponent>
+  + getTable(): PaginationTable
+}
+
+class MealAddBuilder {
+  - buildButtonRow()
+  - buildDropDownRow()
+}
+
+class MealAddDirector {
+  - builder: ContentBuilder
+
+  + constructPage(String): void
+}
+
+class MealAddForm {
+  - foodController: IFoodController
+
+  - setRegex(): void
+  - verifyAddFood(): boolean
+  - verifySubmit(): boolean
+  - handleSubmit(): ActionListener
+  - handleAddFood(): ActionListener
+  - getFoodList(): void
+  - mount(): void
+}
+
+IContent <.up. Content
+Content <|-left- MealForm
+MealForm <|-left- MealAddForm
+MealFormBuilder <|-right-MealAddBuilder
+ContentBuilder <|-right- MealFormBuilder
+MealAddForm --> ContentBuilder
+MealAddDirector --> ContentBuilder
+MealAddForm -left-> MealAddDirector
+
+@enduml

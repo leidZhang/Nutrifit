@@ -1,0 +1,86 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface IContent {
+  +showContent(JPanel): String
+}
+
+abstract class Content {
+    #instance: UserSession
+    #frontEnd: WeakReference<IMainframe>
+
+    +setMainframe(IMainframe): void
+    +showContent(JPanel): String
+}
+
+class MealVisualPage {
+  - DEFAULT_CATEGORY: String
+  - Content: recordPage
+  - controller： IMealController
+  - buttonMap: Map<String, JButton>
+  - entries: Map<String, NfEntry>
+  - DefaultPieDataset: pieDataset
+  - DefaultCategoryDataset: radarDataSet
+
+  - handleViewRecords(): void
+  - handleDefaultRender(): void
+  - handleReset(): void
+  - verifyEntries(): void
+  - setUpEntries(): void
+  - renderPieChart(Date, Date): void
+  - renderRadarChart(Date, Date): void
+  - mount(): void
+}
+
+class MealVisualDirector {
+  - MealVisualBuilder: builder
+
+  + constructPage(String): void
+}
+
+abstract class ContentBuilder {
+    #page: JPanel
+    #constraints: GridBagConstraints
+    #gridy: int
+
+    +buildTitle(String): void
+    +buildMainContent(): void
+    +setUp(): void
+    +clearPage(): void
+}
+
+class MealVisualBuilder {
+  - DATE_ENTRY_HEIGHT: int
+  - DATE_ENTRY_WIDTH: int
+  - CFG_RECOMMEND: String
+  - BUTTON_DIMENSION: Dimension
+  - CHART_DIMENSION: Dimension
+  - CFG_RECOMMENDATION: Object[][]
+  - buttonMap: Map<String, JButton>
+  - entries: Map<String, NfEntry>
+  - pieChart: JFreeChart
+  - pieDataSet: DefaultPieDataset
+  - radarChart: JFreeChart
+  - radarPlot: SpiderWebPlot
+  - radarDataSet: DefaultCategoryDataset
+
+  + buildDataRow(): void
+  - buildRadarChart(): void
+  - buildPieChart(): void
+  - buildRecordButton(): void
+  - plotCFGRecommendation(DefaultCategoryDataset): void
+  + getButtonMap: Map<String, JButton>
+  + getEntries: Map<String, NfEntry>
+  + getDieDataSet: DefaultPieDataset
+  + getRadarPlot: DefaultCategoryDataset
+}
+
+ContentBuilder <|-right- MealVisualBuilder
+MealVisualDirector -up-> ContentBuilder
+MealVisualPage -right-> ContentBuilder
+MealVisualPage --> MealVisualDirector
+
+MealVisualPage --|> Content
+Content ..> IContent
+
+@enduml

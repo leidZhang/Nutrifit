@@ -1,0 +1,49 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface IContent {
+  +showContent(JPanel): String
+}
+
+interface IMainframe {
+  + switchContentPanel(IContent): void
+  + initialize(): void
+  + getPageMap(): Map<String, IContent>
+  + getContent(): JComponent
+}
+
+class FrontEnd {
+  - sideBar: JPanel
+  - content: JPanel
+  - pageMap: Map<String, IContent>
+  - instance: UserSession
+
+  - createContent(int): JPanel
+  - createSideBar(int): JPanel
+}
+
+abstract class Content {
+    #instance: UserSession
+    #frontEnd: WeakReference<IMainframe>
+
+    +setMainframe(IMainframe): void
+    +showContent(JPanel): String
+}
+
+class UserSession {
+  - instance: UserSession
+  - user: User
+
+  + getInstance(): UserSession
+  + setUser(User): void
+  + getUser(): User
+}
+
+FrontEnd .down..|> IMainframe
+Content .up..|> IContent
+FrontEnd --> UserSession
+Content -left-> UserSession
+FrontEnd o-left-> IContent: 1          *
+Content -right-> IMainframe
+
+@enduml
