@@ -1,0 +1,104 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface IExerciseController {
+  + save(Exercise, User): Result
+  + delete(int): Result
+  + getByUsername(String name): Result
+  + getByPeriod(String, Date, Date): Result
+  + getCaloriesByDate(User, Date, Date): Result
+}
+
+class ExerciseController {
+  - exerciseService: IExerciseController
+
+  + save(Exercise, User): Result
+  + delete(int): Result
+  + getByUsername(String name): Result
+  + getByPeriod(String, Date, Date): Result
+  + getCaloriesByDate(User, Date, Date): Result
+}
+
+interface IExerciseService {
+  + save(Exercise, User): void
+  + delete(int): void
+  + getByUsername(String name): List<Exercise>
+  + getByPeriod(String, Date, Date): List<Exercise>
+  + getCaloriesByDate(User, Date, Date): Map<Date, Float>
+}
+
+class ExerciseService {
+  - exerciseMapper: IExerciseMapper
+
+  + save(Exercise, User): void
+  + delete(int): void
+  + getByUsername(String name): List<Exercise>
+  + getByPeriod(String, Date, Date): List<Exercise>
+  + getCaloriesByDate(User, Date, Date): Map<Date, Float>
+}
+
+interface IExerciseMapper {
+  + save(Exercise, User): void
+  + delete(int): void
+  + getByUsername(String name): List<Exercise>
+  + getByPeriod(String, Date, Date): List<Exercise>
+  + getCaloriesByDate(User, Date, Date): Map<Date, Float>
+}
+
+class ExerciseMapper {
+  + save(Exercise, User): void
+  + delete(int): void
+  + getByUsername(String name): List<Exercise>
+  + getByPeriod(String, Date, Date): List<Exercise>
+  + getCaloriesByDate(User, Date, Date): Map<Date, Float>
+}
+
+class ConnectionUtil {
+  - JDBC_DIVER: String
+  - DB_URL: String
+  - USER: String
+  - PASS: String
+
+  + getConnection(): Connection
+  + close(Connection, Statement, ResultSet): void
+}
+
+class ExerciseValidator {
+  - VALIDATORS: Validator[]
+
+  + validate(): void
+}
+
+class Exercise {
+  - id: int
+  - date: Date
+  - type: String
+  - intensity: String
+  - duration: int
+  - burnCalories: int
+
+  + getId(): int
+  + getDate(): date
+  + getDuration(): int
+  + getCalories(): int
+  + getType(): String
+  + setBurnCalories(int): void
+}
+
+IExerciseController <|.down. ExerciseController
+ExerciseController -right-> IExerciseService
+ExerciseService .left.|> IExerciseService
+IExerciseController <.right. Exercise
+ExerciseService -up-> IExerciseMapper
+
+ExerciseMapper --|> IExerciseMapper
+ConnectionUtil <-right- ExerciseMapper
+ExerciseValidator <-left- ExerciseService
+Exercise --> ExerciseController
+Exercise --> ExerciseService
+Exercise -up[hidden]-> ConnectionUtil
+IExerciseMapper <.left. Exercise
+IExerciseService <.up. Exercise
+ExerciseMapper <-- Exercise
+
+@enduml

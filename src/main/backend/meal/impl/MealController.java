@@ -9,7 +9,7 @@ import main.backend.user.entity.User;
 import java.sql.Date;
 
 public class MealController implements IMealController {
-    IMealService service = new MealService();
+    private IMealService service = new MealService();
 
     @Override
     public Result save(Meal meal, User user) {

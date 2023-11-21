@@ -40,5 +40,6 @@ SideBarBuilder -right-|> ContentBuilder
 SideBarDirector -right-> SideBarBuilder
 AccountPanel --> ContentBuilder
 AccountPanel -left-> SideBarDirector
+FrontEnd *-left-> AccountPanel
 
 @enduml

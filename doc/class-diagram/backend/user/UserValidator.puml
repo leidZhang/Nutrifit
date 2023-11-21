@@ -1,0 +1,32 @@
+@startuml
+class UserValidator {
+  - VALIDATORS: Validator[]
+
+  + validate(): void
+}
+
+abstract class Validator {
+  # obj: Object
+
+  + validate(): void
+}
+
+class DateValidator
+class HeightValidator
+class WeightValidator
+class NameValidator
+class UserNameValidator
+class SexValidator
+class PasswordValidator
+
+DateValidator --|> Validator
+HeightValidator --|> Validator
+WeightValidator --|> Validator
+PasswordValidator --|> Validator
+NameValidator --|> Validator
+UserNameValidator --|> Validator
+SexValidator --|> Validator
+
+UserValidator *-up-> Validator
+
+@enduml

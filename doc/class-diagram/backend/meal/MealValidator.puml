@@ -1,0 +1,24 @@
+@startuml
+class MealValidator {
+  - VALIDATORS: Validator[]
+
+  + validate(): void
+}
+
+abstract class Validator {
+  # obj: Object
+
+  + validate(): void
+}
+
+class DateValidator
+class MealTypeValidator
+class FoodValidator
+
+DateValidator --|> Validator
+MealTypeValidator --|> Validator
+FoodValidator --|> Validator
+
+MealValidator *-up-> Validator
+
+@enduml

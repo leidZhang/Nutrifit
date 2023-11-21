@@ -1,0 +1,100 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Food {
+  - id: int
+  - name: String
+  - group: String
+  - nutrientFloatMap: Map<Nutrient, Float>
+
+  + getId(): int
+  + getName(): String
+  + getGroup(): String
+  + getNutrientFloatMap: Map<Nutrient, Float>
+  + setNutrientFloatMap(Map<Nutrient, Float>): void
+  + toString(): String
+}
+
+class Nutrient {
+  - description: String
+  - name: String
+  - unit: String
+
+  + getName(): String
+  + getUnit(): String
+  + getDescription(): String
+  + setUnit(String): void
+  + equals(Object): boolean
+  + hashCode(): int
+}
+
+interface IFoodController {
+  + getList(): Result
+}
+
+interface IFoodService {
+  + getList(): List<Food>
+  + getUnitNutrientValue(int): Map<Nutrient, Float>
+  + getUnitNutrientValue(int): long
+}
+
+interface IFoodMapper {
+  + getList(): List<Food>
+  + getUnitNutrientValue(int): Map<Nutrient, Float>
+  + getUnitNutrientValue(int): long
+}
+
+class FoodController {
+  + getList(): Result
+}
+
+class FoodService {
+  + getList(): List<Food>
+  + getUnitNutrientValue(int): Map<Nutrient, Float>
+  + getUnitNutrientValue(int): long
+}
+
+class FoodMapper {
+  + getList(): List<Food>
+  + getUnitNutrientValue(int): Map<Nutrient, Float>
+  + getUnitNutrientValue(int): long
+}
+
+class ConnectionUtil {
+  - JDBC_DIVER: String
+  - DB_URL: String
+  - USER: String
+  - PASS: String
+
+  + getConnection(): Connection
+  + close(Connection, Statement, ResultSet): void
+}
+
+IFoodController <|.. FoodController
+FoodController -right-> IFoodService
+FoodService -left-|> IFoodService
+Food .left.> IFoodController
+Food -up-> Nutrient
+Food --> FoodController
+Food ..> IFoodService
+Food --> FoodService
+FoodService -right-> IFoodMapper
+ConnectionUtil <-down- FoodMapper
+Food ..> IFoodMapper
+Food -right-> FoodMapper
+FoodMapper ..|> IFoodMapper
+
+class GroupConverter {
+  - foodCategories: Map<String, List<String>>
+
+  - initVegetablesAndFruits(): void
+  - initProtein(): void
+  - initWholeGrain(): void
+  + toCFGFoodGroup(String): String
+}
+
+GroupConverter -right[hidden]-> Nutrient
+GroupConverter -down[hidden]-> IFoodController
+GroupConverter <-- FoodService
+
+@enduml

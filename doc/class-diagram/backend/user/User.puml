@@ -1,0 +1,105 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface IUserMapper {
+    + login(String, String): User
+    + save(User): void
+    + getByUsername(String): User
+    + updateUser(User): void
+}
+
+interface IUserService {
+   + login(String, String): User
+   + save(User): void
+   + getByUsername(String): User
+   + updateUser(User): User
+}
+
+interface IUserController {
+   + login(String, String): Result
+   + save(User): Result
+   + getUser(String): Result
+   + updateUser(User): Result
+}
+
+class UserController {
+    - service: IUserService
+
+     + login(String, String): Result
+     + save(User): Result
+     + getUser(String): Result
+     + updateUser(User): Result
+}
+
+class UserMapper {
+  + login(String, String): User
+  + save(User): void
+  + getUer(String): void
+  + updateUser(User): void
+}
+
+class UserService {
+  - userMapper: IUserMapper
+
+  + login(String, String): User
+  + save(User): void
+  - calAge(Date): int
+  + getByUsername(String): User
+  + updateUser(User): void
+  - validateUser(User): void
+}
+
+class User {
+  - id: int
+  - name: String
+  - sex: String
+  - dateOfBirth: Date
+  - height: double
+  - weight: double
+  - age: int
+  - password: String
+
+  + getName(): String
+  + getUsername(): String
+  + getSex(): String
+  + getDateOfBirth(): Date
+  + getHeight(): double
+  + getWeight(): double
+  + getAge(): int
+  + getId(): int
+  + getPassword: String
+  + setAge(int): void
+  + setId(int): void
+}
+
+class ConnectionUtil {
+  - JDBC_DIVER: String
+  - DB_URL: String
+  - USER: String
+  - PASS: String
+
+  + getConnection(): Connection
+  + close(Connection, Statement, ResultSet): void
+}
+
+class UserValidator {
+  - VALIDATORS: Validator[]
+
+  + validate(): void
+}
+
+IUserController <|.down. UserController
+UserController -right-> IUserService
+IUserService <|.right. UserService
+UserService -right-> IUserMapper
+UserMapper .down.|> IUserMapper
+User .left.> IUserController
+User ..> IUserService
+User ..> IUserMapper
+User --> UserService
+User --> UserController
+User -right-> UserMapper
+UserMapper -right-> ConnectionUtil
+UserService -up-> UserValidator
+
+@enduml

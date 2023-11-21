@@ -3,7 +3,7 @@ package main.frontend.view.meal.table;
 import main.frontend.common.ContentBuilder;
 
 public class MealTableDirector {
-    private MealTableBuilder builder;
+    private ContentBuilder builder;
 
     public MealTableDirector(ContentBuilder builder) {
         this.builder = (MealTableBuilder) builder;
