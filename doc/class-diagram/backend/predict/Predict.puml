@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/class-diagram
+interface IPredictService {
+  + getPredictionByDate(User, Date): float
+}
+
+interface IPredictController {
+  + getPredictionByDate(User, Date): Result
+}
+
+class PredictController {
+  - service: IPredictService
+
+  + getPredictionByDate(User, Date): Result
+}
+
+class PredictService {
+ - RATIO: int
+ - mealService: IMealService
+ - exerciseService: IExerciseService
+
+ - calTotalCalories(Map<Date, Float>): int
+ - calFatLose(Date, Map<Date, Float>, Map<Date, Float>): float
+ + getPredictionByDate(User, Date): float
+}
+
+class FutureDateValidator{
+
+}
+
+interface IExerciseService {}
+interface IMealService {}
+
+IPredictController <|.down. PredictController
+PredictController -right-> IPredictService
+PredictService .left.|> IPredictService
+IMealService <-- PredictService
+IExerciseService <-- PredictService
+FutureDateValidator <-- PredictService
+
+@enduml

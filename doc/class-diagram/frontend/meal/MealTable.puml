@@ -24,4 +24,57 @@ abstract class ContentBuilder {
     +clearPage(): void
 }
 
+class MealBuilder {
+  - PAGE_SIZE: int
+  - DATE_ENTRY_HEIGHT: int
+  - DATE_ENTRY_WIDTH: int
+  - table: PaginationTable
+  - buttonMap: Map<String, JButton>
+  - entries: Map<String, NfEntry>
+
+  - buildDateRow(): void
+  - buildTable(): void
+  - buildTableButtons(): void
+  + getTable(): PaginationTable
+  + getEntries(): Map<String, NfEntry>
+  + getButtonMap(): Map<String, JButton>
+}
+
+class MealTableDirector {
+  - builder: ContentBuilder
+
+  + constructPage(String): void
+}
+
+class MealTablePage {
+  - table: PaginationTable
+  - entries: Map<String, NfEntry>
+  - buttons: Map<String, JButton>
+  - controller: IMealController
+  - detailForm: Content
+
+  - handleNextPage(): ActionListener
+  - handlePrevPage(): ActionListener
+  - handleBack(): ActionListener
+  - handleAdd(): ActionListener
+  - setRegex(): void
+  - verify(): boolean
+  - handleApply(JPanel): ActionListener
+  - handleReset(JPanel): ActionListener
+  - handleDelete(): ActionListener
+  - handleViewDetail(): ActionListener
+  - setTablePopUp(): void
+  - showTableData(JPanel, Result): void
+  - initTableData(JPanel): void
+  - loadTableData(List<Meal> meals): void
+  - mount(JPanel): void
+}
+
+MealTablePage --|> Content
+MealTablePage --> MealTableDirector
+MealTablePage --> ContentBuilder
+Content .up.|> IContent
+MealBuilder --|> ContentBuilder
+MealTableDirector -left-> ContentBuilder
+
 @enduml

@@ -58,6 +58,7 @@ public class UserService implements IUserService {
         validateUser(user);
         userMapper.updateUser(user);
     }
+
     private void validateUser(User user) throws IllegalArgumentException { // change to validateUser in refactor stage
         UserValidator validator = new UserValidator(user);
         validator.validate();

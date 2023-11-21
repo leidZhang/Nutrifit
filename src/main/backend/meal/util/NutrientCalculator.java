@@ -23,18 +23,18 @@ public class NutrientCalculator { // use this util after processed by MealUtil
         return res;
     }
 
-    public float getTotalOthers(Map<Nutrient, Float> nutrientMap) {
-        float res = 0;
-        for (Map.Entry<Nutrient, Float> entry : nutrientMap.entrySet()) {
-            String description = entry.getKey().getDescription();
-
-            if (!description.matches(VITAMIN_REGEX) && !description.matches(CARBOHYDRATE_REGEX) && !description.matches(PROTEIN_REGEX)) {
-                res += entry.getValue();
-            }
-        }
-
-        return res;
-    }
+//    public float getTotalOthers(Map<Nutrient, Float> nutrientMap) {
+//        float res = 0;
+//        for (Map.Entry<Nutrient, Float> entry : nutrientMap.entrySet()) {
+//            String description = entry.getKey().getDescription();
+//
+//            if (!description.matches(VITAMIN_REGEX) && !description.matches(CARBOHYDRATE_REGEX) && !description.matches(PROTEIN_REGEX)) {
+//                res += entry.getValue();
+//            }
+//        }
+//
+//        return res;
+//    }
 
     public float getTotalVitamin(Map<Nutrient, Float> nutrientMap) {
         return getMatchedNutrient(nutrientMap, VITAMIN_REGEX);

@@ -4,6 +4,7 @@ import main.backend.meal.entity.Meal;
 import main.backend.validator.Validator;
 import main.backend.validator.impl.DateValidator;
 import main.backend.validator.impl.FoodValidator;
+import main.backend.validator.impl.IdValidator;
 import main.backend.validator.impl.MealTypeValidator;
 
 public class MealValidator {

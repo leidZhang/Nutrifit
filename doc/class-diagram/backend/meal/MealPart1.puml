@@ -1,0 +1,108 @@
+@startuml
+interface IMealMapper {
+  + save(Meal, User): void
+  + delete(int): void
+  + getByDateAndType(Date, User, String): Meal
+  + getById(int): Meal
+  + getByUser(User): List<Meal>
+  + getByPeriod(User, Date, Date): List<Meal>
+  + getCaloriesByDate(User, Date, Date): Map<Date, Float>
+}
+
+interface IMealService {
+    + save(Meal, User): void
+    + delete(int): void
+    + getByDateAndType(Date, User, String): Meal
+    + getById(int): Meal
+    + getByUser(User): List<Meal>
+    + getByPeriod(User, Date, Date): List<Meal>
+    + getCaloriesByDate(User, Date, Date): Map<Date, Float>
+    + getSortedDailyNutrient(User, Date, Date): Map<Nutrient, Float>
+}
+
+interface IMealController {
+    + save(Meal, User): Result
+    + delete(int): Result
+    + getByDateAndType(Date, User, String): Result
+    + getById(int): Result
+    + getByUser(User): Result
+    + getByPeriod(User, Date, Date): Result
+    + getCaloriesByDate(User, Date, Date): Result
+    + getSortedDailyNutrient(User, Date, Date): Result
+}
+
+class MealController {
+  - service: IMealService
+
+  + save(Meal, User): Result
+      + delete(int): Result
+      + getByDateAndType(Date, User, String): Result
+      + getById(int): Result
+      + getByUser(User): Result
+      + getByPeriod(User, Date, Date): Result
+      + getCaloriesByDate(User, Date, Date): Result
+      + getSortedDailyNutrient(User, Date, Date): Result
+}
+
+class MealService {
+  - mapper: IMealMapper
+  - service: IFoodService
+  - util: MealProcessor
+  - calculator: NutrientCalculator
+  - converter: GroupConverter
+
+    - calCalories(Map<Food, Float>): int
+    - calOthers(Map<Food, Float>, float, float, float): float
+    - validateDuplicate(Date, User, Type): void
+    - validateId(): void
+    - getTotalFoodMap(List<Meal>): Map<Food, FLoat>
+    + save(Meal, User): void
+    + delete(int): void
+    + getByDateAndType(Date, User, String): Meal
+    + getById(int): Meal
+    + getByUser(User): List<Meal>
+    + getByPeriod(User, Date, Date): List<Meal>
+    + getCaloriesByDate(User, Date, Date): Map<Date, Float>
+    + getSortedDailyNutrient(User, Date, Date): Map<Nutrient, Float>
+}
+
+class Meal {
+  - id: int
+  - date: Date
+  - type: String
+  - totalCalories: int
+  - totalProtein: float
+  - totalVitamins: float
+  - totalCarbs: float
+  - totalOthers: float
+  - foodMap: Map<Food, Float>
+
+  + getId(): int
+  + getDate: Date
+  + getType(): String
+  + getTotalCalories(): int
+  + setTotalCalories(int): void
+  + getFoodMap(): Map<Food, Float>
+  + setFoodMap(Map<Food, Float>): void
+  + getTotalProtein(): float
+  + setTotalProtein(float): void
+  + getTotalVitamins(): float
+  + setTotalVitamins(float): void
+  + getTotalCarbs(): float
+  + setTotalCarbs(float): void
+  + getTotalOthers(): float
+  + setTotalOthers(float): void
+}
+
+IMealController <|.down. MealController
+MealController -right-> IMealService
+IMealService <|.right. MealService
+IMealMapper <-- MealService
+Meal .left.> IMealController
+Meal --> MealController
+Meal --> MealService
+Meal ..> IMealService
+Meal .right.> IMealMapper
+MealMapper -left-|> IMealMapper
+
+@enduml

@@ -1,0 +1,56 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class Content
+interface IContent
+
+class Home
+class RegisterPage
+class LoginPage
+class MealVisualPage
+class MealTablePage
+class MealDetailPage
+class MealAddForm
+class ExerciseFormPage
+class ExerciseVisualPage
+class UserProfilePage
+abstract class MealFormPage
+abstract class UserFormPage
+
+IContent <|.. Content
+MealFormPage -up-|> Content
+UserFormPage -up-|> Content
+RegisterPage -up-|> UserFormPage
+UserProfilePage -up-|> UserFormPage
+LoginPage -up-|> Content
+MealDetailPage -up-|> MealFormPage
+MealAddForm -up-|> MealFormPage
+MealTablePage -up-|> Content
+MealTablePage o--> Content
+MealVisualPage -up-|> Content
+Home -up-|> Content
+ExerciseVisualPage -up-|> Content
+ExerciseFormPage -up-|> Content
+MealVisualPage o--> Content
+
+interface IUserController
+
+IUserController <-up- UserFormPage
+IUserController <-up- LoginPage
+
+interface IMealController
+
+IMealController <-up- MealTablePage
+IMealController <-up- MealVisualPage
+IMealController <-up- MealFormPage
+
+interface IExerciseController
+interface IPredictController
+
+IExerciseController <-up- ExerciseFormPage
+IExerciseController <-up- ExerciseVisualPage
+IPredictController <-up- Home
+IMealController <-up- Home
+IExerciseController <-up- Home
+
+@enduml

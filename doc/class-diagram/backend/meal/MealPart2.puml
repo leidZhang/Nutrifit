@@ -1,0 +1,85 @@
+@startuml
+'https://plantuml.com/class-diagram
+class ConnectionUtil {
+  - JDBC_DIVER: String
+  - DB_URL: String
+  - USER: String
+  - PASS: String
+
+  + getConnection(): Connection
+  + close(Connection, Statement, ResultSet): void
+}
+
+class MealMapper {
+  - setMeal(ResultSet): Meal
+  + save(Meal, User): void
+    + delete(int): void
+    + getByDateAndType(Date, User, String): Meal
+    + getById(int): Meal
+    + getByUser(User): List<Meal>
+    + getByPeriod(User, Date, Date): List<Meal>
+    + getCaloriesByDate(User, Date, Date): Map<Date, Float>
+}
+
+class MealValidator {
+  - VALIDATORS: Validator[]
+
+  + validate(): void
+}
+
+class NutrientCalculator {
+  - VITAMIN_REGEX: String
+  - CARBOHYDRATE_REGEX: String
+  - PROTEIN_REGEX: String
+
+  - getMatchedNutrient(Map<Nutrient, Float>, String): float
+  + getTotalVitamin(Map<Nutrient, Float> nutrientMap): float
+}
+
+class MealProcessor {
+  - UNIT_MG: String
+  - UNIT_UG: String
+  - UNIT_G: String
+
+  + mergeFoodMap(Map<Food, Float>, Map<Food, Float>): Map<Food, Float>
+  - calNutrient(Food, Float, Map<Nutrient, Float>): void
+  + getSortedDailyNutrient(Map<Food, Float>, int): Map<Nutrient, Float>
+  + getNutrientMap(Map<Food, Float>): Map<Nutrient, Float>
+  + public toPercentageMap(Map<? extends T, Float>): Map<T, Float>
+  - getTotalNutrient(Map<Food, Float>): Map<Nutrient, Float>
+  - getDailyNutrient(Map<Nutrient, Float>): Map<Nutrient, Float>
+  - getNutrientList(Map<Nutrient, Float>): List<Map.Entry<Nutrient, Float>>
+  - entryListToMap(List<Map.Entry<Nutrient, Float>>): Map<Nutrient, Float>
+  - getMaxHeap(List<Map.Entry<Nutrient, Float>>): PriorityQueue<Map.Entry<Nutrient, Float>>
+  - sortNutrientList(List<Map.Entry<Nutrient, Float>>): List<Map.Entry<Nutrient, Float>>
+}
+
+interface IMealMapper
+
+class MealService
+
+interface IFoodService {
+  getList(): List<Food>
+  getUnitNutrientValue(int): Map<Nutrient, Float>
+  getUnitCalories(int): long
+}
+
+class PeriodValidator {
+  - startDate: Date
+  - endDate: Date
+  - validators: Validators[]
+
+  + validate(): void
+}
+
+MealProcessor <-- MealService
+IFoodService <-left- MealService
+MealValidator <-right- MealService
+NutrientCalculator <-- MealService
+MealService --> IMealMapper
+IMealMapper <|.right. MealMapper
+ConnectionUtil <-left- MealMapper
+MealService --> PeriodValidator
+Meal --> MealMapper
+
+@enduml

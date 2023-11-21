@@ -28,7 +28,7 @@ public class MealTablePage extends Content {
     private Map<String, NfEntry> entries;
     private Map<String, JButton> buttons;
     private IMealController controller = new MealController();
-    private IContent detailForm = new MealDetailForm();
+    private Content detailForm = new MealDetailForm();
 
     private ActionListener handleNextPage() {
         return e -> table.nextPage();
