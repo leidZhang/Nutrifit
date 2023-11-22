@@ -4,6 +4,9 @@ import main.backend.user.entity.User;
 import main.backend.user.IUserMapper;
 import main.backend.user.IUserService;
 import main.backend.user.util.UserValidator;
+import main.backend.validator.impl.NameValidator;
+import main.backend.validator.impl.PasswordValidator;
+import main.backend.validator.impl.UsernameValidator;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -14,7 +17,12 @@ public class UserService implements IUserService {
     private IUserMapper userMapper = new UserMapper();
 
     @Override
-    public User login(String username, String password) throws SQLException, NullPointerException {
+    public User login(String username, String password) throws SQLException, IllegalArgumentException, NullPointerException {
+        UsernameValidator usernameValidator = new UsernameValidator(username);
+        usernameValidator.validate();
+        PasswordValidator passwordValidator = new PasswordValidator(password);
+        passwordValidator.validate();
+
         User user = userMapper.login(username, password);
         if (user == null) throw new NullPointerException("Wrong username or password");
 
