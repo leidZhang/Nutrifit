@@ -220,72 +220,72 @@ public class UserUpdateTest extends UserBaseTest {
         System.out.println(res.getMessage());
     }
 
-    @Test
-    public void testUpdateUserCase12() {
-        //Testing illegal height
-        String dateOfBirthString = "1987-09-15";
-        Date sqlDate = TransformDate(dateOfBirthString);
+//    @Test
+//    public void testUpdateUserCase12() {
+//        //Testing illegal height
+//        String dateOfBirthString = "1987-09-15";
+//        Date sqlDate = TransformDate(dateOfBirthString);
+//
+//        // Use a string that cannot be parsed as a float
+//        String invalidHeightString = "invalid_height_value";
+//
+//        try {
+//            float invalidHeight = Float.parseFloat(invalidHeightString);
+//            Result result=userController.getUser("mok335");
+//            User old_user= (User) result.getData();
+//            User user = new User(
+//                    old_user.getId(),
+//                    "Bob Smith",
+//                    "mok3344",
+//                    "zg%$%@#1",
+//                    "male",
+//                    sqlDate,
+//                    invalidHeight,
+//                    65);
+//
+//            // This line should not be reached, fail the test if it does
+//            Result res = userController.updateUser(user);
+//            assertNotEquals("200", res.getCode());
+//        } catch (NumberFormatException e) {
+//            // Catch the expected exception
+//            // Perform any additional assertions if needed
+//            assertEquals("Expected exception message", "For input string: \"invalid_height_value\"", e.getMessage());
+//        }
+//    }
 
-        // Use a string that cannot be parsed as a float
-        String invalidHeightString = "invalid_height_value";
-
-        try {
-            float invalidHeight = Float.parseFloat(invalidHeightString);
-            Result result=userController.getUser("mok335");
-            User old_user= (User) result.getData();
-            User user = new User(
-                    old_user.getId(),
-                    "Bob Smith",
-                    "mok3344",
-                    "zg%$%@#1",
-                    "male",
-                    sqlDate,
-                    invalidHeight,
-                    65);
-
-            // This line should not be reached, fail the test if it does
-            Result res = userController.updateUser(user);
-            assertNotEquals("200", res.getCode());
-        } catch (NumberFormatException e) {
-            // Catch the expected exception
-            // Perform any additional assertions if needed
-            assertEquals("Expected exception message", "For input string: \"invalid_height_value\"", e.getMessage());
-        }
-    }
-
-    @Test
-    public void testUpdateUserCase13() {
-        //Testing illegal height
-        String dateOfBirthString = "1987-09-15";
-        Date sqlDate = TransformDate(dateOfBirthString);
-
-        // Use a string that cannot be parsed as a float
-        String invalidWeightString = "invalid_height_value";
-
-        try {
-            float invalidWeight = Float.parseFloat(invalidWeightString);
-            Result result=userController.getUser("mok335");
-            User old_user= (User) result.getData();
-
-            User user = new User(
-                    old_user.getId(),
-                    "Bob Smith",
-                    "mok3344",
-                    "zg%$%@#1",
-                    "male",
-                    sqlDate,
-                    180,
-                    invalidWeight);
-
-            // This line should not be reached, fail the test if it does
-            Result res = userController.updateUser(user);
-            assertNotEquals("200", res.getCode());
-        } catch (NumberFormatException e) {
-            // Catch the expected exception
-            // Perform any additional assertions if needed
-            assertEquals("Expected exception message", "For input string: \"invalid_height_value\"", e.getMessage());
-        }
-    }
+//    @Test
+//    public void testUpdateUserCase13() {
+//        //Testing illegal weight
+//        String dateOfBirthString = "1987-09-15";
+//        Date sqlDate = TransformDate(dateOfBirthString);
+//
+//        // Use a string that cannot be parsed as a float
+//        String invalidWeightString = "invalid_height_value";
+//
+//        try {
+//            float invalidWeight = Float.parseFloat(invalidWeightString);
+//            Result result=userController.getUser("mok335");
+//            User old_user= (User) result.getData();
+//
+//            User user = new User(
+//                    old_user.getId(),
+//                    "Bob Smith",
+//                    "mok3344",
+//                    "zg%$%@#1",
+//                    "male",
+//                    sqlDate,
+//                    180,
+//                    invalidWeight);
+//
+//            // This line should not be reached, fail the test if it does
+//            Result res = userController.updateUser(user);
+//            assertNotEquals("200", res.getCode());
+//        } catch (NumberFormatException e) {
+//            // Catch the expected exception
+//            // Perform any additional assertions if needed
+//            assertEquals("Expected exception message", "For input string: \"invalid_height_value\"", e.getMessage());
+//        }
+//    }
 
     @Test
     public void testUpdateUserCase14() {

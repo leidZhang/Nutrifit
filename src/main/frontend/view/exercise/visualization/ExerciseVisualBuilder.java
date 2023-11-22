@@ -21,6 +21,7 @@ public class ExerciseVisualBuilder extends ContentBuilder{
     private Map<String, JButton> buttons;
     private DefaultCategoryDataset barChartDataset;
     private JFreeChart barChart;
+
     public ExerciseVisualBuilder(JPanel page) {
         super(page);
 

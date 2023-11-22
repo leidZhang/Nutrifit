@@ -1,25 +1,25 @@
 @startuml
-activate ExerciseVisualization
-ExerciseVisualization -> UserSession: getInstance()
+activate ExerciseVisualPage
+ExerciseVisualPage -> UserSession: getUser()
 activate UserSession
-UserSession --> ExerciseVisualization: User
+UserSession --> ExerciseVisualPage: User
 deactivate UserSession
 
-ExerciseVisualization -> ExerciseController: getByPeriod(String, Date, Date)
+ExerciseVisualPage -> ExerciseController: getDailyExerciseMinutesByDate(User, Date, Date)
 activate ExerciseController
 
-ExerciseController -> ExerciseService: getByPeriod(String, Date, Date)
+ExerciseController -> ExerciseService: ggetDailyExerciseMinutesByDate(User, Date, Date)
 activate ExerciseService
 
-ExerciseService -> ExerciseMapper: getByPeriod(String, Date, Date)
+ExerciseService -> ExerciseMapper: getDailyExerciseMinutesByDate(User, Date, Date)
 activate ExerciseMapper
 
-ExerciseMapper --> ExerciseService: List
+ExerciseMapper --> ExerciseService: Map<Date, Integer>
 deactivate ExerciseMapper
 
-ExerciseService --> ExerciseController: List
+ExerciseService --> ExerciseController: Map<Date, Integer>
 deactivate ExerciseService
 
-ExerciseController --> ExerciseVisualization: Result
+ExerciseController --> ExerciseVisualPage: Result
 deactivate ExerciseController
 @enduml

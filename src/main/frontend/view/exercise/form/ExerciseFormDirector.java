@@ -3,7 +3,7 @@ package main.frontend.view.exercise.form;
 import main.frontend.common.ContentBuilder;
 
 public class ExerciseFormDirector {
-    private ExerciseFormBuilder builder;
+    private ContentBuilder builder;
 
     public ExerciseFormDirector(ContentBuilder builder) {
         this.builder = (ExerciseFormBuilder) builder;

@@ -24,4 +24,50 @@ abstract class ContentBuilder {
     +clearPage(): void
 }
 
+class ExerciseFormPage {
+  - table: PaginationTable
+  - entries: Map<String, JComponent>
+  - controller: IExerciseController
+  - buttons: Map<String, JButton>
+  - deleteItem: JMenuItem
+
+  - handlePrev(): ActionListener
+  - handleNext(): ActionListener
+  - handleDelete(): ActionListener
+  - handleBack(): ActionListener
+  - loadExerciseLog(User): void
+}
+
+class ExerciseFormDirector {
+  - builder: ContentBuilder
+
+  + constructPage(String): void
+}
+
+class ExerciseFormBuilder {
+  - PAGE_SIZE: int
+  - ENTRY_DIMENSION: int[]
+  - buttons: Map<String, JButton>
+  - entries: Map<String, JComponent>
+  - table: PaginationTable
+  - popupMenu: JPopupMenu
+  - deleteItem: JMenuItem
+
+  + buildExerciseTable(): void
+  + buildButtons(): void
+  + buildSaveNewRecordRow(): void
+  - addComponent(Component): void
+  + getButtons(): Map<String, JButton>
+  + getEntries(): Map<String, JComponent>
+  + getTable(): PaginationTable
+  + getDeleteItem(): JMenuItem
+}
+
+ExerciseFormPage --|> Content
+Content ..|> IContent
+ExerciseFormBuilder -left-|> ContentBuilder
+ExerciseFormPage -right-> ExerciseFormDirector
+ExerciseFormPage --> ContentBuilder
+ExerciseFormDirector --> ContentBuilder
+
 @enduml

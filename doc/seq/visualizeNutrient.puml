@@ -1,0 +1,25 @@
+@startuml
+activate MealVisualPage
+MealVisualPage -> UserSession: getUser()
+activate UserSession
+UserSession --> MealVisualPage: User
+deactivate UserSession
+
+MealVisualPage -> MealController: getSortedDailyNutrient(User, Date, Date)
+activate MealController
+
+MealController -> MealService: getSortedDailyNutrient(User, Date, Date)
+activate MealService
+
+MealService -> MealMapper: getSortedDailyNutrient(User, Date, Date)
+activate MealMapper
+
+MealMapper --> MealService: Map<Nutrient, Float>
+deactivate MealMapper
+
+MealService --> MealController: Map<Nutrient, Float>
+deactivate MealService
+
+MealController --> MealVisualPage: Result
+deactivate MealController
+@enduml
