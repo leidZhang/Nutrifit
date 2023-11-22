@@ -1,34 +1,34 @@
 @startuml
 activate Home
-Home -> UserSession: getInstance()
+Home -> UserSession: getUser()
 activate UserSession
 
 UserSession --> Home: User
 deactivate UserSession
 
-Home -> MealController: getByPeriod(String, Date, Date)
+Home -> MealController: getCaloriesByDate(User, Date, Date)
 activate MealController
-MealController -> MealService: getByPeriod(String, Date, Date)
+MealController -> MealService: getCaloriesByDate(User, Date, Date)
 activate MealService
-MealService -> MealMapper: getByPeriod(String, Date, Date)
+MealService -> MealMapper: getCaloriesByDate(User, Date, Date)
 activate MealMapper
-MealMapper --> MealService: List
+MealMapper --> MealService: Map<Date, Integer>
 deactivate MealMapper
-MealService --> MealController: List
+MealService --> MealController: Map<Date, Integer>
 deactivate MealService
 
 MealController --> Home: Result
 deactivate MealController
 
-Home -> ExerciseController: getByPeriod(String, Date, Date)
+Home -> ExerciseController: getCaloriesByDate(User, Date, Date)
 activate ExerciseController
-ExerciseController -> ExerciseService: getByPeriod(String, Date, Date)
+ExerciseController -> ExerciseService: getCaloriesByDate(User, Date, Date)
 activate ExerciseService
-ExerciseService -> ExerciseMapper: getByPeriod(String, Date, Date)
+ExerciseService -> ExerciseMapper: getCaloriesByDate(User, Date, Date)
 activate ExerciseMapper
-ExerciseMapper --> ExerciseService: List
+ExerciseMapper --> ExerciseService: Map<Date, Integer>
 deactivate ExerciseMapper
-ExerciseService --> ExerciseController: List
+ExerciseService --> ExerciseController: Map<Date, Integer>
 deactivate ExerciseService
 
 ExerciseController --> Home: Result

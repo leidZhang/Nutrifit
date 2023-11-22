@@ -1,12 +1,12 @@
 @startuml
-activate ExerciseList
-ExerciseList -> UserSession: getInstance()
+activate ExerciseFormPage
+ExerciseFormPage -> UserSession: getUser()
 activate UserSession
 
-UserSession --> ExerciseList: User
+UserSession --> ExerciseFormPage: User
 deactivate UserSession
 
-ExerciseList -> ExerciseController: getByUsername(String)
+ExerciseFormPage -> ExerciseController: getByUsername(String)
 activate ExerciseController
 
 ExerciseController -> ExerciseService:  getByUsername(String)
@@ -21,6 +21,6 @@ deactivate ExerciseMapper
 ExerciseService --> ExerciseController: List
 deactivate ExerciseService
 
-ExerciseController --> ExerciseList: Result
+ExerciseController --> ExerciseFormPage: Result
 deactivate ExerciseController
 @enduml

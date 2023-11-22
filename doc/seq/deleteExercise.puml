@@ -1,6 +1,6 @@
 @startuml
-activate ExerciseList
-ExerciseList -> ExerciseController: delete(int)
+activate ExerciseFormPage
+ExerciseFormPage -> ExerciseController: delete(int)
 activate ExerciseController
 
 ExerciseController -> ExerciseService: delete(int)
@@ -15,6 +15,6 @@ deactivate ExerciseMapper
 ExerciseService --> ExerciseController:
 deactivate ExerciseService
 
-ExerciseController --> ExerciseList: Result
+ExerciseController --> ExerciseFormPage: Result
 deactivate ExerciseController
 @enduml

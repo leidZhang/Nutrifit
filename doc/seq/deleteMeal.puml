@@ -1,6 +1,6 @@
 @startuml
-activate MealList
-MealList -> MealController: delete(int)
+activate MealTablePage
+MealTablePage -> MealController: delete(int)
 activate MealController
 
 MealController -> MealService: delete(int)
@@ -15,6 +15,6 @@ deactivate MealMapper
 MealService --> MealController:
 deactivate MealService
 
-MealController --> MealList: Result
+MealController --> MealTablePage: Result
 deactivate MealController
 @enduml

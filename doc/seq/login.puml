@@ -1,6 +1,6 @@
 @startuml
-Login -> UserController: getUser(String, String)
-activate Login
+LoginPage -> UserController: getUser(String, String)
+activate LoginPage
 activate UserController
 
 UserController -> UserService: getUser(String, String)
@@ -15,9 +15,9 @@ deactivate UserMapper
 UserService --> UserController: User
 deactivate UserService
 
-UserController --> Login: Result
+UserController --> LoginPage: Result
 deactivate UserController
 
-Login -> UserSession: setInstance()
+LoginPage -> UserSession: setUser(User)
 activate UserSession
 @enduml
