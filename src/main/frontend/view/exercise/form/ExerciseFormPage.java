@@ -5,6 +5,7 @@ import main.backend.exercise.IExerciseController;
 import main.backend.exercise.entity.Exercise;
 import main.backend.exercise.impl.ExerciseController;
 import main.backend.user.entity.User;
+import main.frontend.common.IContent;
 import main.frontend.custom.dropdown.AutoComboBox;
 import main.frontend.custom.entry.NfEntry;
 import main.frontend.custom.table.PaginationTable;
@@ -22,25 +23,10 @@ public class ExerciseFormPage extends Content {
     private PaginationTable table;
     private Map<String, JComponent> entries;
     private IExerciseController controller = new ExerciseController();
+    private Map<String, JButton> buttons;
+    private JMenuItem deleteItem;
 
-    @Override
-    public String showContent(JPanel content) {
-        User user = instance.getUser();
-
-        //construct page
-        ExerciseFormBuilder builder = new ExerciseFormBuilder(content);
-        ExerciseFormDirector director = new ExerciseFormDirector(builder);
-        director.constructPage("Exercise Record", handlePerv(), handleNext(), handleSubmit(user, content), handleDelete());
-
-
-        table = builder.getTable();
-        entries = builder.getEntries();
-        loadExerciseLog(user);
-
-        return "Switch to Exercise page";
-    }
-
-    private ActionListener handlePerv() {
+    private ActionListener handlePrev() {
         return e -> table.prevPage();
     }
 
@@ -87,6 +73,13 @@ public class ExerciseFormPage extends Content {
         };
     }
 
+    private ActionListener handleBack() {
+        return e -> {
+            Map<String, IContent> map = frontEnd.get().getPageMap();
+            frontEnd.get().switchContentPanel(map.get("Exercise"));
+        };
+    }
+
     private void loadExerciseLog(User user) {
         Result result = controller.getByUsername(user.getUsername());
         String code = result.getCode();
@@ -109,5 +102,29 @@ public class ExerciseFormPage extends Content {
         } else {
             throw new RuntimeException();
         }
+    }
+
+    @Override
+    public String showContent(JPanel content) {
+        User user = instance.getUser();
+
+        //construct page
+        ExerciseFormBuilder builder = new ExerciseFormBuilder(content);
+        ExerciseFormDirector director = new ExerciseFormDirector(builder);
+        director.constructPage("Exercise Record");
+
+        table = builder.getTable();
+        entries = builder.getEntries();
+        buttons = builder.getButtons();
+        deleteItem = builder.getDeleteItem();
+        loadExerciseLog(user);
+
+        buttons.get("Prev Page").addActionListener(handlePrev());
+        buttons.get("Next Page").addActionListener(handleNext());
+        buttons.get("Save").addActionListener(handleSubmit(user, content));
+        buttons.get("Back").addActionListener(handleBack());
+        deleteItem.addActionListener(handleDelete());
+
+        return "Switch to Exercise page";
     }
 }

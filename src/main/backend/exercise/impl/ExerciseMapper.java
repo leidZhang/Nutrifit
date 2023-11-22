@@ -185,4 +185,40 @@ public class ExerciseMapper implements IExerciseMapper {
 
         return calories;
     }
+
+    @Override
+    public Map<Date, Integer> getDailyExerciseMinutesByDate(User user, Date startDate, Date endDate) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        Map<Date, Integer> exerciseMinutes = new LinkedHashMap<>();
+        int userId = user.getId();
+
+        try {
+            connection = ConnectionUtil.getConnection();
+            String query = "select date, sum(duration) as total_minutes ";
+            query += "from exercise where user_id = ? and date between ? and ? ";
+            query += "group by date order by date asc";
+            ps = connection.prepareStatement(query);
+
+            ps.setInt(1, userId);
+            ps.setDate(2, startDate);
+            ps.setDate(3, endDate);
+
+            res = ps.executeQuery();
+            while (res.next()) {
+                Date date = res.getDate("date");
+                int value = res.getInt("total_minutes");
+                exerciseMinutes.put(date, value);
+            }
+        } catch (SQLException e) {
+            throw new SQLException(e.getMessage());
+        } finally {
+            ConnectionUtil.close(connection, ps, res);
+        }
+
+        return exerciseMinutes;
+    }
+
 }
