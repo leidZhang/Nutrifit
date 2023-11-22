@@ -88,17 +88,17 @@ class Exercise {
 IExerciseController <|.down. ExerciseController
 ExerciseController -right-> IExerciseService
 ExerciseService .left.|> IExerciseService
-IExerciseController <.right. Exercise
+IExerciseController .right.> Exercise
 ExerciseService -up-> IExerciseMapper
 
 ExerciseMapper --|> IExerciseMapper
 ConnectionUtil <-right- ExerciseMapper
 ExerciseValidator <-left- ExerciseService
-Exercise --> ExerciseController
-Exercise --> ExerciseService
+Exercise <-- ExerciseController
+Exercise <-- ExerciseService
 Exercise -up[hidden]-> ConnectionUtil
-IExerciseMapper <.left. Exercise
-IExerciseService <.up. Exercise
-ExerciseMapper <-- Exercise
+IExerciseMapper .left.> Exercise
+IExerciseService .up.> Exercise
+ExerciseMapper --> Exercise
 
 @enduml

@@ -98,11 +98,11 @@ IMealController <|.down. MealController
 MealController -right-> IMealService
 IMealService <|.right. MealService
 IMealMapper <-- MealService
-Meal .left.> IMealController
-Meal --> MealController
-Meal --> MealService
-Meal ..> IMealService
-Meal .right.> IMealMapper
+Meal <.left. IMealController
+Meal <-- MealController
+Meal <-- MealService
+Meal <.. IMealService
+Meal <.right. IMealMapper
 MealMapper -left-|> IMealMapper
 
 @enduml
