@@ -50,6 +50,21 @@ public class UserProfilePage extends UserFormPage {
         }
     }
 
+    private void updateEntries(Result userResult, JPanel content) {
+        if (userResult.getCode().equals("200")) {
+            User user1 = (User) userResult.getData();
+            instance.setUser(user1); // update session
+            displayUserInfo(user1); // update form
+
+            editable = false; // update editable
+            setEditable(false); // disable entries
+
+            JOptionPane.showMessageDialog(content, "Information updated!", "Message", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(content, userResult.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private ActionListener handleSubmit(JPanel content, User user) {
         ActionListener listener = e -> {
             // verify input
@@ -63,19 +78,8 @@ public class UserProfilePage extends UserFormPage {
             // submit result
             if (res.getCode().equals("200")) {
                 Result userResult = controller.getUser(newUser.getUsername());
-
-                if (userResult.getCode().equals("200")) {
-                    User user1 = (User) userResult.getData();
-                    instance.setUser(user1); // update session
-                    displayUserInfo(user1); // update form
-
-                    editable = false; // update editable
-                    setEditable(false); // disable entries
-
-                    JOptionPane.showMessageDialog(content, "Information updated!", "Message", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                // update entries
+                updateEntries(userResult, content);
             } else {
                 JOptionPane.showMessageDialog(content, res.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
