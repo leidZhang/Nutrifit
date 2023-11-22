@@ -80,6 +80,6 @@ MealService --> IMealMapper
 IMealMapper <|.right. MealMapper
 ConnectionUtil <-left- MealMapper
 MealService --> PeriodValidator
-Meal --> MealMapper
+Meal <-- MealMapper
 
 @enduml

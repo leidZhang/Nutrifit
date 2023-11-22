@@ -94,11 +94,11 @@ IUserService <|.right. UserService
 UserService -right-> IUserMapper
 UserMapper .down.|> IUserMapper
 User .left.> IUserController
-User ..> IUserService
-User ..> IUserMapper
-User --> UserService
-User --> UserController
-User -right-> UserMapper
+User <.. IUserService
+User <.. IUserMapper
+User <-- UserService
+User <-- UserController
+User <-right- UserMapper
 UserMapper -right-> ConnectionUtil
 UserService -up-> UserValidator
 

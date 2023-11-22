@@ -53,4 +53,30 @@ IPredictController <-up- Home
 IMealController <-up- Home
 IExerciseController <-up- Home
 
+MealController .up.|> IMealController
+PredictController .up.|> IPredictController
+ExerciseController .up.|> IExerciseController
+UserController .up.|> IUserController
+
+class Result {
+  - message: String
+  - code: String
+  - data: Object
+
+  + setMessage(String): void
+  + setCode(String): void
+  + setData(Object): void
+  + getData(): Object
+  + getMessage(): String
+  + getCode(): String
+  + success(): Result
+  + success(Object): Result
+  + error(String): Result
+}
+
+Result <-up- UserController
+Result <-up- MealController
+Result <-up- PredictController
+Result <-up- ExerciseController
+
 @enduml
