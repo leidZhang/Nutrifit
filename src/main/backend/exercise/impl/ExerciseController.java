@@ -1,6 +1,5 @@
 package main.backend.exercise.impl;
 
-//import main.backend.exercise.ExerciseData;
 import main.backend.exercise.IExerciseController;
 import main.backend.exercise.IExerciseService;
 import main.backend.exercise.entity.Exercise;
@@ -62,6 +61,16 @@ public class ExerciseController implements IExerciseController {
             return Result.success(totalCalories);
         } catch (Exception e) {
             return Result.error("Error retrieving total burned calories by date: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public Result getDailyExerciseMinutesByDate(User user, Date startDate, Date endDate) {
+        try {
+            Map<Date, Integer> dailyTotalMinutes = exerciseService.getDailyExerciseMinutesByDate(user, startDate, endDate);
+            return Result.success(dailyTotalMinutes);
+        } catch (Exception e) {
+            return Result.error("Error retrieving total exercise minutes by date: " + e.getMessage());
         }
     }
 }

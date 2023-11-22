@@ -53,6 +53,14 @@ public class ExerciseService implements IExerciseService {
         return exerciseMapper.getCaloriesByDate(user, startDate, endDate);
     }
 
+    @Override
+    public Map<Date, Integer> getDailyExerciseMinutesByDate(User user, Date startDate, Date endDate) throws SQLException, IllegalArgumentException {
+        PeriodValidator validator = new PeriodValidator(startDate, endDate);
+        validator.validate();
+
+        return exerciseMapper.getDailyExerciseMinutesByDate(user, startDate, endDate);
+    }
+
     private int calBurnCalories(Exercise data, User user) {
         System.out.println("pass cal BC");
 

@@ -14,4 +14,5 @@ public interface IExerciseMapper {
     List<Exercise> getByUsername(String username) throws SQLException;
     List<Exercise> getByPeriod(String username, Date startDate, Date endDate) throws SQLException;
     Map<Date, Float> getCaloriesByDate(User user, Date startDate, Date endDate) throws SQLException;
+    Map<Date, Integer> getDailyExerciseMinutesByDate(User user, Date startDate, Date endDate) throws SQLException;
 }
