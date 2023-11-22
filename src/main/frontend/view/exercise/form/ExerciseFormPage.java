@@ -5,6 +5,7 @@ import main.backend.exercise.IExerciseController;
 import main.backend.exercise.entity.Exercise;
 import main.backend.exercise.impl.ExerciseController;
 import main.backend.user.entity.User;
+import main.frontend.common.ContentBuilder;
 import main.frontend.common.IContent;
 import main.frontend.custom.dropdown.AutoComboBox;
 import main.frontend.custom.entry.NfEntry;
@@ -109,14 +110,14 @@ public class ExerciseFormPage extends Content {
         User user = instance.getUser();
 
         //construct page
-        ExerciseFormBuilder builder = new ExerciseFormBuilder(content);
+        ContentBuilder builder = new ExerciseFormBuilder(content);
         ExerciseFormDirector director = new ExerciseFormDirector(builder);
         director.constructPage("Exercise Record");
 
-        table = builder.getTable();
-        entries = builder.getEntries();
-        buttons = builder.getButtons();
-        deleteItem = builder.getDeleteItem();
+        table = ((ExerciseFormBuilder)builder).getTable();
+        entries = ((ExerciseFormBuilder)builder).getEntries();
+        buttons = ((ExerciseFormBuilder)builder).getButtons();
+        deleteItem = ((ExerciseFormBuilder)builder).getDeleteItem();
         loadExerciseLog(user);
 
         buttons.get("Prev Page").addActionListener(handlePrev());

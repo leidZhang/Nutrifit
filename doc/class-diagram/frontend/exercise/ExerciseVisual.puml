@@ -1,27 +1,73 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
+interface IContent {
+  +showContent(JPanel): String
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+abstract class Content {
+    #instance: UserSession
+    #frontEnd: WeakReference<IMainframe>
+
+    +setMainframe(IMainframe): void
+    +showContent(JPanel): String
 }
+
+abstract class ContentBuilder {
+    #page: JPanel
+    #constraints: GridBagConstraints
+    #gridy: int
+
+    +buildTitle(String): void
+    +buildMainContent(): void
+    +setUp(): void
+    +clearPage(): void
+}
+
+class ExerciseVisualBuilder {
+  - ENTRY_DIMENSION: int[]
+  - entries: Map<String, NfEntry>
+  - buttons: Map<String, JButton>
+  - barChartDataset: DefaultCategoryDataset
+  - barChart: JFreeChart
+
+  - buildDateRow(): void
+  - buildBarChart(): void
+  - buildBottomRow(): void
+  + getEntries(): Map<String, NfEntry>
+  + getButtons(): Map<String, JButton>
+  + getDataSet(): DefaultCategoryDataset
+}
+
+class ExerciseVisualDirector {
+  - builder: ContentBuilder
+
+  + constructPage(String): void
+}
+
+class ExerciseVisualPage {
+  - recordPage: Content
+  - today: LocalDate
+  - defaultStartDate: LocalDate
+  - entries: Map<String, NfEntry>
+  - buttons: Map<String, JButton>
+  - exerciseController: IExerciseController
+  - dataSet: DefaultCategoryDataset
+
+  - verifyPeriod(): boolean
+  - handleViewRecords(): ActionListener
+  - handleApply(): ActionListener
+  - handleReset(): ActionListener
+  - setRegex(): void
+  - renderBarChart(Date, Date): void
+  - mount(): void
+}
+
+Content --|> IContent
+ExerciseVisualBuilder -right-|> ContentBuilder
+ExerciseVisualPage -right-> ExerciseVisualDirector
+ExerciseVisualPage --> ContentBuilder
+ExerciseVisualDirector --> ContentBuilder
+ExerciseVisualPage -left-|> Content
 
 @enduml
