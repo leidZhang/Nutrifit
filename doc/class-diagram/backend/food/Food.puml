@@ -73,15 +73,15 @@ class ConnectionUtil {
 IFoodController <|.. FoodController
 FoodController -right-> IFoodService
 FoodService -left-|> IFoodService
-Food .left.> IFoodController
-Food -up-> Nutrient
-Food --> FoodController
-Food ..> IFoodService
-Food --> FoodService
+Food <.left. IFoodController
+Food <-up- Nutrient
+Food <-- FoodController
+Food <.. IFoodService
+Food <-- FoodService
 FoodService -right-> IFoodMapper
 ConnectionUtil <-down- FoodMapper
-Food ..> IFoodMapper
-Food -right-> FoodMapper
+Food <.. IFoodMapper
+Food <-right- FoodMapper
 FoodMapper ..|> IFoodMapper
 
 class GroupConverter {
