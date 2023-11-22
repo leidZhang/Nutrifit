@@ -3,7 +3,7 @@ package main.frontend.view.exercise.visualization;
 import main.frontend.common.ContentBuilder;
 
 public class ExerciseVisualDirector {
-    private ExerciseVisualBuilder builder;
+    private ContentBuilder builder;
 
     public ExerciseVisualDirector(ContentBuilder builder) {
         this.builder = (ExerciseVisualBuilder) builder;

@@ -4,6 +4,7 @@ import main.backend.common.Result;
 import main.backend.exercise.IExerciseController;
 import main.backend.exercise.impl.ExerciseController;
 import main.backend.user.entity.User;
+import main.frontend.common.ContentBuilder;
 import main.frontend.custom.entry.NfEntry;
 import main.frontend.common.Content;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -101,13 +102,13 @@ public class ExerciseVisualPage extends Content {
 
     @Override
     public String showContent(JPanel content) {
-        ExerciseVisualBuilder builder = new ExerciseVisualBuilder(content);
+        ContentBuilder builder = new ExerciseVisualBuilder(content);
         ExerciseVisualDirector director = new ExerciseVisualDirector(builder);
 
         director.constructPage("Exercise Visualization");
-        entries = builder.getEntries();
-        buttons = builder.getButtons();
-        dataSet = builder.getDataSet();
+        entries = ((ExerciseVisualBuilder) builder).getEntries();
+        buttons = ((ExerciseVisualBuilder) builder).getButtons();
+        dataSet = ((ExerciseVisualBuilder) builder).getDataSet();
 
         mount();
         return "Exercise Visualization";
