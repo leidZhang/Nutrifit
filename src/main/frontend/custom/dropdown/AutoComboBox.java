@@ -81,15 +81,15 @@ public class AutoComboBox<T> extends JPanel {
     private boolean isInList() {
         if (itemList == null) return false;
 
+        boolean flag = true;
         for (Object item : itemList) {
             String itemString = item.toString().toLowerCase();
             String input = comboBox.getEditor().getItem().toString().toLowerCase();
-            if (itemString.equals(input)) {
-                return true;
-            }
+
+            flag = flag & itemString.equals(input);
         }
 
-        return false;
+        return flag;
     }
 
     public boolean verifyInput() {
