@@ -69,7 +69,7 @@ public class MealGetByPeriodTest extends MealBaseTest {
     public void mealGetByPeriodCase6(){
         //Testing user getMeals by period with endtime after currentTime
         User user = new User(1, "Jane Doe", "jd123", "1234567", "female", null, 0, 0);
-        Result res = mealController.getByPeriod(user, Date.valueOf("2023-10-25"), Date.valueOf("2024-10-30"));
+        Result res = mealController.getByPeriod(user, Date.valueOf("2023-10-25"), Date.valueOf("2077-10-30"));
         assertNotEquals("200", res.getCode());
 
     }

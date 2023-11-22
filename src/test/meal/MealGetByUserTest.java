@@ -21,6 +21,7 @@ public class MealGetByUserTest extends MealBaseTest {
         assertEquals("200", res.getCode());
 
     }
+
     @Test
     public void mealGetByUserCase2(){
         //Testing fake user getALl Meals

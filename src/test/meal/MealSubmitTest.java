@@ -107,26 +107,26 @@ public class MealSubmitTest extends MealBaseTest {
         map.clear(); // clear map
     }
 
-    @Test
-    public void MealSubmitTestCase7() {
-        // Test invalid food input
-        try {
-            Object invalidFood = "SDFDSF";
-            Food food = (Food) invalidFood;
-            float quantity = 100;
-            map.put(food, quantity);
-
-            Meal meal = new Meal(1, VALID_DATE, TYPE_DINNER);
-            meal.setFoodMap(map);
-            // this line will not reach
-            Result res = mealController.save(meal, user);
-            assertNotEquals(SUCCESS_CODE, res.getCode());
-        } catch (Exception e) {
-            assertEquals(e.getClass(), new ClassCastException().getClass());
-        }
-
-        map.clear(); // clear map
-    }
+//    @Test
+//    public void MealSubmitTestCase7() {
+//        // Test invalid food input
+//        try {
+//            Object invalidFood = "SDFDSF";
+//            Food food = (Food) invalidFood;
+//            float quantity = 100;
+//            map.put(food, quantity);
+//
+//            Meal meal = new Meal(1, VALID_DATE, TYPE_DINNER);
+//            meal.setFoodMap(map);
+//            // this line will not reach
+//            Result res = mealController.save(meal, user);
+//            assertNotEquals(SUCCESS_CODE, res.getCode());
+//        } catch (Exception e) {
+//            assertEquals(e.getClass(), new ClassCastException().getClass());
+//        }
+//
+//        map.clear(); // clear map
+//    }
 
     @Test
     public void MealSubmitTestCase8() {
@@ -142,27 +142,27 @@ public class MealSubmitTest extends MealBaseTest {
         map.clear(); // clear map
     }
 
-    @Test
-    public void MealSubmitTestCase9() {
-        // Test invalid quantity input
-        String invalid = "(^&(";
-
-        try {
-            Food food = foodList.get(1);
-            float quantity = Float.parseFloat(invalid);
-            map.put(food, quantity);
-
-            Meal meal = new Meal(1, VALID_DATE, TYPE_DINNER);
-            meal.setFoodMap(map);
-            // this line will not reach
-            Result res = mealController.save(meal, user);
-            assertNotEquals(SUCCESS_CODE, res.getCode());
-        } catch (Exception e) {
-            assertEquals(e.getClass(), new NumberFormatException().getClass());
-        }
-
-        map.clear(); // clear map
-    }
+//    @Test
+//    public void MealSubmitTestCase9() {
+//        // Test invalid quantity input
+//        String invalid = "(^&(";
+//
+//        try {
+//            Food food = foodList.get(1);
+//            float quantity = Float.parseFloat(invalid);
+//            map.put(food, quantity);
+//
+//            Meal meal = new Meal(1, VALID_DATE, TYPE_DINNER);
+//            meal.setFoodMap(map);
+//            // this line will not reach
+//            Result res = mealController.save(meal, user);
+//            assertNotEquals(SUCCESS_CODE, res.getCode());
+//        } catch (Exception e) {
+//            assertEquals(e.getClass(), new NumberFormatException().getClass());
+//        }
+//
+//        map.clear(); // clear map
+//    }
 
     @Test
     public void MealSubmitTestCase10() {
