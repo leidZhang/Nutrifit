@@ -15,4 +15,5 @@ public interface IExerciseService {
     List<Exercise> getByPeriod(String username, Date startDate, Date endDate) throws SQLException;
     // void saveExerciseData(ExerciseData data, User user);
     Map<Date, Float> getCaloriesByDate(User user, Date startDate, Date endDate) throws SQLException;
+    Map<Date, Integer> getDailyExerciseMinutesByDate(User user, Date startDate, Date endDate) throws SQLException;
 }

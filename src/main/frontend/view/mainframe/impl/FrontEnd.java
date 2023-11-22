@@ -6,6 +6,7 @@ import main.frontend.common.IContent;
 import main.frontend.common.ContentBuilder;
 import main.frontend.session.UserSession;
 import main.frontend.view.exercise.form.ExerciseFormPage;
+import main.frontend.view.exercise.visualization.ExerciseVisualPage;
 import main.frontend.view.home.Home;
 import main.frontend.view.mainframe.IMainframe;
 import main.frontend.view.mainframe.component.SideBarBuilder;
@@ -34,7 +35,8 @@ public class FrontEnd extends JFrame implements IMainframe {
         pageMap.put("UserProfile", new UserProfilePage());
         pageMap.put("Register", new RegisterPage());
         pageMap.put("Login", new LoginPage((Content) pageMap.get("Register")));
-        pageMap.put("Exercise", new ExerciseFormPage());
+        pageMap.put("Exercise Records", new ExerciseFormPage());
+        pageMap.put("Exercise", new ExerciseVisualPage((Content) pageMap.get("Exercise Records")));
         pageMap.put("Meal Records", new MealTablePage());
         pageMap.put("Meal", new MealVisualPage((Content) pageMap.get("Meal Records")));
         pageMap.put("Meal Form", new MealAddForm());
