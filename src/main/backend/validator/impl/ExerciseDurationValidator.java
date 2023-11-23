@@ -12,7 +12,7 @@ public class ExerciseDurationValidator extends Validator{
     @Override
     public void validate() throws IllegalArgumentException, IllegalStateException{
         if (obj instanceof Integer input) {
-            if (input < 0 || input > MAX_DURATION) {
+            if (input <= 0 || input > MAX_DURATION) {
                 throw new IllegalStateException("Duration out of boundary");
             }
         } else {
