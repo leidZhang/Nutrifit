@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 18/11/2023 13:28:37
+ Date: 22/11/2023 21:18:10
 */
 
 SET NAMES utf8mb4;
@@ -98,38 +98,23 @@ CREATE TABLE `exercise`  (
   PRIMARY KEY (`exercise_id`) USING BTREE,
   INDEX `fk1`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of exercise
 -- ----------------------------
-INSERT INTO `exercise` VALUES (1, '2023-10-25', 'jogging', 'high', 30, 1000, 1);
-INSERT INTO `exercise` VALUES (2, '2023-10-25', 'swimming', 'low', 100, 1500, 4);
-INSERT INTO `exercise` VALUES (4, '2023-10-24', 'jogging', 'low', 30, 1100, 4);
-INSERT INTO `exercise` VALUES (5, '2023-10-25', 'jogging', 'high', 30, 1100, 1);
-INSERT INTO `exercise` VALUES (6, '2023-10-25', 'jogging', 'high', 30, 1200, 1);
-INSERT INTO `exercise` VALUES (7, '2023-10-25', 'jogging', 'high', 30, 1300, 1);
-INSERT INTO `exercise` VALUES (8, '2023-10-25', 'jogging', 'high', 30, 1400, 1);
-INSERT INTO `exercise` VALUES (9, '2023-10-25', 'jogging', 'high', 30, 1400, 1);
-INSERT INTO `exercise` VALUES (10, '2023-10-25', 'jogging', 'high', 30, 1500, 1);
-INSERT INTO `exercise` VALUES (11, '2023-10-25', 'jogging', 'high', 30, 1400, 1);
-INSERT INTO `exercise` VALUES (12, '2023-10-25', 'jogging', 'high', 30, 1400, 1);
-INSERT INTO `exercise` VALUES (13, '2023-10-25', 'jogging', 'high', 30, 1400, 1);
-INSERT INTO `exercise` VALUES (14, '2023-10-25', 'jogging', 'high', 30, 1400, 1);
-INSERT INTO `exercise` VALUES (15, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
-INSERT INTO `exercise` VALUES (16, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
-INSERT INTO `exercise` VALUES (17, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
-INSERT INTO `exercise` VALUES (18, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
-INSERT INTO `exercise` VALUES (19, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
-INSERT INTO `exercise` VALUES (21, '2023-11-18', 'Walking', 'Very High', 33, 0, 4);
-INSERT INTO `exercise` VALUES (22, '2023-11-17', 'Walking', 'Very High', 55, 0, 4);
-INSERT INTO `exercise` VALUES (23, '2023-11-18', 'Walking', 'Very High', 22, 0, 4);
-INSERT INTO `exercise` VALUES (24, '2023-11-18', 'Walking', 'Very High', 55, 0, 4);
-INSERT INTO `exercise` VALUES (25, '2023-11-18', 'Walking', 'Very High', 55, 0, 4);
-INSERT INTO `exercise` VALUES (26, '2023-11-18', 'Walking', 'Very High', 21, 0, 4);
-INSERT INTO `exercise` VALUES (27, '2023-11-18', 'Walking', 'Very High', 33, 0, 4);
 INSERT INTO `exercise` VALUES (28, '2021-11-18', 'Walking', 'Very High', 33, 461, 4);
-INSERT INTO `exercise` VALUES (29, '2023-10-25', 'jogging', 'low', 100, 1500, 1);
+INSERT INTO `exercise` VALUES (33, '2023-11-20', 'Walking', 'Very High', 68, 696, 1);
+INSERT INTO `exercise` VALUES (34, '2023-11-19', 'Biking', 'Medium', 28, 130, 1);
+INSERT INTO `exercise` VALUES (37, '2023-11-15', 'Walking', 'High', 30, 223, 1);
+INSERT INTO `exercise` VALUES (38, '2023-11-15', 'Walking', 'High', 720, 5364, 1);
+INSERT INTO `exercise` VALUES (39, '2023-11-15', 'Walking', 'High', 1, 7, 1);
+INSERT INTO `exercise` VALUES (42, '2023-04-11', 'Walking', 'Low', 30, 83, 1);
+INSERT INTO `exercise` VALUES (43, '2023-04-11', 'Running', 'Medium', 60, 279, 1);
+INSERT INTO `exercise` VALUES (45, '2023-11-22', 'Walking', 'Low', 30, 83, 1);
+INSERT INTO `exercise` VALUES (46, '2023-11-22', 'Walking', 'Low', 30, 83, 1);
+INSERT INTO `exercise` VALUES (47, '2023-11-22', 'Walking', 'Low', 30, 83, 1);
+INSERT INTO `exercise` VALUES (48, '2023-11-22', 'Walking', 'Low', 30, 83, 1);
 
 -- ----------------------------
 -- Table structure for food group
@@ -278,10 +263,128 @@ CREATE TABLE `food used`  (
 -- ----------------------------
 -- Records of food used
 -- ----------------------------
-INSERT INTO `food used` VALUES (1, 2, 100);
-INSERT INTO `food used` VALUES (1, 4, 150);
-INSERT INTO `food used` VALUES (1, 6, 80);
-INSERT INTO `food used` VALUES (1, 8, 10);
+INSERT INTO `food used` VALUES (32, 2, 18);
+INSERT INTO `food used` VALUES (32, 5, 18);
+INSERT INTO `food used` VALUES (32, 6, 18);
+INSERT INTO `food used` VALUES (33, 2, 200);
+INSERT INTO `food used` VALUES (34, 2, 0);
+INSERT INTO `food used` VALUES (34, 4, 1.4013e-45);
+INSERT INTO `food used` VALUES (34, 5, 2.8026e-45);
+INSERT INTO `food used` VALUES (35, 2, 0);
+INSERT INTO `food used` VALUES (35, 4, 1.4013e-45);
+INSERT INTO `food used` VALUES (35, 5, 2.8026e-45);
+INSERT INTO `food used` VALUES (35, 6, 4.2039e-45);
+INSERT INTO `food used` VALUES (35, 7, 5.60519e-45);
+INSERT INTO `food used` VALUES (35, 8, 7.00649e-45);
+INSERT INTO `food used` VALUES (35, 9, 8.40779e-45);
+INSERT INTO `food used` VALUES (35, 10, 9.80909e-45);
+INSERT INTO `food used` VALUES (35, 13, 1.12104e-44);
+INSERT INTO `food used` VALUES (35, 14, 1.26117e-44);
+INSERT INTO `food used` VALUES (35, 16, 1.4013e-44);
+INSERT INTO `food used` VALUES (35, 17, 1.54143e-44);
+INSERT INTO `food used` VALUES (35, 18, 1.68156e-44);
+INSERT INTO `food used` VALUES (35, 19, 1.82169e-44);
+INSERT INTO `food used` VALUES (35, 20, 1.96182e-44);
+INSERT INTO `food used` VALUES (35, 21, 2.10195e-44);
+INSERT INTO `food used` VALUES (35, 22, 2.24208e-44);
+INSERT INTO `food used` VALUES (35, 23, 2.38221e-44);
+INSERT INTO `food used` VALUES (35, 24, 2.52234e-44);
+INSERT INTO `food used` VALUES (35, 25, 2.66247e-44);
+INSERT INTO `food used` VALUES (35, 26, 2.8026e-44);
+INSERT INTO `food used` VALUES (35, 27, 2.94273e-44);
+INSERT INTO `food used` VALUES (35, 28, 3.08286e-44);
+INSERT INTO `food used` VALUES (35, 29, 3.22299e-44);
+INSERT INTO `food used` VALUES (35, 30, 3.36312e-44);
+INSERT INTO `food used` VALUES (35, 31, 3.50325e-44);
+INSERT INTO `food used` VALUES (35, 32, 3.64338e-44);
+INSERT INTO `food used` VALUES (35, 33, 3.78351e-44);
+INSERT INTO `food used` VALUES (35, 34, 3.92364e-44);
+INSERT INTO `food used` VALUES (35, 35, 4.06377e-44);
+INSERT INTO `food used` VALUES (35, 37, 4.2039e-44);
+INSERT INTO `food used` VALUES (35, 38, 4.34403e-44);
+INSERT INTO `food used` VALUES (35, 41, 4.48416e-44);
+INSERT INTO `food used` VALUES (36, 2, 0);
+INSERT INTO `food used` VALUES (36, 4, 1.4013e-45);
+INSERT INTO `food used` VALUES (36, 5, 2.8026e-45);
+INSERT INTO `food used` VALUES (37, 2, 0);
+INSERT INTO `food used` VALUES (37, 4, 1.4013e-45);
+INSERT INTO `food used` VALUES (37, 5, 2.8026e-45);
+INSERT INTO `food used` VALUES (37, 6, 4.2039e-45);
+INSERT INTO `food used` VALUES (37, 7, 5.60519e-45);
+INSERT INTO `food used` VALUES (37, 8, 7.00649e-45);
+INSERT INTO `food used` VALUES (37, 9, 8.40779e-45);
+INSERT INTO `food used` VALUES (37, 10, 9.80909e-45);
+INSERT INTO `food used` VALUES (37, 13, 1.12104e-44);
+INSERT INTO `food used` VALUES (37, 14, 1.26117e-44);
+INSERT INTO `food used` VALUES (37, 16, 1.4013e-44);
+INSERT INTO `food used` VALUES (37, 17, 1.54143e-44);
+INSERT INTO `food used` VALUES (37, 18, 1.68156e-44);
+INSERT INTO `food used` VALUES (37, 19, 1.82169e-44);
+INSERT INTO `food used` VALUES (37, 20, 1.96182e-44);
+INSERT INTO `food used` VALUES (37, 21, 2.10195e-44);
+INSERT INTO `food used` VALUES (37, 22, 2.24208e-44);
+INSERT INTO `food used` VALUES (37, 23, 2.38221e-44);
+INSERT INTO `food used` VALUES (37, 24, 2.52234e-44);
+INSERT INTO `food used` VALUES (37, 25, 2.66247e-44);
+INSERT INTO `food used` VALUES (37, 26, 2.8026e-44);
+INSERT INTO `food used` VALUES (37, 27, 2.94273e-44);
+INSERT INTO `food used` VALUES (37, 28, 3.08286e-44);
+INSERT INTO `food used` VALUES (37, 29, 3.22299e-44);
+INSERT INTO `food used` VALUES (37, 30, 3.36312e-44);
+INSERT INTO `food used` VALUES (37, 31, 3.50325e-44);
+INSERT INTO `food used` VALUES (37, 32, 3.64338e-44);
+INSERT INTO `food used` VALUES (37, 33, 3.78351e-44);
+INSERT INTO `food used` VALUES (37, 34, 3.92364e-44);
+INSERT INTO `food used` VALUES (37, 35, 4.06377e-44);
+INSERT INTO `food used` VALUES (37, 37, 4.2039e-44);
+INSERT INTO `food used` VALUES (37, 38, 4.34403e-44);
+INSERT INTO `food used` VALUES (37, 41, 4.48416e-44);
+INSERT INTO `food used` VALUES (47, 2, 0);
+INSERT INTO `food used` VALUES (47, 4, 1.4013e-45);
+INSERT INTO `food used` VALUES (47, 5, 2.8026e-45);
+INSERT INTO `food used` VALUES (48, 2, 0);
+INSERT INTO `food used` VALUES (48, 4, 1.4013e-45);
+INSERT INTO `food used` VALUES (48, 5, 2.8026e-45);
+INSERT INTO `food used` VALUES (48, 6, 4.2039e-45);
+INSERT INTO `food used` VALUES (48, 7, 5.60519e-45);
+INSERT INTO `food used` VALUES (48, 8, 7.00649e-45);
+INSERT INTO `food used` VALUES (48, 9, 8.40779e-45);
+INSERT INTO `food used` VALUES (48, 10, 9.80909e-45);
+INSERT INTO `food used` VALUES (48, 13, 1.12104e-44);
+INSERT INTO `food used` VALUES (48, 14, 1.26117e-44);
+INSERT INTO `food used` VALUES (48, 16, 1.4013e-44);
+INSERT INTO `food used` VALUES (48, 17, 1.54143e-44);
+INSERT INTO `food used` VALUES (48, 18, 1.68156e-44);
+INSERT INTO `food used` VALUES (48, 19, 1.82169e-44);
+INSERT INTO `food used` VALUES (48, 20, 1.96182e-44);
+INSERT INTO `food used` VALUES (48, 21, 2.10195e-44);
+INSERT INTO `food used` VALUES (48, 22, 2.24208e-44);
+INSERT INTO `food used` VALUES (48, 23, 2.38221e-44);
+INSERT INTO `food used` VALUES (48, 24, 2.52234e-44);
+INSERT INTO `food used` VALUES (48, 25, 2.66247e-44);
+INSERT INTO `food used` VALUES (48, 26, 2.8026e-44);
+INSERT INTO `food used` VALUES (48, 27, 2.94273e-44);
+INSERT INTO `food used` VALUES (48, 28, 3.08286e-44);
+INSERT INTO `food used` VALUES (48, 29, 3.22299e-44);
+INSERT INTO `food used` VALUES (48, 30, 3.36312e-44);
+INSERT INTO `food used` VALUES (48, 31, 3.50325e-44);
+INSERT INTO `food used` VALUES (48, 32, 3.64338e-44);
+INSERT INTO `food used` VALUES (48, 33, 3.78351e-44);
+INSERT INTO `food used` VALUES (48, 34, 3.92364e-44);
+INSERT INTO `food used` VALUES (48, 35, 4.06377e-44);
+INSERT INTO `food used` VALUES (48, 37, 4.2039e-44);
+INSERT INTO `food used` VALUES (48, 38, 4.34403e-44);
+INSERT INTO `food used` VALUES (48, 41, 4.48416e-44);
+INSERT INTO `food used` VALUES (55, 2, 0);
+INSERT INTO `food used` VALUES (55, 4, 1.4013e-45);
+INSERT INTO `food used` VALUES (55, 5, 2.8026e-45);
+INSERT INTO `food used` VALUES (56, 2, 0);
+INSERT INTO `food used` VALUES (56, 4, 1.4013e-45);
+INSERT INTO `food used` VALUES (56, 5, 2.8026e-45);
+INSERT INTO `food used` VALUES (58, 2, 100);
+INSERT INTO `food used` VALUES (59, 2, 0.01);
+INSERT INTO `food used` VALUES (61, 2, 10);
+INSERT INTO `food used` VALUES (62, 2, 10);
 
 -- ----------------------------
 -- Table structure for meal
@@ -300,13 +403,25 @@ CREATE TABLE `meal`  (
   PRIMARY KEY (`meal_id`) USING BTREE,
   INDEX `mUserID`(`user_id` ASC) USING BTREE,
   CONSTRAINT `mUserID` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 63 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of meal
 -- ----------------------------
-INSERT INTO `meal` VALUES (1, '2023-10-28', 'lunch', 1000, 0, 0, 0, 0, 1);
-INSERT INTO `meal` VALUES (2, '2023-10-28', 'dinner', 2500, 0, 0, 0, 0, 4);
+INSERT INTO `meal` VALUES (32, '2023-11-19', 'Breakfast', 118, 0.00046969074, 4.473, 9.5076, 40.018932, 1);
+INSERT INTO `meal` VALUES (33, '2023-11-20', 'Breakfast', 408, 0.000097207994, 19.08, 11.82, 169.0999, 1);
+INSERT INTO `meal` VALUES (34, '2020-01-01', 'Breakfast', 0, 0, 0, 0, 4.2e-45, 1);
+INSERT INTO `meal` VALUES (35, '2020-01-01', 'Lunch', 0, 0, 1.18e-43, 3.1e-44, 5.91e-43, 1);
+INSERT INTO `meal` VALUES (36, '2020-01-01', 'Breakfast', 0, 0, 0, 0, 4.2e-45, 1);
+INSERT INTO `meal` VALUES (37, '2020-01-01', 'Lunch', 0, 0, 1.18e-43, 3.1e-44, 5.91e-43, 1);
+INSERT INTO `meal` VALUES (47, '2020-01-01', 'Breakfast', 0, 0, 0, 0, 4.2e-45, 1);
+INSERT INTO `meal` VALUES (48, '2020-01-01', 'Lunch', 0, 0, 1.18e-43, 3.1e-44, 5.91e-43, 1);
+INSERT INTO `meal` VALUES (55, '2020-01-01', 'Breakfast', 0, 0, 0, 0, 4.2e-45, 12);
+INSERT INTO `meal` VALUES (56, '2020-01-01', 'Breakfast', 0, 0, 0, 0, 4.2e-45, 12);
+INSERT INTO `meal` VALUES (58, '2023-11-15', 'Breakfast', 204, 0.000048603997, 9.54, 5.91, 84.54995, 4);
+INSERT INTO `meal` VALUES (59, '2023-11-15', 'Breakfast', 0, 0.0000000048604, 0.000954, 0.00059099996, 0.008454995, 4);
+INSERT INTO `meal` VALUES (61, '2023-11-20', 'Breakfast', 20, 0.0000048604, 0.954, 0.59099996, 8.454996, 4);
+INSERT INTO `meal` VALUES (62, '2023-11-20', 'Snack', 20, 0.0000048604, 0.954, 0.59099996, 8.454996, 1);
 
 -- ----------------------------
 -- Table structure for measure name
@@ -4250,13 +4365,13 @@ CREATE TABLE `user`  (
   `weight` double NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'Jane Doe', 'jd123', 'female', '1998-10-08', 178, 52, '1234567');
-INSERT INTO `user` VALUES (4, 'John Smith', 'js288c', 'male', '1997-12-31', 180, 70, '000000');
+INSERT INTO `user` VALUES (1, 'Jane Doe', 'jd123', 'female', '1997-10-08', 178, 52, '1234567');
+INSERT INTO `user` VALUES (4, 'John Smith', 'js288c', 'male', '1997-12-31', 180, 70, '0000000');
 INSERT INTO `user` VALUES (5, 'Hua Li', 'lima2', 'male', '2023-10-26', 180, 70, '000000');
 INSERT INTO `user` VALUES (6, 'Mark Johnson', 'mj123', 'male', '2021-11-03', 180, 77, '000000');
 INSERT INTO `user` VALUES (8, 'Miller Kastar', 'mika', 'male', '2011-02-18', 181, 70, '000000');
