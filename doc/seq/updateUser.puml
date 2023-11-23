@@ -1,6 +1,12 @@
 @startuml
-UserProfilePage -> UserController: update(User)
 activate UserProfilePage
+UserProfilePage -> UserSession: getUser()
+
+activate UserSession
+UserSession --> UserProfilePage: User
+deactivate UserSession
+
+UserProfilePage -> UserController: update(User)
 activate UserController
 
 UserController -> UserService: update(User)
