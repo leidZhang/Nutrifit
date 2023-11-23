@@ -20,7 +20,7 @@ public class ExerciseBaseTest {
     public ExerciseBaseTest() { initTest(); }
 
     private void initTest() {
-        Result userRes = userController.login("aa", "1111111111");
+        Result userRes = userController.login("jd123", "1234567");
         user = (User) userRes.getData(); // get test user
         Result exerciseRes = exerciseController.getByUsername(user.getUsername());
         exerciseList = (List<Exercise>) exerciseRes.getData();
