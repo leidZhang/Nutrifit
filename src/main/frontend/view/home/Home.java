@@ -48,6 +48,7 @@ public class Home extends Content {
     private ActionListener handleApply() {
         return e -> {
             if (!verifyPeriod()) return;
+            dataSet.clear(); // clear dataset
 
             Date startDate = Date.valueOf(entries.get("Start Date").getInput());
             Date endDate = Date.valueOf(entries.get("End Date").getInput());
