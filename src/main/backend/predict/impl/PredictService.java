@@ -29,7 +29,15 @@ public class PredictService implements IPredictService {
     }
 
     private float calFatLose(Date date, Map<Date, Float> intakeMap, Map<Date, Float> expenditureMap) {
-        int days = Math.min(intakeMap.size(), expenditureMap.size());
+        int days;
+        if (intakeMap.size() == 0 || expenditureMap.size() == 0) {
+            // handle no one of the record
+            days = Math.max(intakeMap.size(), expenditureMap.size());
+        } else {
+            // general case
+            days = Math.min(intakeMap.size(), expenditureMap.size());
+        }
+
         int calorieDiff = calTotalCalorie(intakeMap) - calTotalCalorie(expenditureMap);
 
         LocalDate today = LocalDate.now();
