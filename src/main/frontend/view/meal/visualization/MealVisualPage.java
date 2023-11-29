@@ -39,6 +39,9 @@ public class MealVisualPage extends Content {
     private ActionListener handleApply() {
         return e -> {
             if (!verifyEntries()) return;
+            pieDataset.clear(); // clear dataset
+            radarDataSet.clear(); // clear dataset
+
             Date startDate = Date.valueOf(entries.get("Start Date").getInput());
             Date endDate = Date.valueOf(entries.get("End Date").getInput());
 
