@@ -37,6 +37,8 @@ public class ExerciseFormPage extends Content {
 
     private ActionListener handleSubmit(User user, JPanel content) {
         return e -> {
+            if (!verifyInput()) return;
+
             String type = (String) ((AutoComboBox) entries.get("Type")).getInput();
             Date date = Date.valueOf(((NfEntry) entries.get("Date")).getInput());
             int duration = Integer.parseInt(((NfEntry) entries.get("Duration(min)")).getInput());
@@ -79,6 +81,32 @@ public class ExerciseFormPage extends Content {
             Map<String, IContent> map = frontEnd.get().getPageMap();
             frontEnd.get().switchContentPanel(map.get("Exercise"));
         };
+    }
+
+    private boolean verifyInput() {
+        // get entries
+        NfEntry dateEntry = (NfEntry) entries.get("Date");
+        NfEntry durationEntry = (NfEntry) entries.get("Duration(min)");
+        // clear message
+        dateEntry.setMessage("");
+        durationEntry.setMessage("");
+
+        boolean flag = true;
+        flag = flag & dateEntry.verifyInput();
+        flag = flag & durationEntry.verifyInput();
+
+        return flag;
+    }
+
+    private void setRegex() {
+        ((NfEntry) entries.get("Date")).setRegex(
+                "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$",
+                "data input format should be yyyy-mm-dd"
+        );
+        ((NfEntry) entries.get("Duration(min)")).setRegex(
+                "^\\d+(\\.\\d+)?$",
+                "Height value must be positives number"
+        );
     }
 
     private void loadExerciseLog(User user) {
@@ -125,6 +153,8 @@ public class ExerciseFormPage extends Content {
         buttons.get("Save").addActionListener(handleSubmit(user, content));
         buttons.get("Back").addActionListener(handleBack());
         deleteItem.addActionListener(handleDelete());
+
+        setRegex();
 
         return "Switch to Exercise page";
     }
