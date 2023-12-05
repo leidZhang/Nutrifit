@@ -11,13 +11,22 @@ public class RegisterBuilder extends UserProfileBuilder {
         super(page);
     }
 
-    public void buildBackButton(ActionListener listener) {
+    public void buildBackButton() {
         JButton button = new JButton("Back");
         button.setMinimumSize(new Dimension(120, 30));
-        button.addActionListener(listener);
         constraints.gridx = 1;
         constraints.gridy = gridy;
         constraints.gridwidth = 1;
         page.add(button, constraints);
+        buttonMap.put("Back", button);
+    }
+
+    @Override
+    public void buildMainContent() {
+        buildEntries();
+        setHeadHorizontalSpace(150);
+        buildBackButton();
+        buildSubmitButton();
+        setTailHorizontalSpace(400);
     }
 }

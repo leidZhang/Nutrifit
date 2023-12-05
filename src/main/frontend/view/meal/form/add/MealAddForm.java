@@ -4,16 +4,11 @@ import main.backend.common.Result;
 import main.backend.food.IFoodController;
 import main.backend.food.entity.Food;
 import main.backend.food.impl.FoodController;
-import main.backend.meal.IMealController;
 import main.backend.meal.entity.Meal;
-import main.backend.meal.impl.MealController;
 import main.backend.user.entity.User;
-import main.frontend.common.Content;
-import main.frontend.common.ContentBuilder;
-import main.frontend.common.IContent;
+import main.frontend.common.Director;
 import main.frontend.custom.dropdown.AutoComboBox;
 import main.frontend.custom.entry.NfEntry;
-import main.frontend.custom.table.PaginationTable;
 import main.frontend.view.meal.form.common.MealFormPage;
 
 import javax.swing.*;
@@ -106,7 +101,7 @@ public class MealAddForm extends MealFormPage {
         }
     }
 
-    private void mount() {
+    protected void mount(JPanel content) {
         getFoodList();
         setRegex();
 
@@ -117,16 +112,16 @@ public class MealAddForm extends MealFormPage {
 
     @Override
     public String showContent(JPanel content) {
-        ContentBuilder builder = new MealAddBuilder(content);
-        MealAddDirector director = new MealAddDirector(builder);
+        MealAddBuilder builder = new MealAddBuilder(content);
+        Director director = new Director(builder);
 
         director.constructPage("Meal Form");
 
-        buttons = ((MealAddBuilder) builder).getButtons();
-        entries = ((MealAddBuilder) builder).getEntries();
-        table = ((MealAddBuilder) builder).getTable();
+        buttons = builder.getButtons();
+        entries = builder.getEntries();
+        table = builder.getTable();
 
-        mount();
+        mount(content);
 
         return "Meal Detail Form";
     }

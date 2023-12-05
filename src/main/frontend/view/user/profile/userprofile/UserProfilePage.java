@@ -3,6 +3,7 @@ package main.frontend.view.user.profile.userprofile;
 import main.backend.common.Result;
 import main.backend.user.entity.User;
 import main.frontend.common.ContentBuilder;
+import main.frontend.common.Director;
 import main.frontend.custom.entry.NfEntry;
 import main.frontend.view.user.profile.common.UserFormPage;
 
@@ -99,20 +100,28 @@ public class UserProfilePage extends UserFormPage {
         return listener;
     }
 
-    @Override
-    public String showContent(JPanel content) {
+    protected void mount(JPanel content) {
         // get user from session
         User user = instance.getUser();
+        displayUserInfo(user);
 
+        setEntryRegex(entries);
+        buttonMap.get("Modify").addActionListener(handleModify());
+        buttonMap.get("Submit").addActionListener(handleSubmit(content, user));
+    }
+
+    @Override
+    public String showContent(JPanel content) {
         // construct page
-        ContentBuilder builder = new UserProfileBuilder(content);
-        UserProfileDirector director = new UserProfileDirector(builder);
-        director.constructPage("My Profile", handleSubmit(content, user), handleModify());
+        UserProfileBuilder builder = new UserProfileBuilder(content);
+        Director director = new Director(builder);
+        director.constructPage("My Profile");
 
         // get entries and setup entries
-        entries = ((UserProfileBuilder) builder).getFormData();
-        displayUserInfo(user);
-        setEntryRegex(entries);
+        entries = builder.getFormData();
+        buttonMap = builder.getButtonMap();
+
+        mount(content);
 
         return "Switch to " + pageName;
     }

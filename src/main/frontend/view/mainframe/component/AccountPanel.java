@@ -10,14 +10,16 @@ import java.awt.event.ActionListener;
 public class AccountPanel extends JPanel {
     private JLabel usernameLabel;
     private JButton logoutButton;
-    private IMainframe frontEnd;
 
-    public AccountPanel(String username, IMainframe frontEnd) {
-        setLayout(new GridLayout(2, 1));
-
-        usernameLabel = new JLabel("User: " + username);
+    public AccountPanel() {
+        usernameLabel = new JLabel();
         logoutButton = new JButton("Logout");
-        this.frontEnd = frontEnd;
+
+        initialize();
+    }
+
+    private void initialize() {
+        setLayout(new GridLayout(2, 1));
 
         Dimension labelDimension = new Dimension(200, 30);
         Dimension buttonDimension = new Dimension(200, 8);
@@ -33,25 +35,13 @@ public class AccountPanel extends JPanel {
         add(logoutButton);
 
         setBackground(Color.white);
-        setLogoutButton();
     }
 
-    public void setLogoutButton() {
-        ActionListener actionListener = e -> {
-            System.out.println("logout button is clicked!");
-            UserSession instance = UserSession.getInstance();
-            instance.setUser(null);
+    public JButton getLogoutButton() {
+        return logoutButton;
+    }
 
-            JPanel content = (JPanel) frontEnd.getContent();
-            // Remove the login page components from the content panel
-            content.removeAll();
-
-            // Revalidate and repaint to update the content panel
-            content.revalidate();
-            content.repaint();
-
-            frontEnd.initialize();
-        };
-        logoutButton.addActionListener(actionListener);
+    public JLabel getUsernameLabel() {
+        return usernameLabel;
     }
 }

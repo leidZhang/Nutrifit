@@ -1,6 +1,7 @@
 package main.frontend.view.mainframe.component;
 
 import main.frontend.common.ContentBuilder;
+import main.frontend.session.UserSession;
 import main.frontend.view.mainframe.IMainframe;
 
 import javax.swing.*;
@@ -10,30 +11,30 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class SideBarBuilder extends ContentBuilder {
-    private JPanel accountPanel;
+    private AccountPanel accountPanel;
     private Map<String, JButton> buttonMap = new LinkedHashMap<>();
-    private IMainframe frontEnd;
 
-    public SideBarBuilder(JPanel page, IMainframe frontEnd) {
+    public SideBarBuilder(JPanel page) {
         super(page);
-        this.frontEnd = frontEnd;
+        accountPanel = new AccountPanel();
+    }
 
+    @Override
+    public void buildTitle(String title) {
+        constraints.gridy = gridy++;
+        accountPanel.getUsernameLabel().setText("User: " + title);
+        page.add(accountPanel, constraints);
+    }
+
+    @Override
+    public void setUp() {
         constraints = new GridBagConstraints();
         page.setLayout(new GridBagLayout());
         constraints.anchor = GridBagConstraints.NORTH;
         constraints.weightx = 1;
         constraints.weighty = 1;
         constraints.gridwidth = 0; // one component per row
-    }
 
-    public void buildAccountPanel(String username) {
-        accountPanel = new AccountPanel(username, frontEnd);
-        constraints.gridy = gridy++;
-        page.add(accountPanel);
-    }
-
-    @Override
-    public void setUp() {
         Dimension dimension = new Dimension(200, 50);
         Font buttonFont = new Font("Arial", Font.BOLD, 14);
         String[] pageList = {"Home", "My Profile", "My Exercise Log", "My Meal Log"};
@@ -44,8 +45,7 @@ public class SideBarBuilder extends ContentBuilder {
         }
     }
 
-    @Override
-    public void buildMainContent() {
+    private void buildButtons() {
         // Add some empty space after the content
         constraints.gridy = gridy++;
         page.add(Box.createVerticalStrut(10), constraints);
@@ -68,29 +68,19 @@ public class SideBarBuilder extends ContentBuilder {
         page.add(versionLabel, constraints);
     }
 
-    public void setListener() {
-        ActionListener homeListener = e -> {
-            System.out.println("Home button clicked!");
-            frontEnd.switchContentPanel(frontEnd.getPageMap().get("Home"));
-        };
-        buttonMap.get("Home").addActionListener(homeListener);
+    @Override
+    public void buildMainContent() {
+        buildButtons();
+        buildFooter();
+    }
 
-        ActionListener profileListener = e -> {
-            System.out.println("profile button clicked!");
-            frontEnd.switchContentPanel(frontEnd.getPageMap().get("UserProfile"));
-        };
-        buttonMap.get("My Profile").addActionListener(profileListener);
+    public Map<String, JButton> getButtonMap() {
+        buttonMap.put("Log out", accountPanel.getLogoutButton());
 
-        ActionListener exerciseListener = e -> {
-            System.out.println("exercise button clicked!");
-            frontEnd.switchContentPanel(frontEnd.getPageMap().get("Exercise"));
-        };
-        buttonMap.get("My Exercise Log").addActionListener(exerciseListener);
+        return buttonMap;
+    }
 
-        ActionListener mealListener = e -> {
-            System.out.println("meal button clicked!");
-            frontEnd.switchContentPanel(frontEnd.getPageMap().get("Meal"));
-        };
-        buttonMap.get("My Meal Log").addActionListener(mealListener);
+    public JLabel getLabel() {
+        return accountPanel.getUsernameLabel();
     }
 }

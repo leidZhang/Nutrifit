@@ -3,7 +3,7 @@ package main.frontend.view.meal.form.common;
 import main.backend.meal.IMealController;
 import main.backend.meal.impl.MealController;
 import main.frontend.common.Content;
-import main.frontend.common.IContent;
+import main.frontend.view.mainframe.IContent;
 import main.frontend.custom.table.PaginationTable;
 
 import javax.swing.*;

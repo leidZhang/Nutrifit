@@ -1,11 +1,9 @@
-package main.frontend.view.home;
+package main.frontend.common;
 
-import main.frontend.common.ContentBuilder;
+public class Director {
+    protected ContentBuilder builder;
 
-public class HomeDirector {
-    private ContentBuilder builder;
-
-    public HomeDirector(ContentBuilder builder) {
+    public Director(ContentBuilder builder) {
         this.builder = builder;
     }
 

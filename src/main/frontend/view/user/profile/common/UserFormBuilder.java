@@ -10,6 +10,7 @@ import java.util.Map;
 
 public abstract class UserFormBuilder extends ContentBuilder { // change to public abstract
     protected Map<String, NfEntry> entries = new LinkedHashMap<>();
+    protected Map<String, JButton> buttonMap = new LinkedHashMap<>();
 
     public UserFormBuilder(JPanel page) {
         super(page);
@@ -22,15 +23,17 @@ public abstract class UserFormBuilder extends ContentBuilder { // change to publ
         constraints.gridwidth = 0; // one component per row
     }
 
-    @Override
-    public void buildMainContent() {
+    protected void buildEntries() {
         for (Map.Entry<String, NfEntry> entry : entries.entrySet()) {
             constraints.gridy = gridy++;
             page.add(entry.getValue(), constraints);
         }
     }
 
-    public void setHeadHorizontalSpace(int width) {
+    @Override
+    public abstract void buildMainContent();
+
+    protected void setHeadHorizontalSpace(int width) {
         // Add some empty space after the content
         constraints.gridy = gridy++;
         page.add(Box.createVerticalStrut(10), constraints);
@@ -42,7 +45,7 @@ public abstract class UserFormBuilder extends ContentBuilder { // change to publ
         page.add(Box.createHorizontalStrut(width), constraints);
     }
 
-    public void setTailHorizontalSpace(int width) {
+    protected void setTailHorizontalSpace(int width) {
         page.add(Box.createHorizontalStrut(width), constraints);
     }
 
@@ -65,14 +68,18 @@ public abstract class UserFormBuilder extends ContentBuilder { // change to publ
         }
     }
 
-    public Map<String, NfEntry> getFormData() {
-        return entries;
-    }
-
-    public void enableForm(boolean flag) {
+    protected void enableForm(boolean flag) {
         for (Map.Entry<String, NfEntry> entry : entries.entrySet()) {
             if (entry.getKey().equals("Age")) continue;
             entry.getValue().setEditable(flag);
         }
+    }
+
+    public Map<String, NfEntry> getFormData() {
+        return entries;
+    }
+
+    public Map<String, JButton> getButtonMap() {
+        return buttonMap;
     }
 }

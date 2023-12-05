@@ -5,6 +5,7 @@ import main.backend.exercise.IExerciseController;
 import main.backend.exercise.impl.ExerciseController;
 import main.backend.user.entity.User;
 import main.frontend.common.ContentBuilder;
+import main.frontend.common.Director;
 import main.frontend.custom.entry.NfEntry;
 import main.frontend.common.Content;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -91,7 +92,7 @@ public class ExerciseVisualPage extends Content {
         }
     }
 
-    private void mount() {
+    protected void mount(JPanel content) {
         buttons.get("Apply").addActionListener(handleApply());
         buttons.get("Reset").addActionListener(handleReset());
         buttons.get("View Records").addActionListener(handleViewRecords());
@@ -103,15 +104,15 @@ public class ExerciseVisualPage extends Content {
 
     @Override
     public String showContent(JPanel content) {
-        ContentBuilder builder = new ExerciseVisualBuilder(content);
-        ExerciseVisualDirector director = new ExerciseVisualDirector(builder);
+        ExerciseVisualBuilder builder = new ExerciseVisualBuilder(content);
+        Director director = new Director(builder);
 
         director.constructPage("Exercise Visualization");
-        entries = ((ExerciseVisualBuilder) builder).getEntries();
-        buttons = ((ExerciseVisualBuilder) builder).getButtons();
-        dataSet = ((ExerciseVisualBuilder) builder).getDataSet();
+        entries = builder.getEntries();
+        buttons = builder.getButtons();
+        dataSet = builder.getDataSet();
 
-        mount();
+        mount(content);
         return "Exercise Visualization";
     }
 }

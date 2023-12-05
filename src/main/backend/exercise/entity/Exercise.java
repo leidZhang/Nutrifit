@@ -10,23 +10,14 @@ public class Exercise {
     private int duration;
     private int burnCalories;
 
-    public Exercise(Date date, String type, String intensity, int duration) {
+    public Exercise(Date date, String type, String intensity) {
         this.date = date;
         this.type = type;
         this.intensity = intensity;
-        this.duration = duration;
     }
 
-    public Exercise(Date date, String type, String intensity, int duration, int burnCalories) {
-        this.date = date;
-        this.type = type;
-        this.intensity = intensity;
-        this.duration = duration;
-        this.burnCalories = burnCalories;
-    }
-
-    public Exercise(int id, Date date, String type, String intensity, int duration, int burnCalories) {
-        this(date, type, intensity, duration, burnCalories);
+    public Exercise(int id, Date date, String type, String intensity) {
+        this(date, type, intensity);
         this.id = id;
     }
 
@@ -56,5 +47,9 @@ public class Exercise {
 
     public void setBurnCalories(int burnCalories) {
         this.burnCalories = burnCalories;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

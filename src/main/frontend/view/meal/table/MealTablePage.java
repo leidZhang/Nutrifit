@@ -6,11 +6,10 @@ import main.backend.meal.entity.Meal;
 import main.backend.meal.impl.MealController;
 import main.backend.user.entity.User;
 import main.frontend.common.Content;
-import main.frontend.common.ContentBuilder;
-import main.frontend.common.IContent;
+import main.frontend.common.Director;
+import main.frontend.view.mainframe.IContent;
 import main.frontend.custom.entry.NfEntry;
 import main.frontend.custom.table.PaginationTable;
-import main.frontend.view.meal.form.add.MealAddForm;
 import main.frontend.view.meal.form.detail.MealDetailForm;
 
 import javax.swing.*;
@@ -181,7 +180,7 @@ public class MealTablePage extends Content {
         }
     }
 
-    private void mount(JPanel content) { // render data add apply listeners
+    protected void mount(JPanel content) { // render data add apply listeners
         initTableData(content);
         setTablePopUp();
         setRegex();
@@ -196,8 +195,8 @@ public class MealTablePage extends Content {
 
     @Override
     public String showContent(JPanel content) {
-        ContentBuilder builder = new MealTableBuilder(content);
-        MealTableDirector director = new MealTableDirector(builder);
+        MealTableBuilder builder = new MealTableBuilder(content);
+        Director director = new Director(builder);
 
         director.constructPage("Meal Records");
         table = ((MealTableBuilder) builder).getTable();

@@ -1,5 +1,6 @@
 package main.frontend.common;
 
+import main.frontend.view.mainframe.IContent;
 import main.frontend.view.mainframe.IMainframe;
 import main.frontend.session.UserSession;
 
@@ -14,12 +15,10 @@ public abstract class Content implements IContent {
         // default constructor
     }
 
-//    protected void notifyMainframe(String pageName) {
-//        System.out.println("Receive notification from" + pageName);
-//    }
-
     @Override
     public abstract String showContent(JPanel content);
+
+    protected abstract void mount(JPanel content);
 
     public void setMainframe(IMainframe frontEnd) {
         this.frontEnd = new WeakReference<>(frontEnd);

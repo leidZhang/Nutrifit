@@ -8,11 +8,13 @@ import main.frontend.custom.entry.NfEntry;
 
 import javax.swing.*;
 import java.sql.Date;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class UserFormPage extends Content { // change to public abstract in D3!
     protected IUserController controller = new UserController();
     protected Map<String, NfEntry> entries;
+    protected Map<String, JButton> buttonMap;
     protected boolean editable = false;
 
     protected User getNewUser(Map<String, NfEntry> entries) {
@@ -25,7 +27,13 @@ public abstract class UserFormPage extends Content { // change to public abstrac
         double height = Double.parseDouble(entries.get("Height (cm)").getInput());
 
         // create new user
-        return new User(name, username, password, sex, dateOfBirth, height, weight);
+        User user = new User(name, username, sex);
+        user.setPassword(password);
+        user.setHeight(height);
+        user.setWeight(weight);
+        user.setDateOfBirth(dateOfBirth);
+
+        return user;
     }
 
     protected void setEntryRegex(Map<String, NfEntry> entries) {

@@ -4,7 +4,7 @@ import org.junit.Test;
 import main.backend.exercise.entity.Exercise;
 import main.backend.common.Result;
 import main.backend.user.entity.User;
-import org.junit.Test;
+
 import java.sql.Date;
 import java.util.List;
 import static org.junit.Assert.*;

@@ -5,6 +5,7 @@ import main.backend.user.IUserController;
 import main.backend.user.entity.User;
 import main.backend.user.impl.UserController;
 import main.frontend.common.ContentBuilder;
+import main.frontend.common.Director;
 import main.frontend.custom.entry.NfEntry;
 import main.frontend.view.user.profile.common.UserFormPage;
 import main.frontend.view.user.profile.userprofile.UserProfileBuilder;
@@ -16,7 +17,6 @@ import java.util.Map;
 public class RegisterPage extends UserFormPage {
     private String pageName = "Register Page";
     private IUserController controller = new UserController();
-    private Map<String, NfEntry> entries;
 
     private ActionListener handleSubmit(JPanel content) {
         ActionListener listener = e -> {
@@ -64,16 +64,24 @@ public class RegisterPage extends UserFormPage {
         return listener;
     }
 
+    protected void mount(JPanel content) {
+        setEntryRegex(entries);
+        buttonMap.get("Submit").addActionListener(handleSubmit(content));
+        buttonMap.get("Back").addActionListener(handleBack(content));
+    }
+
     @Override
     public String showContent(JPanel content) {
         // construct page
-        ContentBuilder builder = new RegisterBuilder(content);
-        RegisterDirector director = new RegisterDirector(builder);
-        director.constructPage("Register", handleSubmit(content), handleBack(content));
+        RegisterBuilder builder = new RegisterBuilder(content);
+        Director director = new Director(builder);
+        director.constructPage("Register");
 
         // get entries and setup entries
-        entries = ((UserProfileBuilder) builder).getFormData();
-        setEntryRegex(entries);
+        entries = builder.getFormData();
+        buttonMap = builder.getButtonMap();
+
+        mount(content);
 
         return "Switch to " + pageName;
     }

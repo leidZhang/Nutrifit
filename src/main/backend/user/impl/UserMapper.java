@@ -7,6 +7,57 @@ import main.backend.user.IUserMapper;
 import java.sql.*;
 
 public class UserMapper implements IUserMapper {
+    private User setUser(String username, PreparedStatement ps) throws SQLException {
+        User user = null;
+
+        try (ResultSet res = ps.executeQuery()) {
+            // get data from the result set
+            if (res.next()) {
+                int id = res.getInt("user_id");
+                String name = res.getString("name");
+                String sex = res.getString("sex");
+                Date dateOfBirth = res.getDate("date_of_birth");
+                double height = res.getDouble("height");
+                double weight = res.getDouble("weight");
+                String password = res.getString("password");
+
+                user = new User(id, name, username, sex);
+                user.setDateOfBirth(dateOfBirth);
+                user.setWeight(weight);
+                user.setHeight(height);
+                user.setPassword(password);
+            }
+        }
+
+        return user;
+    }
+
+    @Override
+    public User getUser(String username) throws SQLException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        User user = null;
+
+        try {
+            connection = ConnectionUtil.getConnection();
+
+            // use PreparedStatement with placeholders
+            String query = "select user_id, name, username, sex, date_of_birth, height, weight, password from user ";
+            query += "where username = ?";
+            ps = connection.prepareStatement(query);
+            // set parameters with corresponding methods
+            ps.setString(1, username);
+            // get user
+            user = setUser(username, ps);
+        } catch (SQLException e) {
+            throw new SQLException(e.getMessage());
+        } finally {
+            ConnectionUtil.close(connection, ps, null);
+        }
+
+        return user;
+    }
+
     @Override
     public User login(String username, String password) throws SQLException {
         Connection connection = null;
@@ -18,24 +69,14 @@ public class UserMapper implements IUserMapper {
             connection = ConnectionUtil.getConnection();
 
             // use PreparedStatement with placeholders
-            String query = "select user_id, name, username, sex, date_of_birth, height, weight from user ";
+            String query = "select user_id, name, username, sex, date_of_birth, height, weight, password from user ";
             query += "where username = ? and password = ?";
             ps = connection.prepareStatement(query);
             // set parameters with corresponding methods
             ps.setString(1, username);
             ps.setString(2, password);
-            // execute the query and get the result set
-            res = ps.executeQuery();
-            if (res.next()) { // get data from the result set
-                int id = res.getInt("user_id");
-                String name = res.getString("name");
-                String sex = res.getString("sex");
-                Date dateOfBirth = res.getDate("date_of_birth");
-                double height = res.getDouble("height");
-                double weight = res.getDouble("weight");
-
-                user = new User(id, name, username, password, sex, dateOfBirth, height, weight);
-            }
+            // get user
+            user = setUser(username, ps);
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         } finally {
@@ -80,44 +121,6 @@ public class UserMapper implements IUserMapper {
         } finally {
             ConnectionUtil.close(connection, ps, null);
         }
-    }
-
-    @Override
-    public User getUser(String username) throws SQLException {
-        Connection connection = null;
-        PreparedStatement ps = null;
-        ResultSet res = null;
-        User user = null;
-
-        try {
-            connection = ConnectionUtil.getConnection();
-
-            // use PreparedStatement with placeholders
-            String query = "select user_id, name, username, sex, date_of_birth, height, weight, password from user ";
-            query += "where username = ?";
-            ps = connection.prepareStatement(query);
-            // set parameters with corresponding methods
-            ps.setString(1, username);
-            // execute the query and get the result set
-            res = ps.executeQuery();
-            if (res.next()) { // get data from the result set
-                int id = res.getInt("user_id");
-                String name = res.getString("name");
-                String sex = res.getString("sex");
-                Date dateOfBirth = res.getDate("date_of_birth");
-                double height = res.getDouble("height");
-                double weight = res.getDouble("weight");
-                String password = res.getString("password");
-
-                user = new User(id, name, username, password, sex, dateOfBirth, height, weight);
-            }
-        } catch (SQLException e) {
-            throw new SQLException(e.getMessage());
-        } finally {
-            ConnectionUtil.close(connection, ps, res);
-        }
-
-        return user;
     }
 
     @Override

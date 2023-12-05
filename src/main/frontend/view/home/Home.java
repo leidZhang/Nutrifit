@@ -10,6 +10,7 @@ import main.backend.predict.impl.PredictController;
 import main.backend.user.entity.User;
 import main.frontend.common.Content;
 import main.frontend.common.ContentBuilder;
+import main.frontend.common.Director;
 import main.frontend.custom.entry.NfEntry;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -116,11 +117,10 @@ public class Home extends Content {
         plotLineChart(exerciseRes, "Calorie Expenditure");
     }
 
-    private void mount() {
+    protected void mount(JPanel content) {
         buttons.get("Apply").addActionListener(handleApply());
         buttons.get("Reset").addActionListener(handleReset());
         buttons.get("Calculate").addActionListener(handleCalculate());
-
 
         renderLineChart(Date.valueOf(defaultStartDate), Date.valueOf(today));
 
@@ -129,15 +129,15 @@ public class Home extends Content {
 
     @Override
     public String showContent(JPanel content) {
-        ContentBuilder builder = new HomeBuilder(content);
-        HomeDirector director = new HomeDirector(builder);
+        HomeBuilder builder = new HomeBuilder(content);
+        Director director = new Director(builder);
         director.constructPage("Welcome to Nutrifit");
 
-        entries = ((HomeBuilder) builder).getEntries();
-        buttons = ((HomeBuilder) builder).getButtons();
-        dataSet = ((HomeBuilder) builder).getDataSet();
+        entries = builder.getEntries();
+        buttons = builder.getButtons();
+        dataSet = builder.getDataSet();
 
-        mount();
+        mount(content);
 
         return "Switch to Home Page";
     }

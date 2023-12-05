@@ -5,6 +5,7 @@ import main.backend.food.entity.Food;
 import main.backend.meal.IMealController;
 import main.backend.meal.entity.Meal;
 import main.frontend.common.ContentBuilder;
+import main.frontend.common.Director;
 import main.frontend.custom.dropdown.AutoComboBox;
 import main.frontend.custom.entry.NfEntry;
 import main.frontend.custom.table.PaginationTable;
@@ -72,7 +73,7 @@ public class MealDetailForm extends MealFormPage {
         }
     }
 
-    private void mount() {
+    protected void mount(JPanel content) {
         buttons.get("Back").addActionListener(handleBack());
 
         renderEntries();
@@ -84,16 +85,16 @@ public class MealDetailForm extends MealFormPage {
     public String showContent(JPanel content) {
         System.out.println(meal.getId());
 
-        ContentBuilder builder = new MealDetailBuilder(content);
-        MealDetailDirector director = new MealDetailDirector(builder);
+        MealDetailBuilder builder = new MealDetailBuilder(content);
+        Director director = new Director(builder);
 
         director.constructPage("Meal Detail");
-        buttons = ((MealDetailBuilder) builder).getButtons();
-        entries = ((MealDetailBuilder) builder).getEntries();
-        table = ((MealDetailBuilder) builder).getTable();
-        nutrientTable = ((MealDetailBuilder) builder).getNutrientTable();
+        buttons = builder.getButtons();
+        entries = builder.getEntries();
+        table = builder.getTable();
+        nutrientTable = builder.getNutrientTable();
 
-        mount();
+        mount(content);
 
         return "Meal Detail";
     }

@@ -13,22 +13,14 @@ public class User {
     private int age;
     private String password;
 
-    public User(String name, String username, String sex, Date dateOfBirth, double height, double weight) {
+    public User(String name, String username, String sex) {
         this.name = name;
         this.username = username;
         this.sex = sex;
-        this.dateOfBirth = dateOfBirth;
-        this.height = height;
-        this.weight = weight;
     }
 
-    public User(String name, String username, String password, String sex, Date dateOfBirth, double height, double weight) {
-        this(name, username, sex, dateOfBirth, height, weight);
-        this.password = password;
-    }
-
-    public User(int id, String name, String username, String password, String sex, Date dateOfBirth, double height, double weight) {
-        this(name, username, password, sex, dateOfBirth, height, weight);
+    public User(int id, String name, String username, String sex) {
+        this(name, username, sex);
         this.id = id;
     }
 
@@ -68,6 +60,9 @@ public class User {
     public String getPassword() {
         return password;
     }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public void setAge(int age) {
         this.age = age;
@@ -75,5 +70,17 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 }

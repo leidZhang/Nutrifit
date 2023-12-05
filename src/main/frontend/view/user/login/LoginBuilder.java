@@ -6,11 +6,13 @@ import main.frontend.custom.entry.NfEntry;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class LoginBuilder extends ContentBuilder {
     private Map<String, NfEntry> entries = new LinkedHashMap<>();
+    private Map<String, JButton> buttonMap = new LinkedHashMap<>();
 
     public LoginBuilder(JPanel page) {
         super(page);
@@ -29,6 +31,9 @@ public class LoginBuilder extends ContentBuilder {
             constraints.gridy = gridy++;
             page.add(entry.getValue(), constraints);
         }
+
+        buildRegisterButton();
+        buildSubmitButton();
     }
 
     @Override
@@ -49,31 +54,37 @@ public class LoginBuilder extends ContentBuilder {
         }
     }
 
-    public void buildRegisterButton(ActionListener listener) {
+    public void buildRegisterButton() {
         // Add some empty space after the content
         constraints.gridy = gridy++;
         page.add(Box.createVerticalStrut(10), constraints);
 
-        JButton submitButton = new JButton("Register");
-        submitButton.setPreferredSize(new Dimension(100, 30));
-        submitButton.addActionListener(listener);
+        JButton button = new JButton("Register");
+        button.setPreferredSize(new Dimension(100, 30));
         constraints.gridx = 0;
         constraints.gridy = gridy;
         constraints.gridwidth = 1;
-        page.add(submitButton, constraints);
+        page.add(button, constraints);
+
+        buttonMap.put("Register", button);
     }
 
-    public void buildSubmitButton(ActionListener listener) {
-        JButton submitButton = new JButton("Login");
-        submitButton.setPreferredSize(new Dimension(100, 30));
-        submitButton.addActionListener(listener);
+    public void buildSubmitButton() {
+        JButton button = new JButton("Login");
+        button.setPreferredSize(new Dimension(100, 30));
         constraints.gridx = 1;
         constraints.gridy = gridy;
         constraints.gridwidth = 1;
-        page.add(submitButton, constraints);
+        page.add(button, constraints);
+
+        buttonMap.put("Login", button);
     }
 
     public Map<String, NfEntry> getFormData() {
         return entries;
+    }
+
+    public Map<String, JButton> getButtonMap() {
+        return buttonMap;
     }
 }

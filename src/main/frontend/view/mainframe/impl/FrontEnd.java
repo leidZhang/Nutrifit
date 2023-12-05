@@ -2,15 +2,14 @@ package main.frontend.view.mainframe.impl;
 
 import main.backend.user.entity.User;
 import main.frontend.common.Content;
-import main.frontend.common.IContent;
-import main.frontend.common.ContentBuilder;
+import main.frontend.common.Director;
+import main.frontend.view.mainframe.IContent;
 import main.frontend.session.UserSession;
 import main.frontend.view.exercise.form.ExerciseFormPage;
 import main.frontend.view.exercise.visualization.ExerciseVisualPage;
 import main.frontend.view.home.Home;
 import main.frontend.view.mainframe.IMainframe;
 import main.frontend.view.mainframe.component.SideBarBuilder;
-import main.frontend.view.mainframe.component.SideBarDirector;
 import main.frontend.view.meal.form.add.MealAddForm;
 import main.frontend.view.meal.table.MealTablePage;
 import main.frontend.view.meal.visualization.MealVisualPage;
@@ -20,12 +19,15 @@ import main.frontend.view.user.profile.userprofile.UserProfilePage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FrontEnd extends JFrame implements IMainframe {
     private JPanel sideBar;
     private JPanel content;
+    private JLabel userNameLabel;
+    private Map<String, JButton> buttonMap;
     private Map<String, IContent> pageMap = new HashMap<>();
 
     private UserSession instance = UserSession.getInstance();
@@ -91,7 +93,30 @@ public class FrontEnd extends JFrame implements IMainframe {
         return content;
     }
 
+    private void createLink(String buttonLabel, String pageName) {
+        ActionListener listener = e -> switchContentPanel(pageMap.get(pageName));
+        buttonMap.get(buttonLabel).addActionListener(listener);
+    }
+
+    private ActionListener handleLogout() {
+        return e -> {
+            instance.setUser(null);
+            initialize();
+        };
+    }
+
+    private void setUpSideBar(SideBarBuilder builder) {
+        buttonMap = builder.getButtonMap();
+
+        buttonMap.get("Log out").addActionListener(handleLogout());
+        createLink("My Meal Log", "Meal");
+        createLink("My Exercise Log", "Exercise");
+        createLink("My Profile", "UserProfile");
+        createLink("Home", "Home");
+    }
+
     private JPanel createSideBar(int width) {
+        User user = instance.getUser();
         JPanel sideBar = new JPanel();
 
         // set sideBar attributes
@@ -99,10 +124,11 @@ public class FrontEnd extends JFrame implements IMainframe {
         sideBar.setBorder(BorderFactory.createMatteBorder(0,0,0,2, Color.GRAY));
         sideBar.setBackground(Color.white);
         // set up layout
-        User user = instance.getUser();
-        ContentBuilder builder = new SideBarBuilder(sideBar, this);
-        SideBarDirector director = new SideBarDirector(builder);
-        director.constructSideBar(user.getUsername());
+        SideBarBuilder builder = new SideBarBuilder(sideBar);
+        Director director = new Director(builder);
+        director.constructPage(user.getName());
+
+        setUpSideBar(builder);
 
         return sideBar;
     }
