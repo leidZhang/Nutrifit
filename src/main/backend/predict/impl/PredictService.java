@@ -28,20 +28,13 @@ public class PredictService implements IPredictService {
         return res;
     }
 
-    private float calFatLose(Date date, Map<Date, Float> intakeMap, Map<Date, Float> expenditureMap) {
-        int days;
-        if (intakeMap.size() == 0 || expenditureMap.size() == 0) {
-            // handle no one of the record
-            days = Math.max(intakeMap.size(), expenditureMap.size());
-        } else {
-            // general case
-            days = Math.min(intakeMap.size(), expenditureMap.size());
-        }
-
-        int calorieDiff = calTotalCalorie(intakeMap) - calTotalCalorie(expenditureMap);
+    private float calFatLose(Date date, Map<Date, Float> intakeMap, Map<Date, Float> expenditureMap) throws IllegalArgumentException {
+        int days= Math.max(intakeMap.size(), expenditureMap.size());
+        if (days == 0) throw new IllegalArgumentException("Insufficient data");
 
         LocalDate today = LocalDate.now();
         long dayDiff = ChronoUnit.DAYS.between(today, date.toLocalDate());
+        int calorieDiff = calTotalCalorie(intakeMap) - calTotalCalorie(expenditureMap);
 
         double rate = -1.0 * calorieDiff / days;
 

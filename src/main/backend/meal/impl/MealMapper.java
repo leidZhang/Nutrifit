@@ -13,29 +13,46 @@ import java.util.*;
 public class MealMapper implements IMealMapper { // not tested yet
     @Override
     public void save(Meal meal, User user) throws SQLException {
-        ResultSet res = null;
         Connection connection = null;
-        PreparedStatement ps = null;
 
         try {
             connection = ConnectionUtil.getConnection();
             connection.setAutoCommit(false); // disable auto commit
             // get exercise attributes
             int userID = user.getId();
-            Date date = meal.getDate();
-            String type = meal.getType();
-            int totalCalories = meal.getTotalCalories();
-            float totalProtein = meal.getTotalProtein();
-            float totalCarbs = meal.getTotalCarbs();
-            float totalVitamin = meal.getTotalVitamins();
-            float totalOthers = meal.getTotalOthers();
             Map<Food, Float> foodMap = meal.getFoodMap();
 
-            // use PreparedStatement with placeholders
-            String query = "insert into meal(date, type, total_calories, total_vitamins, ";
-            query += "total_proteins, total_carbs, total_others, user_id) ";
-            query += "values (?, ?, ?, ?, ?, ?, ?, ?)";
-            ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            // insert meal into database and get the new id
+            int mealID = insertMeal(meal, userID, connection);
+            // insert food used into database
+            insertFoodUsed(connection, foodMap, mealID);
+
+            connection.commit(); // commit update
+        } catch (SQLException e) {
+            connection.rollback(); // roll back if any exception happened
+            throw new SQLException(e.getMessage());
+        } finally {
+            ConnectionUtil.close(connection, null, null);
+        }
+    }
+
+    // a helper method to insert meal into database and return the new id
+    private int insertMeal(Meal meal, int userID, Connection connection) throws SQLException {
+        int mealID = -1;
+        Date date = meal.getDate();
+        String type = meal.getType();
+        int totalCalories = meal.getTotalCalories();
+        float totalProtein = meal.getTotalProtein();
+        float totalCarbs = meal.getTotalCarbs();
+        float totalVitamin = meal.getTotalVitamins();
+        float totalOthers = meal.getTotalOthers();
+        // use PreparedStatement with placeholders
+        String query = """
+            insert into meal(date, type, total_calories, total_vitamins,
+            total_proteins, total_carbs, total_others, user_id)
+            values (?, ?, ?, ?, ?, ?, ?, ?)
+        """;
+        try (PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             // set parameters with corresponding methods
             ps.setDate(1, date);
             ps.setString(2, type);
@@ -47,19 +64,26 @@ public class MealMapper implements IMealMapper { // not tested yet
             ps.setInt(8, userID);
             // insert row
             ps.execute();
+            try (ResultSet res = ps.getGeneratedKeys()) {
+                if (res.next()) mealID = res.getInt(1);
+            }
+        }
 
-            // get the new id
-            int mealID = -1;
-            res = ps.getGeneratedKeys();
-            if (res.next()) mealID = res.getInt(1);
-            for (Map.Entry<Food, Float> entry : foodMap.entrySet()) {
-                Food food = entry.getKey();
-                int foodID = food.getId();
-                float quantity = entry.getValue();
-                // use PreparedStatement with placeholders
-                query = "insert into `food used`(meal_id, food_id, quantity) ";
-                query += "values (?, ?, ?)";
-                ps = connection.prepareStatement(query);
+        return mealID;
+    }
+
+    // a helper method to insert food used into database
+    private void insertFoodUsed(Connection connection, Map<Food, Float> foodMap, int mealID) throws SQLException {
+        for (Map.Entry<Food, Float> entry : foodMap.entrySet()) {
+            Food food = entry.getKey();
+            int foodID = food.getId();
+            float quantity = entry.getValue();
+            // use PreparedStatement with placeholders
+            String query = """
+                insert into `food used`(meal_id, food_id, quantity)
+                values (?, ?, ?)
+            """;
+            try (PreparedStatement ps = connection.prepareStatement(query)) {
                 // set parameters with corresponding methods
                 ps.setInt(1, mealID);
                 ps.setInt(2, foodID);
@@ -67,12 +91,6 @@ public class MealMapper implements IMealMapper { // not tested yet
                 // insert row
                 ps.executeUpdate();
             }
-            connection.commit(); // commit update
-        } catch (SQLException e) {
-            connection.rollback(); // roll back if any exception happened
-            throw new SQLException(e.getMessage());
-        } finally {
-            ConnectionUtil.close(connection, ps, res);
         }
     }
 
@@ -127,28 +145,34 @@ public class MealMapper implements IMealMapper { // not tested yet
         return meal;
     }
 
-    private void setMealFoodMap(List<Meal> mealList, Connection conn, PreparedStatement ps, ResultSet res) throws SQLException {
+    private void setMealFoodMap(List<Meal> mealList, Connection conn) throws SQLException {
         for (Meal meal : mealList) {
-            int id = meal.getId();
+            // language=SQL
+            String query = """
+                select ct.food_id, ct.FoodDescription, fg.FoodGroupName, ct.quantity from (
+                    select fu.food_id, fn.FoodDescription,  fn.FoodGroupID, fu.quantity
+                    from `food used` fu join `food name` fn
+                    on fn.FoodID = fu.food_id and fu.meal_id = ?
+                ) as ct
+                join `food group` as fg
+                on ct.FoodGroupID = fg.FoodGroupID
+            """;
 
-            String query = "select ct.food_id, ct.FoodDescription, fg.FoodGroupName, ct.quantity from ( ";
-            query += "select fu.food_id, fn.FoodDescription,  fn.FoodGroupID, fu.quantity ";
-            query += "from `food used` fu join `food name` fn ";
-            query += "on fn.FoodID = fu.food_id and fu.meal_id = ?) as ct join `food group` as fg ";
-            query += "on ct.FoodGroupID = fg.FoodGroupID";
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, id);
-            res = ps.executeQuery();
-            while (res.next()) {
-                int foodID = res.getInt("food_id");
-                String description = res.getString("FoodDescription");
-                float quantity = res.getFloat("quantity");
-                String group = res.getString("FoodGroupName");
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setInt(1, meal.getId());
+                try (ResultSet res = ps.executeQuery()) {
+                    while (res.next()) {
+                        int foodID = res.getInt("food_id");
+                        String description = res.getString("FoodDescription");
+                        float quantity = res.getFloat("quantity");
+                        String group = res.getString("FoodGroupName");
 
-                Map<Food, Float> foodMap = meal.getFoodMap();
-                Food food = new Food(foodID, description, group);
-                foodMap.put(food, quantity);
-                meal.setFoodMap(foodMap);
+                        Map<Food, Float> foodMap = meal.getFoodMap();
+                        Food food = new Food(foodID, description, group);
+                        foodMap.put(food, quantity);
+                        meal.setFoodMap(foodMap);
+                    }
+                }
             }
         }
     }
@@ -198,7 +222,7 @@ public class MealMapper implements IMealMapper { // not tested yet
                 meal = setMeal(res);
             }
 
-            setMealFoodMap(Collections.singletonList(meal), connection, ps, res);
+            setMealFoodMap(Collections.singletonList(meal), connection);
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         } finally {
@@ -235,7 +259,7 @@ public class MealMapper implements IMealMapper { // not tested yet
                 mealList.add(meal);
             }
 
-            setMealFoodMap(mealList, connection, ps, res);
+            setMealFoodMap(mealList, connection);
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         } finally {
@@ -274,7 +298,7 @@ public class MealMapper implements IMealMapper { // not tested yet
                 mealList.add(meal);
             }
 
-            setMealFoodMap(mealList, connection, ps, res);
+            setMealFoodMap(mealList, connection);
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         } finally {

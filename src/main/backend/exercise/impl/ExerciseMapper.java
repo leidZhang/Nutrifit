@@ -66,12 +66,35 @@ public class ExerciseMapper implements IExerciseMapper {
         }
     }
 
+    private List<Exercise> setExercise(PreparedStatement ps) throws SQLException {
+        List<Exercise> exerciseList = new ArrayList<>();
+
+        try (ResultSet res = ps.executeQuery()) {
+            while (res.next()) {
+                // get the data from each column
+                int id = res.getInt("exercise_id");
+                Date date = res.getDate("date");
+                String type = res.getString("type");
+                String intensity = res.getString("intensity");
+                int duration = res.getInt("duration");
+                int burnCalories = res.getInt("burn_calories");
+                // create a new Exercise object with the data
+                Exercise exercise = new Exercise(id, date, type, intensity);
+                exercise.setDuration(duration);
+                exercise.setBurnCalories(burnCalories);
+                // add the object to the list
+                exerciseList.add(exercise);
+            }
+        }
+
+        return exerciseList;
+    }
+
     @Override
     public List<Exercise> getByUsername(String username) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
-        ResultSet res = null;
-        List<Exercise> exerciseList = new ArrayList<>();
+        List<Exercise> exerciseList;
 
         try {
             connection = ConnectionUtil.getConnection();
@@ -83,24 +106,11 @@ public class ExerciseMapper implements IExerciseMapper {
             // set parameters with corresponding methods
             ps.setString(1, username);
             // execute the query
-            res = ps.executeQuery();
-            while (res.next()) {
-                // get the data from each column
-                int id = res.getInt("exercise_id");
-                Date date = res.getDate("date");
-                String type = res.getString("type");
-                String intensity = res.getString("intensity");
-                int duration = res.getInt("duration");
-                int burnCalories = res.getInt("burn_calories");
-                // create a new Exercise object with the data
-                Exercise exercise = new Exercise(id, date, type, intensity, duration, burnCalories);
-                // add the object to the list
-                exerciseList.add(exercise);
-            }
+            exerciseList = setExercise(ps);
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         } finally {
-            ConnectionUtil.close(connection, ps, res);
+            ConnectionUtil.close(connection, ps, null);
         }
 
         return exerciseList;
@@ -110,8 +120,7 @@ public class ExerciseMapper implements IExerciseMapper {
     public List<Exercise> getByPeriod(String username, Date startDate, Date endDate) throws SQLException {
         Connection connection = null;
         PreparedStatement ps = null;
-        ResultSet res = null;
-        List<Exercise> exerciseList = new ArrayList<>();
+        List<Exercise> exerciseList;
 
         try {
             connection = ConnectionUtil.getConnection();
@@ -125,24 +134,11 @@ public class ExerciseMapper implements IExerciseMapper {
             ps.setDate(2, startDate);
             ps.setDate(3, endDate);
             // execute the query
-            res = ps.executeQuery();
-            while (res.next()) {
-                // get the data from each column
-                int id = res.getInt("exercise_id");
-                Date date = res.getDate("date");
-                String type = res.getString("type");
-                String intensity = res.getString("intensity");
-                int duration = res.getInt("duration");
-                int burnCalories = res.getInt("burn_calories");
-                // create a new Exercise object with the data
-                Exercise exercise = new Exercise(id, date, type, intensity, duration, burnCalories);
-                // add the object to the list
-                exerciseList.add(exercise);
-            }
+            exerciseList = setExercise(ps);
         } catch (SQLException e) {
             throw new SQLException(e.getMessage());
         } finally {
-            ConnectionUtil.close(connection, ps, res);
+            ConnectionUtil.close(connection, ps, null);
         }
 
         return exerciseList;

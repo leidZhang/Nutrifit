@@ -7,6 +7,7 @@ import main.backend.meal.impl.MealController;
 import main.backend.user.entity.User;
 import main.frontend.common.Content;
 import main.frontend.common.ContentBuilder;
+import main.frontend.common.Director;
 import main.frontend.custom.entry.NfEntry;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -135,7 +136,7 @@ public class MealVisualPage extends Content {
         }
     }
 
-    private void mount() {
+    protected void mount(JPanel content) {
         buttonMap.get("Apply").addActionListener(handleApply());
         buttonMap.get("Reset").addActionListener(handleReset());
         buttonMap.get("View Records").addActionListener(handleViewRecords());
@@ -146,16 +147,16 @@ public class MealVisualPage extends Content {
 
     @Override
     public String showContent(JPanel content) {
-        ContentBuilder builder = new MealVisualBuilder(content);
-        MealVisualDirector director = new MealVisualDirector(builder);
+        MealVisualBuilder builder = new MealVisualBuilder(content);
+        Director director = new Director(builder);
 
         director.constructPage("Meal Visualization");
-        buttonMap = ((MealVisualBuilder) builder).getButtonMap();
-        entries = ((MealVisualBuilder) builder).getEntries();
-        pieDataset = ((MealVisualBuilder) builder).getPieDataSet();
-        radarDataSet = ((MealVisualBuilder) builder).getRadarPlot();
+        buttonMap = builder.getButtonMap();
+        entries = builder.getEntries();
+        pieDataset = builder.getPieDataSet();
+        radarDataSet = builder.getRadarPlot();
 
-        mount();
+        mount(content);
 
         return "Meal Visualization";
     }

@@ -61,7 +61,8 @@ public class ExerciseDeleteTest extends ExerciseBaseTest{
     }
 
     private Exercise saveExercise() {
-        Exercise exercise = new Exercise(Date.valueOf(LocalDate.now()), "Walking", "Low", 30);
+        Exercise exercise = new Exercise(Date.valueOf(LocalDate.now()), "Walking", "Low");
+        exercise.setDuration(30);
         exerciseController.save(exercise, user);
         return exercise;
     }

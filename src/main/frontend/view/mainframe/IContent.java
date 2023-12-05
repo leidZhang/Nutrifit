@@ -1,4 +1,4 @@
-package main.frontend.common;
+package main.frontend.view.mainframe;
 
 import javax.swing.*;
 

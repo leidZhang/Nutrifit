@@ -11,23 +11,33 @@ public class UserProfileBuilder extends UserFormBuilder {
         super(page);
     }
 
-    public void buildModifyButton(ActionListener listener) {
-        JButton submitButton = new JButton("Modify");
-        submitButton.setMinimumSize(new Dimension(120, 30));
-        submitButton.addActionListener(listener);
+    @Override
+    public void buildMainContent() {
+        buildEntries();
+        enableForm(false);
+        setHeadHorizontalSpace(120);
+        buildModifyButton();
+        buildSubmitButton();
+        setTailHorizontalSpace(500);
+    }
+
+    public void buildModifyButton() {
+        JButton button = new JButton("Modify");
+        button.setMinimumSize(new Dimension(120, 30));
         constraints.gridx = 1;
         constraints.gridy = gridy;
         constraints.gridwidth = 1;
-        page.add(submitButton, constraints);
+        page.add(button, constraints);
+        buttonMap.put("Modify", button);
     }
 
-    public void buildSubmitButton(ActionListener listener) {
-        JButton submitButton = new JButton("Submit");
-        submitButton.setMinimumSize(new Dimension(120, 30));
-        submitButton.addActionListener(listener);
+    public void buildSubmitButton() {
+        JButton button = new JButton("Submit");
+        button.setMinimumSize(new Dimension(120, 30));
         constraints.gridx = 2;
         constraints.gridy = gridy;
         constraints.gridwidth = 1;
-        page.add(submitButton, constraints);
+        page.add(button, constraints);
+        buttonMap.put("Submit", button);
     }
 }

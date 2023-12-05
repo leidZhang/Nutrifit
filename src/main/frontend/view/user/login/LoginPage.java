@@ -6,6 +6,7 @@ import main.backend.user.entity.User;
 import main.backend.user.impl.UserController;
 import main.frontend.common.Content;
 import main.frontend.common.ContentBuilder;
+import main.frontend.common.Director;
 import main.frontend.custom.entry.NfEntry;
 import main.frontend.session.UserSession;
 
@@ -18,6 +19,7 @@ public class LoginPage extends Content {
     private UserSession instance = UserSession.getInstance();
     private IUserController controller = new UserController();
     private Map<String, NfEntry> entries;
+    private Map<String, JButton> buttonMap;
     private Content registerPage;
 
     public LoginPage(Content registerPage) {
@@ -70,19 +72,23 @@ public class LoginPage extends Content {
         return listener;
     }
 
+    protected void mount(JPanel content) {
+        buttonMap.get("Register").addActionListener(handleRegister(content));
+        buttonMap.get("Login").addActionListener(handleLogin(content));
+    }
+
     @Override
     public String showContent(JPanel content) {
-        // add listener
-        ActionListener loginListener = handleLogin(content);
-        ActionListener registerListener = handleRegister(content);
-
         // construct page
-        ContentBuilder builder = new LoginBuilder(content);
-        LoginDirector director = new LoginDirector(builder);
-        director.constructPage("Login", registerListener, loginListener);
+        LoginBuilder builder = new LoginBuilder(content);
+        Director director = new Director(builder);
+        director.constructPage("Login");
 
         // get entries and setup entries
-        entries = ((LoginBuilder) builder).getFormData();
+        entries = builder.getFormData();
+        buttonMap = builder.getButtonMap();
+
+        mount(content);
 
         return "Switch to " + pageName;
     }
