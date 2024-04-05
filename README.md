@@ -1,4 +1,4 @@
-# EECS3311Project
+# Nutrifit
 Course project for EECS3311
 
 # Project Preview
